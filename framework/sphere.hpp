@@ -10,11 +10,11 @@ class Sphere : public Shape
 {
 public:
 	//default constructor unit sphere
-	Sphere(glm::vec3 n_center, float n_radius);
-
-	//custom constructor
 	Sphere();
 
+	//custom constructor
+	Sphere(glm::vec3 n_center, float n_radius);
+	
 	//getter
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
