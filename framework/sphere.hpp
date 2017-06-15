@@ -27,6 +27,9 @@ public:
 	//override volume
 	float volume () const override;
 
+	//override print
+	std::ostream& print (std::ostream& os) const override;
+
 private:
 	glm::vec3 	m_center;
 	float 		m_radius;

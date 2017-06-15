@@ -25,13 +25,12 @@ TEST_CASE("getter shape","[shape]")
 
 TEST_CASE("operator<< and print shape","[shape]")
 {
-	/*
 	Sphere es {"empty_sphere"};
 	std::cout << es;
 	
+	
 	Sphere s {"name", Color(0.0f,0.0f,0.0f),glm::vec3{0.0f},1.0f};
 	std::cout << s;
-	*/
 }
 
 // ----------------------------------
@@ -67,6 +66,16 @@ TEST_CASE("volume","[sphere]")
 	REQUIRE(4.189 == Approx(s.volume()).epsilon(0.001));
 }
 
+TEST_CASE("print sphere","[sphere]")
+{
+	Sphere es {"empty_sphere"};
+	std::cout << es;
+	
+	
+	Sphere s {"name", Color(0.0f,0.0f,0.0f),glm::vec3{0.0f},1.0f};
+	std::cout << s;
+}
+
 // ----------------------------------
 // BOX TESTS
 // ----------------------------------
@@ -96,11 +105,20 @@ TEST_CASE("area of box","[box]")
 
 TEST_CASE("volume of box","[box]")
 {
-	Box b2 {"name", Color{0.0f,0.0f,0.0f},glm::vec3{0.0f}, glm::vec3{1.0f}};
+	Box b2 {"name", Color{0.0f,0.0f,0.0f}, glm::vec3{0.0f}, glm::vec3{1.0f}};
 
 	REQUIRE(1.0f == Approx(b2.volume()).epsilon(0.001));
 }
 
+TEST_CASE("print box","[box]")
+{
+	Box eb {"empty_box"};
+	std::cout << eb;
+	
+	
+	Box b {"name", Color{0.0f,0.0f,0.0f}, glm::vec3{0.0f}, glm::vec3{1.0f}};
+	std::cout << b;
+}
 
 // ----------------------------------
 // BLABLA TESTS

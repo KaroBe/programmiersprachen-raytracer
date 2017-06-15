@@ -43,3 +43,14 @@ float Box::volume () const
 	auto diff = m_max - m_min;
 	return diff.x * diff.y * diff.z;
 }
+
+//override print
+std::ostream& Box::print (std::ostream& os) const
+{
+	os 	<< "\nshape type: box";
+	Shape::print(os);
+	os	<<   "min:        " << "(" << m_min.x << ", " << m_min.y << ", " << m_min.z << ")"
+		<< "\nmax:        " << "(" << m_max.x << ", " << m_max.y << ", " << m_max.z << ")"
+		<< "\n";
+	return os;
+}

@@ -42,3 +42,14 @@ float Sphere::volume () const
 {
 	return (4.0f/3.0f)*M_PI*pow(m_radius,3.0f);
 }
+
+//override print
+std::ostream& Sphere::print (std::ostream& os) const
+{
+	os 	<< "\nshape type: sphere";
+	Shape::print(os);
+	os	<<   "center:     " << "(" << m_center.x << ", " << m_center.y << ", " << m_center.z << ")"
+		<< "\nradius:     " << m_radius
+		<< "\n";
+	return os;
+}

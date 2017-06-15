@@ -22,7 +22,8 @@ Color Shape::get_color() const
 
 std::ostream& Shape::print (std::ostream& os) const
 {
-	os << "shape name: " << m_name << "\nshape color: " << m_color;
+	os  << "\nname:       " << m_name
+		<< "\ncolor:      " << m_color;
 	return os;
 }
 
