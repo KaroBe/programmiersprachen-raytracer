@@ -41,6 +41,16 @@ struct Color
     return *this;
   }
 
+  bool operator==(Color const& other)
+  {
+    if(r==other.r and b==other.b and g==other.g)
+      {
+        return true;
+      }
+    else
+      return false;
+  }
+
   friend Color operator+(Color const& a, Color const& b)
   {
     auto tmp(a);

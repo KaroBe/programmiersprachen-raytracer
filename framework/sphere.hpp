@@ -4,23 +4,25 @@
 #ifndef BUW_SPHERE_HPP
 #define  BUW_SPHERE_HPP
 
+#include "shape.hpp"
 #include <glm/vec3.hpp>
 
 class Sphere : public Shape
 {
 public:
 	//default constructor unit sphere
-	Sphere();
+	Sphere(std::string const& name);
 
 	//custom constructor
-	Sphere(glm::vec3 n_center, float n_radius);
+	Sphere(std::string const& name, Color const& color,
+		glm::vec3 const& center, float radius);
 	
 	//getter
-	glm::vec3 const& get_min() const;
-	glm::vec3 const& get_max() const;
+	glm::vec3 const& get_center() const;
+	float const& get_radius() const;
 
 	//override area
-	flaot area () const override;
+	float area () const override;
 
 	//override volume
 	float volume () const override;
