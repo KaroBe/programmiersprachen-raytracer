@@ -17,7 +17,7 @@ public:
 	Box(std::string const& name, Color const& color,
 		glm::vec3 const& min, glm::vec3 const& max);
 
-	//getter
+	//getter - enhances the range of methods the base class has
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
 	

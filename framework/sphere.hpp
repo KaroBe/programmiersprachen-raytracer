@@ -17,7 +17,7 @@ public:
 	Sphere(std::string const& name, Color const& color,
 		glm::vec3 const& center, float radius);
 	
-	//getter
+	//getter - enhances the range of methods the base class has
 	glm::vec3 const& get_center() const;
 	float const& get_radius() const;
 
@@ -29,6 +29,8 @@ public:
 
 	//override print
 	std::ostream& print (std::ostream& os) const override;
+
+	bool intersect(Ray const& ray, float& distance) const;
 
 private:
 	glm::vec3 	m_center;

@@ -47,9 +47,21 @@ float Sphere::volume () const
 std::ostream& Sphere::print (std::ostream& os) const
 {
 	os 	<< "\nshape type: sphere";
-	Shape::print(os);
+	//uses the default shape parent implementation of print on this instance
+	//to print name and color
+	Shape::print(os); //prints name and color
 	os	<<   "center:     " << "(" << m_center.x << ", " << m_center.y << ", " << m_center.z << ")"
 		<< "\nradius:     " << m_radius
 		<< "\n";
 	return os;
+}
+
+bool Sphere::intersect(Ray const& ray, float& distance) const
+{
+	auto normal_direction = glm::normalize(ray.m_direction);
+	return glm::intersectRaySphere(
+		ray.m_origin, normal_direction,
+		m_center,
+		m_radius * m_radius,
+		distance);
 }

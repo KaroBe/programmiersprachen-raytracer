@@ -48,7 +48,9 @@ float Box::volume () const
 std::ostream& Box::print (std::ostream& os) const
 {
 	os 	<< "\nshape type: box";
-	Shape::print(os);
+	//uses the default shape parent implementation of print on this instance
+	//to print name and color
+	Shape::print(os); //prints name and color
 	os	<<   "min:        " << "(" << m_min.x << ", " << m_min.y << ", " << m_min.z << ")"
 		<< "\nmax:        " << "(" << m_max.x << ", " << m_max.y << ", " << m_max.z << ")"
 		<< "\n";
