@@ -159,6 +159,34 @@ TEST_CASE("intersectRaySphere", "[intersect]")
 	REQUIRE(distance == Approx(4.0f));
 }
 
+// ----------------------------------
+// AUFGABE 5.8 TEST
+// ----------------------------------
+
+TEST_CASE("virtual", "[Destructors]")
+{
+
+	std::cout << "\ntesting virtual and non-virtual construction and destruction\n";
+
+	Color red {255.0f, 0.0f, 0.0f};
+	glm::vec3 position {0.0f,0.0f,0.0f};
+
+	std::cout << "Create s1\n";
+	Sphere* s1 = new Sphere("sphere0",red,position,1.2f);
+	std::cout << "Create s2\n";
+	Shape* s2 = new Sphere("sphere1",red,position,1.2f);
+
+	std::cout << "Printing objects: \n";
+	std::cout << *s1;
+	std::cout << *s2 << "\n";
+
+	std::cout << "Delete s1\n";
+	delete s1;
+	std::cout << "Delete s2\n";
+	delete s2;
+}
+
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);

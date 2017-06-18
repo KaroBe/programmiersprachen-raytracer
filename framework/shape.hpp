@@ -20,6 +20,8 @@ public:
 
 	Shape(std::string const& name, Color const& color);
 
+	virtual ~Shape();
+
 	//pure virtual methods (no implementation in base class)
 	virtual float area() const = 0;
 	virtual float volume() const = 0;

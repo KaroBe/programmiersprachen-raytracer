@@ -9,7 +9,9 @@ Sphere::Sphere(std::string const& name) :
 	Shape{name, Color{0.0f,0.0f,0.0f}},
 	m_center{glm::vec3{0.0f}},
 	m_radius{1}
-{}
+{
+	std::cout << "Sphere constructor\n";
+}
 
 //custom constructor
 Sphere::Sphere(std::string const& name, Color const& color,
@@ -18,7 +20,15 @@ Sphere::Sphere(std::string const& name, Color const& color,
 	Shape{name,color},
 	m_center{center},
 	m_radius{radius}
-{}
+{
+	std::cout << "Sphere constructor\n";
+}
+
+//dtor
+Sphere::~Sphere()
+{
+	std::cout << "Sphere Destructor\n";
+}
 
 //getter
 glm::vec3 const& Sphere::get_center() const

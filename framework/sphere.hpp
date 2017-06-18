@@ -16,6 +16,9 @@ public:
 	//custom constructor
 	Sphere(std::string const& name, Color const& color,
 		glm::vec3 const& center, float radius);
+
+	//override dtor
+	~Sphere();
 	
 	//getter - enhances the range of methods the base class has
 	glm::vec3 const& get_center() const;
