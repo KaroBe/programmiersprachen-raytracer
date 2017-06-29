@@ -4,7 +4,7 @@
 #ifndef BUW_SHAPE_HPP
 #define BUW_SHAPE_HPP
 
-#include <color.hpp>
+#include <material.hpp>
 #include <iostream>
 
 #include "ray.hpp"
@@ -18,7 +18,7 @@ class Shape
 {
 public:
 
-	Shape(std::string const& name, Color const& color);
+	Shape(std::string const& name, Material const& material);
 
 	virtual ~Shape();
 
@@ -28,7 +28,7 @@ public:
 
 	//virtual methods
 	virtual std::string get_name() const; 
-	virtual Color get_color() const;
+	virtual Material get_material() const;
 
 	//fried -> should normally be outside the class, but uses Shape
 	//member variables, therefore marked as friend and able to 
@@ -38,10 +38,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 	virtual std::ostream& print (std::ostream& os) const;
+
+	//distance is overwritten with distance between origin and shape
+	virtual bool intersect(Ray const& ray, float& distance) = 0;
 	
 protected:
 	std::string m_name;
-	Color m_color;
+	Material m_material;
 };
 
 #endif //BUW_SHAPE_HPP

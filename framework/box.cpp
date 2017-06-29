@@ -5,16 +5,19 @@
 
 //default constructor unit box
 Box::Box(std::string const& name) :
-	Shape{name, Color{0.0f,0.0f,0.0f}},
+	Shape{name, Material{"box_material", Color{0.0f,0.0f,0.0f},
+						Color{0.0f,0.0f,0.0f},
+						Color{0.0f,0.0f,0.0f},
+						0.0f}},
 	m_min{glm::vec3{0.0f}},
 	m_max{glm::vec3{1.0f}}
 {}
 
 //custom constructor
-Box::Box(std::string const& name, Color const& color,
+Box::Box(std::string const& name, Material const& material,
 	glm::vec3 const& min, glm::vec3 const& max) :
 	
-	Shape{name, color},
+	Shape{name, material},
 	m_min{min},
 	m_max{max}
 {}
@@ -49,10 +52,17 @@ std::ostream& Box::print (std::ostream& os) const
 {
 	os 	<< "\nshape type: box";
 	//uses the default shape parent implementation of print on this instance
-	//to print name and color
-	Shape::print(os); //prints name and color
+	//to print name and material
+	Shape::print(os); //prints name and material
 	os	<<   "min:        " << "(" << m_min.x << ", " << m_min.y << ", " << m_min.z << ")"
 		<< "\nmax:        " << "(" << m_max.x << ", " << m_max.y << ", " << m_max.z << ")"
 		<< "\n";
 	return os;
+}
+
+//override intersect
+bool Box::intersect(Ray const& ray, float& distance)
+{
+	//do stuff
+	return true;
 }

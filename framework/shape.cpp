@@ -4,9 +4,9 @@
 #include "shape.hpp"
 
 //Constructor
-Shape::Shape (std::string const& name, Color const& color) :
+Shape::Shape (std::string const& name, Material const& material) :
 	m_name{name},
-	m_color{color}
+	m_material{material}
 {
 	std::cout << "Shape Construction\n";
 }
@@ -23,15 +23,15 @@ std::string Shape::get_name() const
 	return m_name;
 }
 
-Color Shape::get_color() const
+Material Shape::get_material() const
 {
-	return m_color;
+	return m_material;
 }
 
 std::ostream& Shape::print (std::ostream& os) const
 {
 	os  << "\nname:       " << m_name
-		<< "\ncolor:      " << m_color;
+		<< "\nmaterial:      " << m_material;
 	return os;
 }
 

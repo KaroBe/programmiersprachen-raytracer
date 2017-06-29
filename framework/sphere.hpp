@@ -14,7 +14,7 @@ public:
 	Sphere(std::string const& name);
 
 	//custom constructor
-	Sphere(std::string const& name, Color const& color,
+	Sphere(std::string const& name, Material const& material,
 		glm::vec3 const& center, float radius);
 
 	//override dtor
@@ -33,7 +33,7 @@ public:
 	//override print
 	std::ostream& print (std::ostream& os) const override;
 
-	bool intersect(Ray const& ray, float& distance) const;
+	bool intersect(Ray const& ray, float& distance);
 
 private:
 	glm::vec3 	m_center;

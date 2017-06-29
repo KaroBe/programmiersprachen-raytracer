@@ -14,7 +14,7 @@ public:
 	Box(std::string const& name);
 
 	//custom constructor
-	Box(std::string const& name, Color const& color,
+	Box(std::string const& name, Material const& material,
 		glm::vec3 const& min, glm::vec3 const& max);
 
 	//dtor
@@ -32,6 +32,8 @@ public:
 
 	//override print
 	std::ostream& print (std::ostream& os) const override;
+
+	bool intersect(Ray const& ray, float& distance) override;
 
 private:
 	glm::vec3	m_min;
