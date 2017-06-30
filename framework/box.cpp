@@ -20,7 +20,33 @@ Box::Box(std::string const& name, Material const& material,
 	Shape{name, material},
 	m_min{min},
 	m_max{max}
-{}
+{
+	sortMinMax();
+}
+
+void Box::sortMinMax()
+{
+	if(m_min.x > m_max.x)
+	{
+		float buffer = m_min.x;
+		m_max.x = buffer;
+		m_min.x = m_max.x;
+	}
+	
+	if(m_min.y > m_max.y)
+	{
+		float buffer = m_min.y;
+		m_max.y = buffer;
+		m_min.y = m_max.y;
+	}
+	
+	if(m_min.z > m_max.z)
+	{
+		float buffer = m_min.z;
+		m_max.z = buffer;
+		m_min.z = m_max.z;
+	}
+}
 
 //getter
 glm::vec3 const& Box::get_min() const
@@ -63,6 +89,7 @@ std::ostream& Box::print (std::ostream& os) const
 //override intersect
 bool Box::intersect(Ray const& ray, float& distance)
 {
+	
 	//do stuff
 	return true;
 }
