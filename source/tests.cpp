@@ -37,6 +37,7 @@ TEST_CASE("operator<< and print shape","[shape]")
 	
 	Sphere s {"name", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f},1.0f};
 	std::cout << s;
+//trolololo
 }
 
 // ----------------------------------
