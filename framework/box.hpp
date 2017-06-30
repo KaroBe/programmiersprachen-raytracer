@@ -20,6 +20,8 @@ public:
 	//dtor
 	~Box(){};
 
+	void sortMinMax();
+
 	//getter - enhances the range of methods the base class has
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
