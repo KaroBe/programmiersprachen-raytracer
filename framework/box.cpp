@@ -63,6 +63,26 @@ std::ostream& Box::print (std::ostream& os) const
 //override intersect
 bool Box::intersect(Ray const& ray, float& distance)
 {
-	//do stuff
-	return true;
+	bool hit = false;
+
+	glm::vec3 shapehit{0.0f};	//coordinates of hit with shape
+	glm::vec3 planehit{0.0f};	//coordiantes of hit with planes
+
+	/* x - plane */
+	if(ray.origin <= m_min.x
+		||
+		(ray.origin.x > m_min.x && ray.origin.x < m_max.x && ray.direction.x > 0))
+	{
+
+	}
+	else if()
+	{
+
+	}
+
+	/* y - plane */
+
+	/* z - plane */
+
+	return hit;
 }
