@@ -13,6 +13,7 @@
 #include "box.hpp"
 #include "material.hpp"
 #include "color.hpp"
+#include "sdfloader.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
@@ -212,6 +213,14 @@ int main(int argc, char *argv[])
   return Catch::Session().run(argc, argv);
 }
 
+
+/*TEST_CASE("SDFloader test", "[SDFloader]")
+{
+	SDFloader load{};
+	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
+}*/
+
+
 // ----------------------------------
 // INTERSECTION Tests
 // ----------------------------------
@@ -326,6 +335,7 @@ TEST_CASE("vektor normalization", "glm::vec3")
 	std::cout << "\n" << norm.x << ", " << norm.y
 		<< ", "  << norm.z;
 }
+
 
 //lissylissylissy <33333
  
