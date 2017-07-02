@@ -212,4 +212,28 @@ int main(int argc, char *argv[])
   return Catch::Session().run(argc, argv);
 }
 
+// ----------------------------------
+// INTERSECTION Tests
+// ----------------------------------
+
+TEST_CASE("intersection tests","Box")
+{
+	Color c {0.0f,0.0f,0.0f};
+	Ray ray {glm::vec3{0.0f},
+			glm::vec3{0.0f,0.0f,-1.0f}};
+
+	Box box {"test_box",
+		Material{"",c,c,c, 0.0f},
+		glm::vec3{-1.0f,-1.0f,-2.0f},	//min
+		glm::vec3{1.0f,1.0f,-3.0f}		//max
+	};
+
+	float distance = 0.0f;
+
+	bool hit = box.intersect(ray,distance);
+
+	std::cout << "Hit? " << hit << " Distance: " << distance;
+}
+
+
 //lissylissylissy <33333

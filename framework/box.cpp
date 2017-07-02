@@ -91,24 +91,112 @@ bool Box::intersect(Ray const& ray, float& distance)
 {
 	bool hit = false;
 
-	glm::vec3 shapehit{0.0f};	//coordinates of hit with shape
-	glm::vec3 planehit{0.0f};	//coordiantes of hit with planes
+	glm::vec3 boxhit{0.0f};	//coordinates of hit with shape
+	glm::vec3 planehit{0.0f};	//coordiantes of hit with planes that are "seen" first by ray
+
+	/*
+	*	Choose which sides (xmin-plane or xmax plane and so on) of the box
+	*	could be hit by ray, and write x/y/z Koordinates of those planes
+	*	to planehit
+	*/
 
 	/* x - plane */
-	if(ray.origin <= m_min.x
-		||
-		(ray.origin.x > m_min.x && ray.origin.x < m_max.x && ray.direction.x > 0))
+	// if min - plane is seen first
+	if(ray.m_origin.x <= m_min.x || (ray.m_origin.x > m_min.x && ray.m_origin.x < m_max.x && ray.m_direction.x < 0))
 	{
-
+		planehit.x = m_min.x;  
 	}
-	else if()
+	//if max - plane is seen first
+	else if(ray.m_origin.x >= m_max.x || (ray.m_origin.x > m_min.x && ray.m_origin.x < m_max.x && ray.m_direction.x > 0))
 	{
-
+		planehit.x = m_max.x;  
 	}
 
 	/* y - plane */
+	// if min - plane is seen first
+	if(ray.m_origin.y <= m_min.y || (ray.m_origin.y > m_min.y && ray.m_origin.y < m_max.y && ray.m_direction.y < 0))
+	{
+		planehit.y = m_min.y;  
+	}
+	//if max - plane is seen first
+	else if(ray.m_origin.y >= m_max.y || (ray.m_origin.y > m_min.y && ray.m_origin.y < m_max.y && ray.m_direction.y > 0))
+	{
+		planehit.y = m_max.y;  
+	}
 
 	/* z - plane */
+	// if min - plane is seen first
+	if(ray.m_origin.z <= m_min.z || (ray.m_origin.z > m_min.z && ray.m_origin.z < m_max.z && ray.m_direction.z < 0))
+	{
+		planehit.z = m_min.z;  
+	}
+	// if max - plane is seen first
+	else if(ray.m_origin.z >= m_max.z || (ray.m_origin.z > m_min.z && ray.m_origin.z < m_max.z && ray.m_direction.z > 0))
+	{
+		planehit.z = m_max.z;  
+	}
+
+	/*
+	*	Calculate hits of vector with the planes with the before calculated x, y or z
+	*	coordiantes
+	*	If the hit lies in the boundaries of the box, the hit with the box is found!
+	*/
+
+	float t = 0.0f;
+
+	/* Check wheter x plane hit is hit with box */
+
+	//calculate distance to hit with x-plane
+	t = (planehit.x - ray.m_origin.x) / ray.m_direction.x;
+	//calculate other koordinates of the hit
+	boxhit.y = ray.m_origin.y + t * ray.m_direction.y;
+	boxhit.z = ray.m_origin.z + t * ray.m_direction.z;
+
+	//check position of hit
+	if( boxhit.x >= m_min.x && boxhit.x <= m_max.x &&
+		boxhit.y >= m_min.y && boxhit.y <= m_max.y &&
+		boxhit.z >= m_min.z && boxhit.z <= m_max.z &&
+		t >= 0 //warum überprüfen wir das nochmal??
+		)
+	{
+		distance = t;
+	}
+
+	/* Check wheter y plane hit is hit with box */
+	
+	//calculate distance to hit with x-plane
+	t = (planehit.y - ray.m_origin.y) / ray.m_direction.y;
+	//calculate other koordinates of the hit
+	boxhit.x = ray.m_origin.x + t * ray.m_direction.x;
+	boxhit.z = ray.m_origin.z + t * ray.m_direction.z;
+
+	//check position of hit
+	if( boxhit.x >= m_min.x && boxhit.x <= m_max.x &&
+		boxhit.y >= m_min.y && boxhit.y <= m_max.y &&
+		boxhit.z >= m_min.z && boxhit.z <= m_max.z &&
+		t >= 0 //warum überprüfen wir das nochmal??
+		)
+	{
+		distance = t;
+	}		
+
+	/* Check wheter z plane hit is hit with box */
+	
+	//calculate distance to hit with x-plane
+	t = (planehit.z - ray.m_origin.z) / ray.m_direction.z;
+	//calculate other koordinates of the hit
+	boxhit.x = ray.m_origin.x + t * ray.m_direction.x;
+	boxhit.y = ray.m_origin.y + t * ray.m_direction.y;
+
+	//check position of hit
+	if( boxhit.x >= m_min.x && boxhit.x <= m_max.x &&
+		boxhit.y >= m_min.y && boxhit.y <= m_max.y &&
+		boxhit.z >= m_min.z && boxhit.z <= m_max.z &&
+		t >= 0 //warum überprüfen wir das nochmal??
+		)
+	{
+		distance = t;
+	}
 
 	return hit;
 }
