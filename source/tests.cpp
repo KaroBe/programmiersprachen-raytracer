@@ -237,14 +237,17 @@ TEST_CASE("intersection tests","Box")
 	std::cout << box;
 
 	float distance = 0.0f;
+	std::cout << "\n\nray 1: \n";
 	bool hit = box.intersect(ray1,distance);
 	std::cout << "\nHit? " << hit << " Distance: " << distance;
 
 	distance = 0.0f;
+	std::cout << "\n\nray 2: \n";
 	hit = box.intersect(ray2,distance);
 	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
 
 	distance = 0.0f;
+	std::cout << "\n\nray 3: \n";
 	hit = box.intersect(ray3,distance);
 	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
 }

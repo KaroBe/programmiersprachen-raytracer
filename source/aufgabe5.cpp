@@ -7,7 +7,7 @@
 int main()
 {
 	std::fstream input;
-	input.open("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
+	input.open("material_input.txt");
 
 	if(input.is_open())
 	{

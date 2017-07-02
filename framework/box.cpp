@@ -29,22 +29,22 @@ void Box::sortMinMax()
 	if(m_min.x > m_max.x)
 	{
 		float buffer = m_min.x;
-		m_max.x = buffer;
 		m_min.x = m_max.x;
+		m_max.x = buffer;
 	}
 	
 	if(m_min.y > m_max.y)
 	{
 		float buffer = m_min.y;
-		m_max.y = buffer;
 		m_min.y = m_max.y;
+		m_max.y = buffer;
 	}
 	
 	if(m_min.z > m_max.z)
 	{
 		float buffer = m_min.z;
-		m_max.z = buffer;
 		m_min.z = m_max.z;
+		m_max.z = buffer;
 	}
 }
 
