@@ -219,14 +219,28 @@ int main(int argc, char *argv[])
 TEST_CASE("intersection tests","Box")
 {
 	Color c {0.0f,0.0f,0.0f};
+
 	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
-			glm::vec3{1.0f,1.0f,-1.0f}}; //richung
+			glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
 
 	Ray ray2 {glm::vec3{0.0f}, //from koordinatenursprung
-			glm::vec3{1.0f,1.0f,-2.0f}}; //richtung
+			glm::vec3{1.0f,1.0f,-2.0f}}; //schräg in anderem winkel in -z richtung
+
+	//BEI INNERHALB DER BOX WERDEN MANCHE VARIABLEN NICHT VERÄNDERT
+	//		distance to x plane: inf
+	//		Hit : (7, -nan, -inf)
 
 	Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
-			glm::vec3{0.0f,0.0f,-1.0f}};
+			glm::vec3{0.0f,0.0f,-1.0f}}; // gerade in -z Richtung schauend
+
+	Ray ray3b {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
+			glm::vec3{1.0f,1.0f,-1.0f}}; // schräg in -z Richtung schauend
+
+	Ray ray4 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{0.0f,0.0f,-2.0f}}; //entlang -z Achse, gerade
+
+	Ray ray4b {glm::vec3{1.0f,1.0f,0.0f}, //from (1|1|0)
+			glm::vec3{0.0f,0.0f,-2.0f}}; //entlang -z Achse, gerade
 
 	Box box {"test_box",
 		Material{"",c,c,c, 0.0f},
@@ -249,8 +263,37 @@ TEST_CASE("intersection tests","Box")
 	distance = 0.0f;
 	std::cout << "\n\nray 3: \n";
 	hit = box.intersect(ray3,distance);
-	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+	
+	distance = 0.0f;
+	std::cout << "\n\nray 3b: \n";
+	hit = box.intersect(ray3b,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+
+	distance = 0.0f;
+	std::cout << "\n\nray 4: \n";
+	hit = box.intersect(ray4,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+	
+	distance = 0.0f;
+	std::cout << "\n\nray 4b: \n";
+	hit = box.intersect(ray4b,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
 }
 
+TEST_CASE("vektor normalization", "glm::vec3")
+{
+	glm::vec3 v {0.0f,0.0f,2.0f};
+	glm::vec3 norm {0.0f};
+
+	std::cout << "\n" << v.x << ", " << v.y
+		<< ", "  << v.z;
+	
+	norm = glm::normalize(v);
+
+	std::cout << "\n" << norm.x << ", " << norm.y
+		<< ", "  << norm.z;
+}
 
 //lissylissylissy <33333
+ 
