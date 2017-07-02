@@ -100,6 +100,11 @@ bool Box::intersect(Ray const& ray, float& distance)
 	//Parallelität zu Achsen
 
 	//Alle Schnittpunkte mit Flächen durch Seiten der Box
+
+/* NOTE: statt direction 1/direction verwenden, da sonst bei ray direction = 0
+	ein Fehler auftritt?!
+	http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection */
+
 	float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
 	float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
 
@@ -139,6 +144,7 @@ bool Box::intersect(Ray const& ray, float& distance)
 		return false;
 	}
 
+	if 
 	distance = tnear;
 
 	return true;
