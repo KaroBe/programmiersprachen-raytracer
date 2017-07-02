@@ -20,3 +20,5 @@ private:
 	std::vector<Material> m_vecMaterials;
 
 };
+
+#endif

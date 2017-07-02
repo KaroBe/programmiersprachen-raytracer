@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
 
 /*TEST_CASE("SDFloader test", "[SDFloader]")
 {
-	SDFloader load();
+	SDFloader load{};
 	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
 }*/
 

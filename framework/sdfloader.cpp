@@ -47,15 +47,11 @@ SDFloader() :
 					}
 				}
 			}
-
-			/*for (std::vector<Material>::iterator it = vec_material.begin(); it != vec_material.end(); ++it)
-	    	{
-	    		std::cout << ' ' << *it;
-	    	}
-	 		std::cout << '\n';*/
 		}
 		else
 		{
 			std::cout << "Couldn't find file." << std::endl;
 		}
+	}
+	
 
