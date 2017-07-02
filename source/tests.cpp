@@ -38,6 +38,7 @@ TEST_CASE("operator<< and print shape","[shape]")
 	
 	Sphere s {"name", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f},1.0f};
 	std::cout << s;
+//trolololo
 }
 
 // ----------------------------------
@@ -212,10 +213,54 @@ int main(int argc, char *argv[])
   return Catch::Session().run(argc, argv);
 }
 
+
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
 	SDFloader load();
 	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
 }
 
+
+// ----------------------------------
+// INTERSECTION Tests
+// ----------------------------------
+
+TEST_CASE("intersection tests","Box")
+{
+	Color c {0.0f,0.0f,0.0f};
+	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{1.0f,1.0f,-1.0f}}; //richung
+
+	Ray ray2 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{1.0f,1.0f,-2.0f}}; //richtung
+
+	Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
+			glm::vec3{0.0f,0.0f,-1.0f}};
+
+	Box box {"test_box",
+		Material{"",c,c,c, 0.0f},
+		glm::vec3{0.0f,0.0f,-1.0f},	//min
+		glm::vec3{2.0f,2.0f,-3.0f}	//max
+	};
+
+	std::cout << box;
+
+	float distance = 0.0f;
+	std::cout << "\n\nray 1: \n";
+	bool hit = box.intersect(ray1,distance);
+	std::cout << "\nHit? " << hit << " Distance: " << distance;
+
+	distance = 0.0f;
+	std::cout << "\n\nray 2: \n";
+	hit = box.intersect(ray2,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
+
+	distance = 0.0f;
+	std::cout << "\n\nray 3: \n";
+	hit = box.intersect(ray3,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
+}
+
+
+‚‚
 //lissylissylissy <33333
