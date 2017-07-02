@@ -34,29 +34,19 @@ struct SDFloader
 
 					if(word == "material")
 					{
-						int i = 16;	//gets name
-						std::string name;
-						while(line.at(i) != ' ')
-						{
-							name.push_back(line[i]);
-							++i;
-						}
-						++i;
+						Material material;
 						
-						std::vector<float> numbers(10);
-						for(int j = 0; j < numbers.size(); ++j)
-						{		//gets numbers for colours etc
-							float a = line[i] - '0';
-							numbers[j] = a;
-							i = i+2;
-						}
-
-						Color color1(numbers[0], numbers[1], numbers[2]);
-						Color color2(numbers[3], numbers[4], numbers[5]);
-						Color color3(numbers[6], numbers[7], numbers[8]);
-
-						Material material(name, color1, color2, color3, numbers[9]);
-						vec_material.push_back(material);
+						stream >> material.m_name;
+						stream >> material.m_ka.r;
+						stream >> material.m_ka.g;
+						stream >> material.m_ka.b;
+						stream >> material.m_kd.r;
+						stream >> material.m_kd.g;
+						stream >> material.m_kd.b;
+						stream >> material.m_ks.r;
+						stream >> material.m_ks.g;
+						stream >> material.m_ks.b;
+						
 					}
 				}
 				
