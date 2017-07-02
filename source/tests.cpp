@@ -219,20 +219,34 @@ int main(int argc, char *argv[])
 TEST_CASE("intersection tests","Box")
 {
 	Color c {0.0f,0.0f,0.0f};
-	Ray ray {glm::vec3{0.0f},
+	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{1.0f,1.0f,-1.0f}}; //richung
+
+	Ray ray2 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{1.0f,1.0f,-2.0f}}; //richtung
+
+	Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
 			glm::vec3{0.0f,0.0f,-1.0f}};
 
 	Box box {"test_box",
 		Material{"",c,c,c, 0.0f},
-		glm::vec3{-1.0f,-1.0f,-2.0f},	//min
-		glm::vec3{1.0f,1.0f,-3.0f}		//max
+		glm::vec3{0.0f,0.0f,-1.0f},	//min
+		glm::vec3{2.0f,2.0f,-3.0f}	//max
 	};
 
+	std::cout << box;
+
 	float distance = 0.0f;
+	bool hit = box.intersect(ray1,distance);
+	std::cout << "\nHit? " << hit << " Distance: " << distance;
 
-	bool hit = box.intersect(ray,distance);
+	distance = 0.0f;
+	hit = box.intersect(ray2,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
 
-	std::cout << "Hit? " << hit << " Distance: " << distance;
+	distance = 0.0f;
+	hit = box.intersect(ray3,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
 }
 
 
