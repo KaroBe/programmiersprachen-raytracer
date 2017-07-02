@@ -13,6 +13,7 @@
 #include "box.hpp"
 #include "material.hpp"
 #include "color.hpp"
+#include "sdfloader.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
@@ -209,6 +210,12 @@ TEST_CASE("material in place of color struct", "Material")
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
+}
+
+TEST_CASE("SDFloader test", "[SDFloader]")
+{
+	SDFloader load();
+	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
 }
 
 //lissylissylissy <33333
