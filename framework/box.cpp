@@ -89,172 +89,57 @@ std::ostream& Box::print (std::ostream& os) const
 //override intersect
 bool Box::intersect(Ray const& ray, float& distance)
 {
-		//normalize ray
-	Ray norm_ray {ray.m_origin,ray.m_direction};
-	norm_ray.m_direction = glm::normalize(ray.m_direction);
+	//normalize ray
+	Ray nray {ray.m_origin,ray.m_direction};
+	nray.m_direction = glm::normalize(ray.m_direction);
 
-	std::cout << "ray m_direction normalized: " 
-		<< norm_ray.m_direction.x << ", "
-		<< norm_ray.m_direction.y << ", "
-		<< norm_ray.m_direction.z;
+	std::cout << ray << nray;;
 
 	bool hit = false;
 
-	glm::vec3 boxhit{7.0f};	//coordinates of hit with shape
-	glm::vec3 planehit{7.0f};	//coordiantes of hit with planes that are "seen" first by ray
+	//Parallelität zu Achsen
 
-	/*
-	*	Choose which sides (xmin-plane or xmax plane and so on) of the box
-	*	could be hit by ray, and write x/y/z Koordinates of those planes
-	*	to planehit
-	*/
+	//Alle Schnittpunkte mit Flächen durch Seiten der Box
+	float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
+	float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
 
-	/* x - plane */
-	// if min - plane is seen first
-	if(norm_ray.m_origin.x <= m_min.x || (ray.m_origin.x > m_min.x && norm_ray.m_origin.x < m_max.x && norm_ray.m_direction.x < 0))
-	{
-		planehit.x = m_min.x;
-		std::cout << "\nhit plane x at min x = " << m_min.x;
-	}
-	//if max - plane is seen first
-	else if(norm_ray.m_origin.x >= m_max.x || (norm_ray.m_origin.x > m_min.x && norm_ray.m_origin.x < m_max.x && norm_ray.m_direction.x > 0))
-	{
-		planehit.x = m_max.x;  
-		std::cout << "\nhit plane x at max x = " << m_max.x;
-	}
-	else
-	{
-		std::cout << "\nparallel to x-plane";
-	}
+	float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
+	float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
 
-	/* y - plane */
-	// if min - plane is seen first
-	if(norm_ray.m_origin.y <= m_min.y || (norm_ray.m_origin.y > m_min.y && norm_ray.m_origin.y < m_max.y && norm_ray.m_direction.y < 0))
+	float t0z = (m_min.z - nray.m_origin.z) / nray.m_direction.z;
+	float t1z = (m_max.z - nray.m_origin.z) / nray.m_direction.z;
+
+	//far und near Schnittpunkte mit Flächen durch Seiten der Box
+	float tx_far = std::max(t0x,t1x);
+	float tx_near = std::min(t0x,t1x);
+
+	float ty_far = std::max(t0y,t1y);
+	float ty_near = std::min(t0y,t1y);
+
+	float tz_far = std::max(t0z,t1z);
+	float tz_near = std::min(t0z,t1z);
+
+	//Schnittpunkte mit Ebenen, die auf der Box liegen
+	float tfar = std::min(tx_far, ty_far);
+	float tnear = std::max(tx_near, ty_near);
+
+	//Wenn der Schnittpunkt mit der weiter entfernten Seite kleiner ist,
+	//wird Box nicht von ray getroffen
+	if(tfar < tnear)
 	{
-		planehit.y = m_min.y;  
-		std::cout << "\nhit plane y at min y = " << m_min.y;
-	}
-	//if max - plane is seen first
-	else if(norm_ray.m_origin.y >= m_max.y || (norm_ray.m_origin.y > m_min.y && norm_ray.m_origin.y < m_max.y && norm_ray.m_direction.y > 0))
-	{
-		planehit.y = m_max.y; 
-		std::cout << "\nhit plane y at max y = " << m_max.y;
-	}
-	else
-	{
-		std::cout << "\nparallel to y-plane";
+		return false;
 	}
 
-	/* z - plane */
-	// if min - plane is seen first
-	if(norm_ray.m_origin.z <= m_min.z || (norm_ray.m_origin.z > m_min.z && norm_ray.m_origin.z < m_max.z && norm_ray.m_direction.z < 0))
+	//Betrachtung in 3D
+	tfar = std::min(tfar, tz_far);
+	tnear = std::max(tnear, tz_near);
+
+	if(tfar < tnear)
 	{
-		planehit.z = m_min.z; 
-		std::cout << "\nhit plane z at min z = " << m_min.z;
-	}
-	// if max - plane is seen first
-	else if(norm_ray.m_origin.z >= m_max.z || (norm_ray.m_origin.z > m_min.z && norm_ray.m_origin.z < m_max.z && norm_ray.m_direction.z > 0))
-	{
-		planehit.z = m_max.z;  
-		std::cout << "\nhit plane z at max z = " << m_max.z;
-	}
-	else
-	{
-		std::cout << "\nparallel to z-plane";
+		return false;
 	}
 
-	/*
-	*	Calculate hits of vector with the planes with the before calculated x, y or z
-	*	coordiantes
-	*	If the hit lies in the boundaries of the box, the hit with the box is found!
-	*/
+	distance = tnear;
 
-	float t = 0.0f;
-
-	/* Check wheter x plane hit is hit with box */
-
-	//calculate distance to hit with x-plane
-	t = (planehit.x - norm_ray.m_origin.x) / norm_ray.m_direction.x;
-	std::cout << "\ndistance to x plane: " << t;
-	//calculate other koordinates of the hit
-	boxhit.y = norm_ray.m_origin.y + t * norm_ray.m_direction.y;
-	boxhit.z = norm_ray.m_origin.z + t * norm_ray.m_direction.z;
-	
-	std::cout << "\nHit : (" << planehit.x << ", "
-		<< boxhit.y << ", " << boxhit.z<< ")";
-
-	std::cout << "\n" << m_min.x << "<=" << planehit.x << "<=" << m_max.x;
-	std::cout << "\n" << m_min.y << "<=" << boxhit.y << "<=" << m_max.y;
-	std::cout << "\n" << m_min.z << "<=" << boxhit.z << "<=" << m_max.z;
-
-	//check position of hit
-	if( boxhit.x >= m_min.x && planehit.x <= m_max.x &&
-		boxhit.y >= m_min.y && boxhit.y <= m_max.y &&
-		boxhit.z >= m_min.z && boxhit.z <= m_max.z &&
-		t >= 0 //warum überprüfen wir das nochmal??
-		)
-	{
-		std::cout << "THIS IST THE HIT WITH THE BOX";
-		distance = t;
-		hit = true;
-	}
-
-	/* Check wheter y plane hit is hit with box */
-	
-	//calculate distance to hit with x-plane
-	t = (planehit.y - norm_ray.m_origin.y) / norm_ray.m_direction.y;
-	std::cout << "\ndistance to y plane: " << t;
-	//calculate other koordinates of the hit
-	boxhit.x = norm_ray.m_origin.x + t * norm_ray.m_direction.x;
-	boxhit.z = norm_ray.m_origin.z + t * norm_ray.m_direction.z;
-
-	std::cout << "\nHit : (" << boxhit.x << ", "
-		<< planehit.y << ", " << boxhit.z << ")";
-
-	std::cout << "\n" << m_min.x << "<=" << boxhit.x << "<=" << m_max.x;
-	std::cout << "\n" << m_min.y << "<=" << planehit.y << "<=" << m_max.y;
-	std::cout << "\n" << m_min.z << "<=" << boxhit.z << "<=" << m_max.z;
-
-	//check position of hit
-	if( boxhit.x >= m_min.x && boxhit.x <= m_max.x &&
-		boxhit.y >= m_min.y && planehit.y <= m_max.y &&
-		boxhit.z >= m_min.z && boxhit.z <= m_max.z &&
-		t >= 0 //warum überprüfen wir das nochmal??
-		)
-	{
-		std::cout << "THIS IST THE HIT WITH THE BOX";
-		distance = t;
-		hit = true;
-	}		
-
-	/* Check wheter z plane hit is hit with box */
-	
-	//calculate distance to hit with x-plane
-	t = (planehit.z - norm_ray.m_origin.z) / norm_ray.m_direction.z;
-	std::cout << "\ndistance to z plane: " << t;
-	//calculate other koordinates of the hit
-	boxhit.x = norm_ray.m_origin.x + t * norm_ray.m_direction.x;
-	boxhit.y = norm_ray.m_origin.y + t * norm_ray.m_direction.y;
-	
-	std::cout << "\nHit : (" << boxhit.x << ", "
-		<< boxhit.y << ", " << planehit.z << ")";
-
-	std::cout << "\n" << m_min.x << "<=" << boxhit.x << "<=" << m_max.x;
-	std::cout << "\n" << m_min.y << "<=" << boxhit.y << "<=" << m_max.y;
-	std::cout << "\n" << m_min.z << "<=" << planehit.z << "<=" << m_max.z;
-	std::cout << "\nt: " << t;
-
-	//check position of hit
-	if( boxhit.x >= m_min.x && boxhit.x <= m_max.x &&
-		boxhit.y >= m_min.y && boxhit.y <= m_max.y &&
-		boxhit.z >= m_min.z && planehit.z <= m_max.z &&
-		t >= 0 //warum überprüfen wir das nochmal??
-		)
-	{
-		std::cout << "THIS IST THE HIT WITH THE BOX";
-		distance = t;
-		hit = true;
-	}
-
-	return hit;
+	return true;
 }
