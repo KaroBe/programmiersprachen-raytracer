@@ -220,16 +220,17 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 	SDFloader loader{};
 	/*
 	load.sdfLoad("/Users/lissyscholz/Documents/
-		programmiersprachen/raytracer/programmiersprachen-
-		raytracer/source/material_input.txt");
-	
-	load.sdfLoad("/home/karoline/Documents/studium/
-		17_sose/programmiersprachen/programmiersprachen-
-		aufgabenblatt-6/programmiersprachen-raytracer/
-		source/material_input.txt");
+		programmiersprachen/raytracer/programmiers./prachen-
+		raytracer/source/material_input.txt")""
 	*/
-	Scene s1 {};
-	s1 = loader.load("bla");
+	//Scene s1 {};
+
+	//std::string karo_file_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen-aufgabenblatt-6/programmiersprachen-raytracer/source/material_input.txt";
+	//s1 = loader.load(karo_file_path);
+	
+	Scene s2 {};
+	std::string bla = "/bla";
+	s2 = loader.load(bla);
 }
 
 // ----------------------------------
