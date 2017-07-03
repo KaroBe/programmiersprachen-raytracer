@@ -215,10 +215,6 @@ int main(int argc, char *argv[])
 }
 
 
-// ----------------------------------
-// SDF Loader Tests
-// ----------------------------------
-
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
 	SDFloader loader{};
