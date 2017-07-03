@@ -13,6 +13,7 @@
 
 	Scene SDFloader::load(std::string const& inputFile)
 	{
+		Scene scene{};
 		std::fstream input;
 		input.open(inputFile);
 
