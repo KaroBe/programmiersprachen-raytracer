@@ -13,6 +13,7 @@
 #include "box.hpp"
 #include "material.hpp"
 #include "color.hpp"
+#include "scene.hpp"
 #include "sdfloader.hpp"
 
 // ----------------------------------
@@ -216,10 +217,20 @@ int main(int argc, char *argv[])
 
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
-	SDFloader load{};
-	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
+	SDFloader loader{};
+	/*
+	load.sdfLoad("/Users/lissyscholz/Documents/
+		programmiersprachen/raytracer/programmiersprachen-
+		raytracer/source/material_input.txt");
+	
+	load.sdfLoad("/home/karoline/Documents/studium/
+		17_sose/programmiersprachen/programmiersprachen-
+		aufgabenblatt-6/programmiersprachen-raytracer/
+		source/material_input.txt");
+	*/
+	Scene s1 {};
+	s1 = loader.load("bla");
 }
-
 
 // ----------------------------------
 // INTERSECTION Tests
@@ -228,14 +239,24 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 TEST_CASE("intersection tests","Box")
 {
 	Color c {0.0f,0.0f,0.0f};
-	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
-			glm::vec3{1.0f,1.0f,-1.0f}}; //richung
 
-	Ray ray2 {glm::vec3{0.0f}, //from koordinatenursprung
-			glm::vec3{1.0f,1.0f,-2.0f}}; //richtung
+	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
+			glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
+
+	Ray ray2 {glm::vec3{0.0f}, //aus koordinatenursprung
+			glm::vec3{1.0f,1.0f,-2.0f}}; //schräg in anderem winkel in -z richtung
 
 	Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
-			glm::vec3{0.0f,0.0f,-1.0f}};
+			glm::vec3{0.0f,0.0f,-1.0f}}; // gerade in -z Richtung schauend
+
+	Ray ray3b {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
+			glm::vec3{1.0f,1.0f,-1.0f}}; // schräg in -z Richtung schauend
+
+	Ray ray4 {glm::vec3{0.0f}, //aus koordinatenursprung
+			glm::vec3{0.0f,0.0f,-2.0f}}; //entlang -z Achse
+
+	Ray ray4b {glm::vec3{1.0f,1.0f,0.0f}, //from (1|1|0)
+			glm::vec3{0.0f,0.0f,-2.0f}}; //parallel -z Achse, gerade
 
 	Box box {"test_box",
 		Material{"",c,c,c, 0.0f},
@@ -258,9 +279,74 @@ TEST_CASE("intersection tests","Box")
 	distance = 0.0f;
 	std::cout << "\n\nray 3: \n";
 	hit = box.intersect(ray3,distance);
-	std::cout << "\n\nHit? " << hit << " Distance: " << distance;
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+	
+	distance = 0.0f;
+	std::cout << "\n\nray 3b: \n";
+	hit = box.intersect(ray3b,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+
+	distance = 0.0f;
+	std::cout << "\n\nray 4: \n";
+	hit = box.intersect(ray4,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+/*
+	OUTPUT:
+	ray 4: 
+
+	origin: 0, 0, 0
+	direction: 0, 0, -2
+	origin: 0, 0, 0
+	direction: 0, 0, -1
+
+	Hit? 1 Distance: -nan <-------------- !!!!!!
+*/
+	distance = 0.0f;
+	std::cout << "\n\nray 4b: \n";
+	hit = box.intersect(ray4b,distance);
+	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
+}
+
+TEST_CASE("nother test", "intersect")
+{
+	//Strahl z-Richtung
+	glm::vec3 ray_origin{0.0 ,0.0 ,0.0};
+	glm::vec3 ray_direction{0.0 ,0.0 ,1.0};
+	Ray ray{ray_origin, ray_direction};
+	float distance{0.0};
+
+	Box box{"Zu schneidende Box", Material{},
+		glm::vec3{-2,-2,1}, glm::vec3{2,6,5}};
+	REQUIRE(box.intersect(ray, distance));
+	REQUIRE(distance == 1.0f);
+}
+
+TEST_CASE("no intersection", "intersect")
+{
+	glm::vec3 ray_origin{0.0 ,0.0 ,0.0};
+	glm::vec3 ray_direction{0.0 ,0.0 ,1.0};
+	Ray ray{ray_origin, ray_direction};
+	float distance{0.0};
+
+	Box box{"Nicht zu schneidende Box",
+		Material{}, glm::vec3{-2,2,1}, glm::vec3{2,6,5}};
+	REQUIRE(!box.intersect(ray, distance));
+}
+
+TEST_CASE("vektor normalization", "glm::vec3")
+{
+	glm::vec3 v {0.0f,0.0f,2.0f};
+	glm::vec3 norm {0.0f};
+
+	std::cout << "\n" << v.x << ", " << v.y
+		<< ", "  << v.z;
+	
+	norm = glm::normalize(v);
+
+	std::cout << "\n" << norm.x << ", " << norm.y
+		<< ", "  << norm.z;
 }
 
 
-
 //lissylissylissy <33333
+ 

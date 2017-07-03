@@ -5,20 +5,25 @@
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include "scene.hpp"
 #include "material.hpp"
 
 struct SDFloader
 {
+/*
 public:
 
 	SDFloader();
+*/
+	//void addToMaterial(Material const& material);
 
-	void addToMaterial(Material const& material);
-	void sdfLoad(std::string const& inputFile);
-
+	Scene load(std::string const& inputFile);
+/*
 private:
-	std::vector<Material> m_vecMaterials;
-
+	//std::vector<Material> m_vecMaterials;
+*/
+	
 };
 
 #endif
