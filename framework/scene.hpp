@@ -5,6 +5,7 @@
 #define BUW_SCENE_HPP
 
 #include <glm/vec3.hpp>
+#include <memory>
 #include "material.hpp"
 #include "shape.hpp"
 
@@ -23,7 +24,7 @@ struct Scene
     std::vector<Material> m_materials;
 
     //Shapes
-    std::vector<Shape> m_shapes;
+    std::vector<std::shared_ptr<Shape>> m_shapes;
 
     //Composites
     //std::vector<Composite> m_composites; 

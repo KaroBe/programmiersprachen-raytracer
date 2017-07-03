@@ -14,7 +14,7 @@
 #include "material.hpp"
 #include "color.hpp"
 #include "scene.hpp"
-#include "sdfloader.hpp" //SDF LOADER INCLUDED !
+#include "sdfloader.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
@@ -229,8 +229,7 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 		source/material_input.txt");
 	*/
 	Scene s1 {};
-	std::string bla = "bla";
-	s1 = loader.load(bla);
+	s1 = loader.load("bla");
 }
 
 // ----------------------------------

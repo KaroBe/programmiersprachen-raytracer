@@ -19,12 +19,12 @@
 
 		if(input.is_open())
 		{
-			std::stringstream stream;
 			std::string line;
 			std::string word;
 			
 			while(std::getline(input, line))
 			{	
+				std::stringstream stream;
 				stream << line; 
 				stream >> word;	
 				if(word == "define")
