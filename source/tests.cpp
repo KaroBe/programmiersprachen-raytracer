@@ -13,6 +13,7 @@
 #include "box.hpp"
 #include "material.hpp"
 #include "color.hpp"
+#include "scene.hpp"
 #include "sdfloader.hpp"
 
 // ----------------------------------
@@ -214,12 +215,26 @@ int main(int argc, char *argv[])
 }
 
 
-/*TEST_CASE("SDFloader test", "[SDFloader]")
-{
-	SDFloader load{};
-	load.sdfLoad("/Users/lissyscholz/Documents/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
-}*/
+// ----------------------------------
+// SDF Loader Tests
+// ----------------------------------
 
+TEST_CASE("SDFloader test", "[SDFloader]")
+{
+	SDFloader loader{};
+	/*
+	load.sdfLoad("/Users/lissyscholz/Documents/
+		programmiersprachen/raytracer/programmiersprachen-
+		raytracer/source/material_input.txt");
+	
+	load.sdfLoad("/home/karoline/Documents/studium/
+		17_sose/programmiersprachen/programmiersprachen-
+		aufgabenblatt-6/programmiersprachen-raytracer/
+		source/material_input.txt");
+	*/
+	Scene s1 {};
+	s1 = loader.load("bla");
+}
 
 // ----------------------------------
 // INTERSECTION Tests

@@ -144,7 +144,6 @@ bool Box::intersect(Ray const& ray, float& distance)
 		return false;
 	}
 
-	if 
 	distance = tnear;
 
 	return true;
