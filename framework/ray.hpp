@@ -1,6 +1,9 @@
 
 //ray struct
 
+#ifndef BUW_RAY_HPP
+#define BUW_RAY_HPP
+
 #include <glm/vec3.hpp>
 
 struct Ray
@@ -20,3 +23,5 @@ struct Ray
         return os;
     }
 };
+
+#endif
