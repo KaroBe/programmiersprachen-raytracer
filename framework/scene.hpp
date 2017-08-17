@@ -7,6 +7,8 @@
 #include <glm/vec3.hpp>
 #include <memory>
 #include "material.hpp"
+#include "light.hpp"
+#include "camera.hpp"
 #include "shape.hpp"
 
 struct Scene
@@ -15,7 +17,7 @@ struct Scene
     //Camera m_camera;
 
     //Ambient Light
-    //Light m_ambient_light;
+    Color m_ambient_light;
 
     //Lights
     //std::vector<Light> m_lights;
