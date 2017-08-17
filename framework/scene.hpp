@@ -27,7 +27,7 @@ struct Scene
     std::vector<std::shared_ptr<Shape>> m_shapes;
 
     //Composites
-    //std::vector<Composite> m_composites; 
+    //std::vector<Composite> m_composites;
 };
 
 #endif //BUW_SCENE_HPP

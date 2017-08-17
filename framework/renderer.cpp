@@ -23,16 +23,22 @@ void Renderer::render()
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
+
+      //new Pixel
       Pixel p(x,y);
+      
+      //calculate some nice colors
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
         p.color = Color(0.0, 1.0, float(x)/height_);
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
       }
 
+      //write Pixel to colorbuffer
       write(p);
     }
   }
+  //save altered file
   ppm_.save(filename_);
 }
 
@@ -46,8 +52,10 @@ void Renderer::write(Pixel const& p)
       << (int)p.x << "," << (int)p.y
       << std::endl;
   } else {
+    //save new pixel to colorbuffer
     colorbuffer_[buf_pos] = p.color;
   }
 
+  //write new pixel to ppm_writer
   ppm_.write(p);
 }

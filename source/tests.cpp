@@ -215,24 +215,6 @@ int main(int argc, char *argv[])
 }
 
 
-TEST_CASE("SDFloader test", "[SDFloader]")
-{
-	SDFloader loader{};
-	/*
-	load.sdfLoad("/Users/lissyscholz/Documents/
-		programmiersprachen/raytracer/programmiers./prachen-
-		raytracer/source/material_input.txt")""
-	*/
-	//Scene s1 {};
-
-	//std::string karo_file_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen-aufgabenblatt-6/programmiersprachen-raytracer/source/material_input.txt";
-	//s1 = loader.load(karo_file_path);
-	
-	Scene s2 {};
-	std::string bla = "/bla";
-	s2 = loader.load(bla);
-}
-
 // ----------------------------------
 // INTERSECTION Tests
 // ----------------------------------
@@ -350,4 +332,39 @@ TEST_CASE("vektor normalization", "glm::vec3")
 
 
 //lissylissylissy <33333
- 
+
+
+//
+// SDF LOADER TESTS
+//
+
+
+TEST_CASE("SDFloader test", "[SDFloader]")
+{
+	std::cout << "\n\nSDF-LOADER TESTS\n**********************";
+
+	SDFloader loader{};
+
+	/*
+	Lissy
+
+	load.load("/Users/lissyscholz/Documents/
+		programmiersprachen/raytracer/programmiers./prachen-
+		raytracer/source/material_input.txt")
+	*/
+	
+	/*
+	Karo
+	*/
+	Scene s2 {};
+	s2 = loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
+	for (std::shared_ptr<Shape> s : s2.m_shapes)
+	{
+		std::cout << *s;		
+	}
+	for (Material m : s2.m_materials)
+	{
+		std::cout << m;		
+	}
+
+}
