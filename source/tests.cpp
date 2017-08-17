@@ -215,24 +215,6 @@ int main(int argc, char *argv[])
 }
 
 
-TEST_CASE("SDFloader test", "[SDFloader]")
-{
-	SDFloader loader{};
-	/*
-	load.sdfLoad("/Users/lissyscholz/Documents/
-		programmiersprachen/raytracer/programmiers./prachen-
-		raytracer/source/material_input.txt")""
-	*/
-	//Scene s1 {};
-
-	//std::string karo_file_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen-aufgabenblatt-6/programmiersprachen-raytracer/source/material_input.txt";
-	//s1 = loader.load(karo_file_path);
-	
-	Scene s2 {};
-	std::string bla = "/bla";
-	s2 = loader.load(bla);
-}
-
 // ----------------------------------
 // INTERSECTION Tests
 // ----------------------------------
@@ -348,6 +330,25 @@ TEST_CASE("vektor normalization", "glm::vec3")
 		<< ", "  << norm.z;
 }
 
+TEST_CASE("SDFloader test", "[SDFloader]")
+{
+	SDFloader loader{};
+	/*
+	load.sdfLoad("/Users/lissyscholz/Documents/
+		programmiersprachen/raytracer/programmiers./prachen-
+		raytracer/source/material_input.txt")""
+	*/
+	//Scene s1 {};
 
+	//std::string karo_file_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen-aufgabenblatt-6/programmiersprachen-raytracer/source/material_input.txt";
+	//s1 = loader.load(karo_file_path);
+	/*
+	Scene s2 {};
+	std::string bla = "/bla";
+	s2 = loader.load(bla);
+	*/
+	loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+
+}
 //lissylissylissy <33333
  

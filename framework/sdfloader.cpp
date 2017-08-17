@@ -47,9 +47,39 @@
 						stream >> in_material.m_ks.b;
 
 						//addToMaterial(material);
-						scene.m_materials.push_back(in_material);
-
+						//scene.m_materials.push_back(in_material.m_name, in_material);
+						scene.m_materials[in_material.m_name] = in_material;
 					}
+					else if(word == "shape")
+					{
+						stream >> word;
+						if(word == "box")
+						{	//find name min max etc. in sdf file
+							std::string name;
+							stream >> name;
+
+							glm::vec3 min;
+							stream >> min.x;
+							stream >> min.y;
+							stream >> min.z;
+
+							glm::vec3 max;
+							stream >> max.x;
+							stream >> max.y;
+							stream >> max.z;
+
+							std::string materialName;
+							stream >> materialName;
+							Material mat = scene.m_materials[materialName];
+
+							//construct box with min max etc. found earlier
+							Box in_box(name, mat, min, max);
+							std::cout << "Added box:\n" << in_box <<std::endl;
+							//std::shared_ptr<Shape> p1(in_box);
+							//scene.m_shapes.push_back(std::make_shared<Shape>(in_box));
+						}
+					}
+
 				}
 			}
 			return scene;

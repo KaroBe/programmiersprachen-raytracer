@@ -6,6 +6,7 @@
 
 #include <glm/vec3.hpp>
 #include <memory>
+#include <map>
 #include "material.hpp"
 #include "shape.hpp"
 
@@ -21,7 +22,7 @@ struct Scene
     //std::vector<Light> m_lights;
 
     //Materials
-    std::vector<Material> m_materials;
+    std::map<std::string, Material> m_materials;
 
     //Shapes
     std::vector<std::shared_ptr<Shape>> m_shapes;

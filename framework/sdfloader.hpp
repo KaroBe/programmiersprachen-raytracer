@@ -9,6 +9,7 @@
 
 #include "scene.hpp"
 #include "material.hpp"
+#include "box.hpp"
 
 struct SDFloader
 {
