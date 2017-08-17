@@ -15,6 +15,7 @@ to do liste für 7.1
 KLassen:
 	renderer:
 		braucht eine funktion raytrace die das berechnet mit dem intersect blabla -> also die farbe berechnet
+		raycast berechnet strahl von ursprung zur bildebene
 	lichtquelle:
 		muss noch komplett erstellt werden, hat position, color, brightness
 	kamera:
