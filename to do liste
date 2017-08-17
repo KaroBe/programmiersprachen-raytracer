@@ -1,0 +1,13 @@
+to do liste für 7.1
+-einlesen einer szene im sdf-format und rendern dieser Szene
+	-materialen definieren
+	-shapes definieren (box und sphere)
+		-beliebig viele shapes
+		-jede shape kan eigenes material haben 
+		-shaps werfen schatten
+	-licht definieren
+		-beliebig viele lichtquellen
+	-kamera defineren
+		-kamera ist fest am ursprung und blickt in richtung negative z-achse
+	-rendern
+
