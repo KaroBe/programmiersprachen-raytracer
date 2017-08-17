@@ -8,6 +8,8 @@
 #include <memory>
 #include <map>
 #include "material.hpp"
+#include "light.hpp"
+#include "camera.hpp"
 #include "shape.hpp"
 
 struct Scene
@@ -16,7 +18,7 @@ struct Scene
     //Camera m_camera;
 
     //Ambient Light
-    //Light m_ambient_light;
+    Color m_ambient_light;
 
     //Lights
     //std::vector<Light> m_lights;
@@ -28,7 +30,7 @@ struct Scene
     std::vector<std::shared_ptr<Shape>> m_shapes;
 
     //Composites
-    //std::vector<Composite> m_composites; 
+    //std::vector<Composite> m_composites;
 };
 
 #endif //BUW_SCENE_HPP

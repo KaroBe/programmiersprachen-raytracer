@@ -10,4 +10,18 @@ to do liste für 7.1
 	-kamera defineren
 		-kamera ist fest am ursprung und blickt in richtung negative z-achse
 	-rendern
-
+		-renderer erstellt pixel und berechnet farbe mit intersect etcsudsudo apt-get install vpnc network-manager-vpnc	o apt-get install vpnc network-manager-vpnc
+		
+KLassen:
+	renderer:
+		braucht eine funktion raytrace die das berechnet mit dem intersect blabla -> also die farbe berechnet
+		raycast berechnet strahl von ursprung zur bildebene
+	lichtquelle:
+		muss noch komplett erstellt werden, hat position, color, brightness
+	kamera:
+		muss noch komplett erstellt werden, hat name, standartposition (0,0,0) und blickwinkel negative z-achse (0,0,-1) (?)
+	stfloader:
+		alles außer material muiss noch einlesbar sein
+	scene:
+		kein vector sondern set/map
+		camera, lightsource etc hinzufügen
