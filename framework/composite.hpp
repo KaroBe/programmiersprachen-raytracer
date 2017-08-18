@@ -27,7 +27,7 @@ public:
     std::ostream& print (std::ostream& os) const override;
 
     //writes distance into variable distance outside the method!
-    bool intersect(Ray const& ray) const override;
+    Hit intersect(Ray const& ray) const override;
 
     //unique composite methods:
     void add_shape(std::shared_ptr<Shape> const& shape);

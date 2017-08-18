@@ -87,9 +87,10 @@ std::ostream& Box::print (std::ostream& os) const
 }
 
 //override intersect
-bool Box::intersect(Ray const& ray, float& distance)
+Hit Box::intersect(Ray const& ray) const
 {
     //normalize ray
+    /*
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
 
@@ -104,7 +105,7 @@ bool Box::intersect(Ray const& ray, float& distance)
 /* NOTE: statt direction 1/direction verwenden, da sonst bei ray direction = 0
     ein Fehler auftritt?!
     http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection */
-
+/*
     float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
     float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
 
@@ -147,4 +148,71 @@ bool Box::intersect(Ray const& ray, float& distance)
     distance = tnear;
 
     return true;
+    */
+
+    Hit hit();
+
+    float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
+    float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
+    tmin = std::min(t0x, t1x);
+    tmax = std::max(t0x, t1xstd::min(t0z, t1z));
+
+    float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
+    float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
+    tmin = std::max(t0y, std::min(t0y, t1y));
+    tmax = std::min(t1y, std::max(t0y, t1y));
+
+    float t0z = (m_min.z - nray.m_origin.z) / nray.m_direction.z;
+    float t1z = (m_max.z - nray.m_origin.z) / nray.m_direction.z;
+    tmin = std::max(t0z, std::min(t0z, t1z));
+    tmax = std::min(t1z, std::max(t0z, t1z));
+
+    if(tmax > std::max(tmin, 0.0))
+    {
+        glm::vec3 intersect
+            {ray.m_origin.x + tmin*ray.m_direction.x,
+            ray.m_origin.y + tmin*ray.m_direction.y,
+            ray.m_origin.z + tmin*ray.m_direction.z};
+        hit.m_intersection = intersect;
+
+        hit.m_hit = true;
+    
+/*
+        //finds the side of the box where the ray intersects
+        if((intersect.x) == Approx(m_min.x))
+        {
+           glm::vec3 normal{-1.0f, 0.0f, 0.0f};
+        }
+        else if((intersect.x) == Approx(m_max.x))
+        {
+            glm::vec3 normal{1.0f, 0.0f, 0.0f};
+        }
+        else if((intersect.y) == Approx(m_min.y))
+        {
+            glm::vec3{0.0f, -1.0f, 0.0f};
+        }
+        else if((intersect.y) == Approx(m_max.y))
+        {
+            glm::vec3{0.0f, 1.0f, 0.0f};
+        }
+        else if((intersect.y) == Approx(m_min.z))
+        {
+            glm::vec3{0.0f, 0.0f, -1.0f};
+        }
+        else if((intersect.y) == Approx(m_max.z))
+        {
+            glm::vec3{0.0f, 0.0f, 1.0f};
+        }
+
+*/
+        hit.m_distance = tmin;
+        hit.m_shape = this;
+
+        return hit;
+
+    }
+
+
+
+
 }
