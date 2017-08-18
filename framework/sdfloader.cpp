@@ -49,6 +49,7 @@
 						//addToMaterial(material);
 						//scene.m_materials.push_back(in_material.m_name, in_material);
 						scene.m_materials[in_material.m_name] = in_material;
+						std::cout <<"Added material:\n" << in_material << std::endl;
 					}
 					else if(word == "shape")
 					{
@@ -73,11 +74,43 @@
 							Material mat = scene.m_materials[materialName];
 
 							//construct box with min max etc. found earlier
-							Box in_box(name, mat, min, max);
-							std::cout << "Added box:\n" << in_box <<std::endl;
+							auto boxptr = std::make_shared<Box>(name, mat, min, max);
+							scene.m_shapes.push_back(boxptr);
+							std::cout << "Added box:\n" << *boxptr <<std::endl;
+
+							//Box in_box(name, mat, min, max);
+							//std::cout << "Added box:\n" << in_box <<std::endl;
 							//std::shared_ptr<Shape> p1(in_box);
 							//scene.m_shapes.push_back(std::make_shared<Shape>(in_box));
 						}
+						else if(word == "sphere")
+						{
+							std::string name;
+							stream >> name;
+
+							glm::vec3 center;
+							stream >> center.x;
+							stream >> center.y;
+							stream >> center.z;
+
+							float rad;
+							stream >> rad;
+
+							std::string materialName;
+							stream >> materialName;
+							Material mat = scene.m_materials[materialName];
+
+							//Sphere in_sphere(name, mat, center, rad);
+							//std::cout << "Added sphere:\n" << in_sphere <<std::endl;
+
+							auto sphereptr = std::make_shared<Sphere>(name, mat, center, rad);
+							scene.m_shapes.push_back(sphereptr);
+							std::cout << "Added sphere:\n" << *sphereptr <<std::endl;
+						}
+					}
+					else if(word == "light")
+					{
+						
 					}
 
 				}
