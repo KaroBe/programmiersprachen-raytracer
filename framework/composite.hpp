@@ -16,15 +16,26 @@ class Composite : public Shape
 {
 public:
 
-	Composite();
+    Composite();
+    Composite(std::string const& name);
+    ~Composite() override;
 
-	Composite(std::string const& name);
+    float area() const override;
+    float volume() const override;
 
-	~Composite() override;
+    std::ostream& print (std::ostream& os) const override;
+
+    //writes distance into variable distance outside the method!
+    bool intersect(Ray const& ray, float& distance) override;
+
+    //unique composite methods:
+    void add_shape(std::shared_ptr<Shape> shape);
+    void remove_shape(std::shared_ptr<Shape> shape);
+    // get_children ??
 
 private:
-	std::string m_name;
-	std::vector<std::shared_ptr<Shape>> m_content;
+    std::string m_name;
+    std::vector<std::shared_ptr<Shape>> m_content;
 };
 
 #endif //BUW_COMPOSITE_HPP

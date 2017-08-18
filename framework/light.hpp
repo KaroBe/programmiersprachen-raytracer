@@ -10,7 +10,7 @@
 struct Light
 
 {
-	Light(): m_name{""}, m_pos{0.0, 0.0, 0.0}, m_color{Color{0.0f, 0.0f, 0.0f}}, m_brightness{0.0f}{};
+    Light(): m_name{""}, m_pos{0.0, 0.0, 0.0}, m_color{Color{0.0f, 0.0f, 0.0f}}, m_brightness{0.0f}{};
 
     Light(std::string name, glm::vec3 position, Color color, float brightness): 
         m_name{name}, m_pos{position}, m_color{color}, m_brightness{brightness}{};
