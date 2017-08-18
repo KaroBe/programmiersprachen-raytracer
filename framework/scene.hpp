@@ -27,13 +27,20 @@ struct Scene
     //Materials
     std::map<std::string, Material> m_materials;
 
-    /*
+    
     //Shapes
     std::vector<std::shared_ptr<Shape>> m_shapes;
-    */
+    
 
     //Composite
     std::shared_ptr<Shape> m_composite;
+
+    //height and width
+    int m_x_res;
+    int m_y_res;
+
+    //fileout
+    std::string m_fileOut;
 };
 
 #endif //BUW_SCENE_HPP

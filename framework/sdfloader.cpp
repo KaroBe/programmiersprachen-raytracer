@@ -51,7 +51,7 @@
                         scene.m_materials[in_material.m_name] = in_material;
                         std::cout <<"Added material:\n" << in_material << std::endl;
                     }
-                    /*
+
                     else if(word == "shape")
                     {
                         stream >> word;
@@ -108,6 +108,12 @@
                             scene.m_shapes.push_back(sphereptr);
                             std::cout << "Added sphere:\n" << *sphereptr << std::endl;
                         }
+
+                        else if(word == "composite")
+                        {
+                            //todo!!
+                        }
+
                     }
                     else if(word == "light")
                     {
@@ -131,8 +137,55 @@
                         scene.m_lights.push_back(lightptr);
                         std::cout << "light added:\n" << *lightptr << std::endl;
                     }
-                    */
 
+                    else if(word == "camera")
+                    {
+                        std::string name;
+                        stream >> name;
+
+                        float fov_x;
+                        stream >> fov_x;
+
+                        glm::vec3 eye;
+                        stream >> eye.x;
+                        stream >> eye.y;
+                        stream >> eye.z;
+
+                        glm::vec3 dir;
+                        stream >> dir.x;
+                        stream >> dir.y;
+                        stream >> dir.z;
+
+                        glm::vec3 up;
+                        stream >> up.x;
+                        stream >> up.y;
+                        stream >> up.z;
+
+                        Camera camera(name, fov_x, eye, dir, up);
+                        scene.m_camera = camera;
+                        std::cout << "camera added:\n" << camera << std::endl;
+                    }
+
+                }
+                else if(word == "render")
+                {
+                    std::string camname;
+                    stream >> camname;
+
+                    if(camname == scene.m_camera.m_name)
+                    {
+                        stream >> scene.m_fileOut;
+                        stream >> scene.m_x_res;
+                        stream >> scene.m_y_res;
+                        std::cout << "rendering:\ncamera: " << camname << "\n" 
+                            << "fileout: " << scene.m_fileOut << "\n"
+                            << "x resolution: " << scene.m_x_res << "\n"
+                            << "y resolution: " << scene.m_y_res << "\n";
+                    }
+                    else
+                    {
+                        std::cout << "camera not found" << std::endl;
+                    }
                 }
             }
             return scene;

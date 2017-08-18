@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
-#include <algorithm>
+#include <algori>
 
 #include "shape.hpp"
 #include <material.hpp>

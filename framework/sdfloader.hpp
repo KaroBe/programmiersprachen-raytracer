@@ -17,19 +17,19 @@ struct SDFloader
 /*
 public:
 
-	SDFloader();
+    SDFloader();
 */
-	//void addToMaterial(Material const& material);
+    //void addToMaterial(Material const& material);
 
-	void test()
-	{
-		std::cout << "i got here";
-	};
+    void test()
+    {
+        std::cout << "i got here";
+    };
 
-	Scene load(std::string const& inputFile);
+    Scene load(std::string const& inputFile);
 /*
 private:
-	//std::vector<Material> m_vecMaterials;
+    //std::vector<Material> m_vecMaterials;
 */
 
 };
