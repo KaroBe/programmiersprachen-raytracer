@@ -76,7 +76,7 @@
 							//construct box with min max etc. found earlier
 							auto boxptr = std::make_shared<Box>(name, mat, min, max);
 							scene.m_shapes.push_back(boxptr);
-							std::cout << "Added box:\n" << *boxptr <<std::endl;
+							std::cout << "Added box:\n" << *boxptr << std::endl;
 
 							//Box in_box(name, mat, min, max);
 							//std::cout << "Added box:\n" << in_box <<std::endl;
@@ -105,12 +105,30 @@
 
 							auto sphereptr = std::make_shared<Sphere>(name, mat, center, rad);
 							scene.m_shapes.push_back(sphereptr);
-							std::cout << "Added sphere:\n" << *sphereptr <<std::endl;
+							std::cout << "Added sphere:\n" << *sphereptr << std::endl;
 						}
 					}
 					else if(word == "light")
 					{
-						
+						std::string name;
+						stream >> name;
+
+						glm::vec3 position;
+						stream >> position.x;
+						stream >> position.y;
+						stream >> position.z;
+
+						Color color;
+						stream >> color.r;
+						stream >> color.g;
+						stream >> color.b;
+
+						float bright;
+						stream >> bright;
+
+						auto lightptr = std::make_shared<Light>(name, position, color, bright);
+						scene.m_lights.push_back(lightptr);
+						std::cout << "light added:\n" << *lightptr << std::endl;
 					}
 
 				}

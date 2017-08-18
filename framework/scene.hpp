@@ -21,7 +21,7 @@ struct Scene
     Color m_ambient_light;
 
     //Lights
-    //std::vector<Light> m_lights;
+    std::vector<std::shared_ptr<Light>> m_lights;
 
     //Materials
     std::map<std::string, Material> m_materials;
