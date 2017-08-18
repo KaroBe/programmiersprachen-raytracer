@@ -357,7 +357,7 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 // SDF LOADER TESTS
 //
 
-
+/*
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
 	std::cout << "\n\nSDF-LOADER TESTS\n**********************";
@@ -375,8 +375,10 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 	/*
 	Karo
 	*/
+	/*
 	Scene s2 {};
 	s2 = loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/material_input.txt");
+	
 	for (std::shared_ptr<Shape> s : s2.m_shapes)
 	{
 		std::cout << *s;		
@@ -385,5 +387,6 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 	{
 		std::cout << m;		
 	}
-
+	
 }
+*/
