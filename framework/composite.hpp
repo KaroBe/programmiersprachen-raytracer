@@ -1,26 +1,25 @@
 
-//Interface for shapes
+//Composite
 
-#ifndef BUW_SHAPE_HPP
-#define BUW_SHAPE_HPP
+#ifndef BUW_COMPOSITE_HPP
+#define BUW_COMPOSITE_HPP
 
-#include <material.hpp>
 #include <iostream>
 
-#include "ray.hpp"
+#include <material.hpp>
+#include <glm/vec3.hpp>
 
-//For Intersect Methods
-# include <glm/glm.hpp>
-# include <glm/gtx/intersect.hpp>
-
-class Shape
+class Composite : public Shape
 {
 public:
 
-	Shape(std::string const& name, Material const& material);
+	Composite();
 
-	virtual ~Shape();
+	Composite(std::string const& name, std::vector<Shape> const& comp_content);
 
+	virtual ~Composite();
+
+/*
 	//pure virtual methods (no implementation in base class)
 	virtual float area() const = 0;
 	virtual float volume() const = 0;
@@ -40,10 +39,12 @@ public:
 
 	//distance is overwritten with distance between origin and shape
 	virtual bool intersect(Ray const& ray, float& distance) = 0;
-	
-protected:
+*/	
+
+	// PROTECTED ODER PRIVATE??
+private:
 	std::string m_name;
-	Material m_material;
+	std::vector<Shape> m_content;
 };
 
-#endif //BUW_SHAPE_HPP
+#endif //BUW_COMPOSITE_HPP

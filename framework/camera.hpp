@@ -15,6 +15,11 @@ struct Camera
     up = (0|1|0) = auf positiver y-Achse
     */
 
+    //c'tor standart-camera
+
+    //Name
+    std::string m_name;
+
     //horizontaler Öffnungswinkel
     float m_fov_x;
     

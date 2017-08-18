@@ -10,7 +10,7 @@
 struct Light
 {
     //Name
-    std::string name;
+    std::string m_name;
 
     //Position
     glm::vec3 m_pos;
