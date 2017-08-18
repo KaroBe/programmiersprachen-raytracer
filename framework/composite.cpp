@@ -5,22 +5,15 @@
 
 //Default Constructor
 Composite::Composite() :
-	m_name{"default_composite"},
-	m_content{std::vector<Shape>}
-{
-	std::cout << "Empty Composite constructed\n";
-}
+	Shape{"default_composite", {}}, //Aufruf des Elternklassen-Konstruktors
+	m_content{}
+{}
 
 //User Constructor
-Composite::Composite(std::string const& name, std::vector<Shape> const& comp_content) :
-	m_name{name},
-	m_content{comp_content}
-{
-	std::cout << "Composite Construction done\n";
-}
+Composite::Composite(std::string const& name) :
+	Shape{name, {}},
+	m_content{}
+{}
 
 //Destructor
-Composite::~Composite()
-{
-	std::cout << "Composite Destruction done\n";
-}
+Composite::~Composite() {}

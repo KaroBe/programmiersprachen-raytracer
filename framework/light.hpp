@@ -8,8 +8,9 @@
 #include <glm/vec3.hpp>
 
 struct Light
-{
+{/*
 	Light(): m_name{""}, m_pos{""}, m_color{0.0f, 0.0f, 0.0f}
+   */
     //Name
     std::string m_name;
 

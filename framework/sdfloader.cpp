@@ -51,6 +51,7 @@
 						scene.m_materials[in_material.m_name] = in_material;
 						std::cout <<"Added material:\n" << in_material << std::endl;
 					}
+					/*
 					else if(word == "shape")
 					{
 						stream >> word;
@@ -112,6 +113,7 @@
 					{
 						
 					}
+					*/
 
 				}
 			}
