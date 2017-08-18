@@ -390,3 +390,7 @@ TEST_CASE("SDFloader test", "[SDFloader]")
     
 }
 */
+TEST_CASE("box intersect lissy", "intersect")
+{
+    
+}

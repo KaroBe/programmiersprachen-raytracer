@@ -70,12 +70,16 @@ std::ostream& Sphere::print (std::ostream& os) const
 	return os;
 }
 
-bool Sphere::intersect(Ray const& ray, float& distance)
+Hit Sphere::intersect(Ray const& ray) const
 {
+	float distance = INFINITY;
 	auto normal_direction = glm::normalize(ray.m_direction);
-	return glm::intersectRaySphere(
+	bool x = glm::intersectRaySphere(
 		ray.m_origin, normal_direction,
 		m_center,
 		m_radius * m_radius,
 		distance);
+	glm::vec3 intersection = ray.m_origin + normal_direction * distance;
+	Hit hit(x, distance, intersection, this);
+	return hit;
 }

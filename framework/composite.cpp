@@ -50,7 +50,7 @@ std::ostream& Composite::print (std::ostream& os) const
 }
 
 //intersect
-bool Composite::intersect(Ray const& ray, float& distance)
+Hit Composite::intersect(Ray const& ray) const
 {
     float closest_dis = 0;
     std::shared_ptr<Shape> closest_shape;
