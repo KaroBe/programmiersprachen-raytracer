@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 #include "shape.hpp"
 #include <material.hpp>
@@ -29,8 +30,8 @@ public:
     bool intersect(Ray const& ray, float& distance) override;
 
     //unique composite methods:
-    void add_shape(std::shared_ptr<Shape> shape);
-    void remove_shape(std::shared_ptr<Shape> shape);
+    void add_shape(std::shared_ptr<Shape> const& shape);
+    void remove_shape(std::shared_ptr<Shape> const& shape);
     // get_children ??
 
 private:
