@@ -160,9 +160,29 @@
 
                         Camera camera(name, fov_x, eye, dir, up);
                         scene.m_camera = camera;
-                        std::cout << "cmaera added:\n" << camera << std::endl;
+                        std::cout << "camera added:\n" << camera << std::endl;
                     }
 
+                }
+                else if(word == "render")
+                {
+                    std::string camname;
+                    stream >> camname;
+
+                    if(camname == scene.m_camera.m_name)
+                    {
+                        stream >> scene.m_fileOut;
+                        stream >> scene.m_x_res;
+                        stream >> scene.m_y_res;
+                        std::cout << "rendering:\ncamera: " << camname << "\n" 
+                            << "fileout: " << scene.m_fileOut << "\n"
+                            << "x resolution: " << scene.m_x_res << "\n"
+                            << "y resolution: " << scene.m_y_res << "\n";
+                    }
+                    else
+                    {
+                        std::cout << "camera not found" << std::endl;
+                    }
                 }
             }
             return scene;
