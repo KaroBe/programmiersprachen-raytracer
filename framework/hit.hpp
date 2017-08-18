@@ -12,34 +12,33 @@ struct Hit
 {
 	//default
 	Hit() : 
-		m_hit{false}
+		m_hit{false},
 		m_distance{INFINITY},
 		m_intersection{glm::vec3{INFINITY}},
 		m_shape{nullptr}
-	{}
+	{};
 
 	//doesn't hit shape
-	Hit(std::shared_ptr const& s) :
+	Hit(std::shared_ptr<Shape> const& s) :
 		m_hit{false},
 		m_distance{INFINITY},
 		m_intersection{glm::vec3{INFINITY}},
 		m_shape{s}
-	{}
+	{};
 
-	Hit(bool h, double d, glm::vec3 const& i,
-			std::shared_ptr<Shape> const& s) :
+	Hit(bool h, double d, glm::vec3 const& i, std::shared_ptr<Shape> const& s) :
 		m_hit{h},
 		m_distance{d},
 		m_intersection{i},
 		m_shape{s}
-	{}
+	{};
 
 	//add = operator overloading
 
 	bool m_hit;
 	double m_distance;
 	glm::vec3 m_intersection;
-	std::shared_ptr m_shape;
+	std::shared_ptr<Shape> m_shape;
 };
 
-#endif HIT_HPP
+#endif //HIT_HPP

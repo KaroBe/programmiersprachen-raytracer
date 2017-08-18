@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "ray.hpp"
+#include "hit.hpp"
 
 //For Intersect Methods
 # include <glm/glm.hpp>
@@ -39,7 +40,7 @@ public:
     virtual std::ostream& print (std::ostream& os) const;
 
     //distance is overwritten with distance between origin and shape
-    virtual bool intersect(Ray const& ray, float& distance) = 0;
+    virtual Hit intersect(Ray const& ray, float& distance) = 0;
     
 protected:
     std::string m_name;
