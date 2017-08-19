@@ -6,18 +6,21 @@
 
 #include <glm/vec3.hpp>
 #include <cmath>
+#include <memory>
 #include "shape.hpp"
+
+class Shape;
 
 struct Hit
 {
 	//default
-	Hit() : 
+	Hit() :
 		m_hit{false},
 		m_distance{INFINITY},
 		m_intersection{glm::vec3{INFINITY}},
 		m_shape{nullptr}
 	{};
-
+/*
 	//doesn't hit shape
 	Hit(std::shared_ptr<Shape> const& s) :
 		m_hit{false},
@@ -34,11 +37,11 @@ struct Hit
 	{};
 
 	//add = operator overloading
-
+*/
 	bool m_hit;
 	double m_distance;
 	glm::vec3 m_intersection;
-	std::shared_ptr<Shape> m_shape;
+	std::weak_ptr<Shape> m_shape;
 };
 
 #endif //HIT_HPP
