@@ -129,42 +129,7 @@ TEST_CASE("print box","[box]")
     std::cout << b;
 }
 
-// ----------------------------------
-// AUFGABE 5.6 TEST
-// ----------------------------------
-/*
-TEST_CASE("intersectRaySphere", "[intersect]")
-{
-    //Ray
-    glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
-    //ray direction has to be normalized !
-    //you can use:
-        //v = glm::normalize(some_vector);
-    glm::vec3 ray_direction{0.0f, 0.0f, 1.0f};
 
-    //Sphere
-    glm::vec3 sphere_center{0.0f, 0.0f, 5.0f};
-    float sphere_radius{1.0f};
-
-    float distance{0.0f};
-    auto result = glm::intersectRaySphere(
-        ray_origin, ray_direction,
-        sphere_center,
-        sphere_radius * sphere_radius,
-        distance);
-
-    REQUIRE(distance == Approx(4.0f));
-
-    Sphere s {"some_sphere", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},
-        sphere_center, sphere_radius};
-
-    Ray r {ray_origin,ray_direction};
-
-    s.intersect(r,distance);
-
-    REQUIRE(distance == Approx(4.0f));
-}
-*/
 // ----------------------------------
 // AUFGABE 5.8 TEST
 // ----------------------------------
@@ -215,106 +180,6 @@ int main(int argc, char *argv[])
 }
 
 
-// ----------------------------------
-// INTERSECTION Tests
-// ----------------------------------
-/*
-TEST_CASE("intersection tests","Box")
-{
-    Color c {0.0f,0.0f,0.0f};
-
-    Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
-            glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
-
-    Ray ray2 {glm::vec3{0.0f}, //aus koordinatenursprung
-            glm::vec3{1.0f,1.0f,-2.0f}}; //schräg in anderem winkel in -z richtung
-
-    Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
-            glm::vec3{0.0f,0.0f,-1.0f}}; // gerade in -z Richtung schauend
-
-    Ray ray3b {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
-            glm::vec3{1.0f,1.0f,-1.0f}}; // schräg in -z Richtung schauend
-
-    Ray ray4 {glm::vec3{0.0f}, //aus koordinatenursprung
-            glm::vec3{0.0f,0.0f,-2.0f}}; //entlang -z Achse
-
-    Ray ray4b {glm::vec3{1.0f,1.0f,0.0f}, //from (1|1|0)
-            glm::vec3{0.0f,0.0f,-2.0f}}; //parallel -z Achse, gerade
-
-    Box box {"test_box",
-        Material{"",c,c,c, 0.0f},
-        glm::vec3{0.0f,0.0f,-1.0f}, //min
-        glm::vec3{2.0f,2.0f,-3.0f}  //max
-    };
-
-    std::cout << box;
-
-    float distance = 0.0f;
-    std::cout << "\n\nray 1: \n";
-    bool hit = box.intersect(ray1,distance);
-    std::cout << "\nHit? " << hit << " Distance: " << distance;
-
-    distance = 0.0f;
-    std::cout << "\n\nray 2: \n";
-    hit = box.intersect(ray2,distance);
-    std::cout << "\n\nHit? " << hit << " Distance: " << distance;
-
-    distance = 0.0f;
-    std::cout << "\n\nray 3: \n";
-    hit = box.intersect(ray3,distance);
-    std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
-    
-    distance = 0.0f;
-    std::cout << "\n\nray 3b: \n";
-    hit = box.intersect(ray3b,distance);
-    std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
-
-    distance = 0.0f;
-    std::cout << "\n\nray 4: \n";
-    hit = box.intersect(ray4,distance);
-    std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
-/*
-    OUTPUT:
-    ray 4: 
-
-    origin: 0, 0, 0
-    direction: 0, 0, -2
-    origin: 0, 0, 0
-    direction: 0, 0, -1
-
-    Hit? 1 Distance: -nan <-------------- !!!!!!
-*//*
-    distance = 0.0f;
-    std::cout << "\n\nray 4b: \n";
-    hit = box.intersect(ray4b,distance);
-    std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
-}
-
-TEST_CASE("nother test", "intersect")
-{
-    //Strahl z-Richtung
-    glm::vec3 ray_origin{0.0 ,0.0 ,0.0};
-    glm::vec3 ray_direction{0.0 ,0.0 ,1.0};
-    Ray ray{ray_origin, ray_direction};
-    float distance{0.0};
-
-    Box box{"Zu schneidende Box", Material{},
-        glm::vec3{-2,-2,1}, glm::vec3{2,6,5}};
-    REQUIRE(box.intersect(ray, distance));
-    REQUIRE(distance == 1.0f);
-}
-
-TEST_CASE("no intersection", "intersect")
-{
-    glm::vec3 ray_origin{0.0 ,0.0 ,0.0};
-    glm::vec3 ray_direction{0.0 ,0.0 ,1.0};
-    Ray ray{ray_origin, ray_direction};
-    float distance{0.0};
-
-    Box box{"Nicht zu schneidende Box",
-        Material{}, glm::vec3{-2,2,1}, glm::vec3{2,6,5}};
-    REQUIRE(!box.intersect(ray, distance));
-}*/
 
 TEST_CASE("vektor normalization", "glm::vec3")
 {
