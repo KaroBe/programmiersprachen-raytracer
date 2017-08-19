@@ -52,19 +52,30 @@ std::ostream& Composite::print (std::ostream& os) const
 //intersect
 Hit Composite::intersect(Ray const& ray) const
 {
-    float closest_dis = 0;
-    std::shared_ptr<Shape> closest_shape;
     bool hit = false;
+    double closest_dis = INFINITY;
+    std::shared_ptr<Shape> closest_shape = nullptr;
 
     for (auto shape : m_content)
     {
-        float temp_dis;
+        double temp_dis;
         if (shape->intersect(ray, temp_dis) && temp_dis < closest_dis)
         {
             closest_dis = temp_dis;
             closest_shape = shape;
         }
     }   
+
+    if (closest_shape != nullptr)
+    {
+        auto normal_direction = glm::normalize(ray.m_direction);
+        glm::vec3 intersection = ray.m_origin + (normal_direction * closest_dis);
+        return Hit (true, closest_dis, intersection, closest_shape);
+    }
+    else
+    {
+        return Hit();
+    }
 }
 
 //add shape

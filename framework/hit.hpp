@@ -26,8 +26,7 @@ struct Hit
 		m_shape{s}
 	{};
 
-	Hit(bool h, double d, glm::vec3 const& i,
-			std::shared_ptr<Shape> const& s) :
+	Hit(bool h, double d, glm::vec3 const& i, std::shared_ptr<Shape> const& s) :
 		m_hit{h},
 		m_distance{d},
 		m_intersection{i},
