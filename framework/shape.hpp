@@ -8,7 +8,6 @@
 #include <iostream>
 
 #include "ray.hpp"
-#include "hit.hpp"
 
 //For Intersect Methods
 #include <glm/glm.hpp>
