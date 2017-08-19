@@ -13,6 +13,8 @@
 # include <glm/glm.hpp>
 # include <glm/gtx/intersect.hpp>
 
+struct Hit;
+
 class Shape
 {
 public:

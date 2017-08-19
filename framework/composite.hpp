@@ -17,7 +17,7 @@ class Composite : public Shape
 {
 public:
 
-    Composite(Shape s);
+    Composite();
     Composite(std::string const& name);
     ~Composite() override;
 

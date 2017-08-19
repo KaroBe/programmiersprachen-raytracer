@@ -7,6 +7,8 @@
 #include <glm/vec3.hpp>
 #include <cmath>
 #include <memory>
+
+//bruachen wir diesen include?? WIE FUNKTIONIERT DAS GEGENSEITIGE INCLUDEN????
 #include "shape.hpp"
 
 class Shape;
@@ -20,7 +22,7 @@ struct Hit
 		m_intersection{glm::vec3{INFINITY}},
 		m_shape{nullptr}
 	{};
-/*
+
 	//doesn't hit shape
 	Hit(std::shared_ptr<Shape> const& s) :
 		m_hit{false},
@@ -37,11 +39,11 @@ struct Hit
 	{};
 
 	//add = operator overloading
-*/
+
 	bool m_hit;
 	double m_distance;
 	glm::vec3 m_intersection;
-	std::weak_ptr<Shape> m_shape;
+	std::shared_ptr<Shape> m_shape;
 };
 
 #endif //HIT_HPP
