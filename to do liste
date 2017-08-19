@@ -16,12 +16,5 @@ KLassen:
 	renderer:
 		braucht eine funktion raytrace die das berechnet mit dem intersect blabla -> also die farbe berechnet
 		raycast berechnet strahl von ursprung zur bildebene
-	lichtquelle:
-		muss noch komplett erstellt werden, hat position, color, brightness
-	kamera:
-		muss noch komplett erstellt werden, hat name, standartposition (0,0,0) und blickwinkel negative z-achse (0,0,-1) (?)
 	stfloader:
-		alles außer material muiss noch einlesbar sein
-	scene:
-		kein vector sondern set/map
-		camera, lightsource etc hinzufügen
+		der andere schmurks wie transform blabla
