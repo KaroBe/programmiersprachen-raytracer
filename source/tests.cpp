@@ -8,14 +8,27 @@
 #include <iostream>
 
 //include classes for testing
+
+//Shapes
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "composite.hpp"
+
+//DTOs
 #include "material.hpp"
-#include "hit.hpp"
 #include "color.hpp"
+#include "ray.hpp"
+
+//raytracing-related DTOs
 #include "scene.hpp"
+#include "hit.hpp"
+#include "camera.hpp"
+#include "light.hpp"
+
+//the hard working classes
 #include "sdfloader.hpp"
+#include "renderer.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
