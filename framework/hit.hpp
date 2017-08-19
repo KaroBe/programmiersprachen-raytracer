@@ -65,7 +65,6 @@ struct Hit
         	return false;
     };
 
-
 	friend std::ostream& operator<<(std::ostream& os, Hit const& hit)
     {
         os  << "hit: " << hit.m_hit << "\n"
