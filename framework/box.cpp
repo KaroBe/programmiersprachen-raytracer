@@ -150,8 +150,6 @@ Hit Box::intersect(Ray const& ray) const
     return true;
     */
 
-    Hit hit();
-
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
 
@@ -176,9 +174,11 @@ Hit Box::intersect(Ray const& ray) const
             {ray.m_origin.x + tmin*ray.m_direction.x,
             ray.m_origin.y + tmin*ray.m_direction.y,
             ray.m_origin.z + tmin*ray.m_direction.z};
-        hit.m_intersection = intersect;
 
-        hit.m_hit = true;
+        bool boolhit = true;
+        auto ptr = std::make_shared<Box>(*this);
+
+        Hit hit(boolhit, tmin, intersect, ptr);
     
 /*
         //finds the side of the box where the ray intersects
@@ -208,14 +208,17 @@ Hit Box::intersect(Ray const& ray) const
         }
 
 */
-        hit.m_distance = tmin;
-        hit.m_shape = this;
-
         return hit;
 
     }
+    else
+    {
+        bool boolhit = false;
+        float dis = INFINITY;
+        glm::vec3 intersect{INFINITY};
+        auto ptr = std::make_shared<Box>(*this);
 
-
-
-
+        Hit hit(boolhit, dis, intersect, ptr);
+        return hit;
+    }
 }

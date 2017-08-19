@@ -390,7 +390,39 @@ TEST_CASE("SDFloader test", "[SDFloader]")
     
 }
 */
-TEST_CASE("box intersect lissy", "intersect")
+TEST_CASE("new intersect tests", "intersect")
 {
-    
+    SECTION("sphere")
+    {
+
+    }
+    SECTION("box")
+    {
+        Color c {0.0f,0.0f,0.0f};
+
+        Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
+                glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
+
+        Ray ray2 {glm::vec3{0.0f}, //aus koordinatenursprung
+                glm::vec3{1.0f,1.0f,-2.0f}}; //schräg in anderem winkel in -z richtung
+
+        Ray ray3 {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
+                glm::vec3{0.0f,0.0f,-1.0f}}; // gerade in -z Richtung schauend
+
+        Ray ray3b {glm::vec3{1.0f,1.0f,-2.0f}, //von innerhalb der Box aus
+                glm::vec3{1.0f,1.0f,-1.0f}}; // schräg in -z Richtung schauend
+
+        Ray ray4 {glm::vec3{0.0f}, //aus koordinatenursprung
+                glm::vec3{0.0f,0.0f,-2.0f}}; //entlang -z Achse
+
+        Ray ray4b {glm::vec3{1.0f,1.0f,0.0f}, //from (1|1|0)
+                glm::vec3{0.0f,0.0f,-2.0f}}; //parallel -z Achse, gerade
+
+        Box box {"test_box",
+            Material{"",c,c,c, 0.0f},
+            glm::vec3{0.0f,0.0f,-1.0f}, //min
+            glm::vec3{2.0f,2.0f,-3.0f}  //max
+
+        
+    }
 }
