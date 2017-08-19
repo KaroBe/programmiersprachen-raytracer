@@ -10,8 +10,11 @@
 #include "ray.hpp"
 
 //For Intersect Methods
-# include <glm/glm.hpp>
-# include <glm/gtx/intersect.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
+#include <memory>
+
+struct Hit;
 
 struct Hit;
 

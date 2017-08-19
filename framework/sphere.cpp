@@ -80,6 +80,7 @@ Hit Sphere::intersect(Ray const& ray) const
 		m_radius * m_radius,
 		distance);
 	glm::vec3 intersection = ray.m_origin + normal_direction * distance;
-	Hit hit(x, distance, intersection, this);
+	auto ptr = std::make_shared<Sphere>(*this);
+	Hit hit(x, distance, intersection, ptr);
 	return hit;
 }
