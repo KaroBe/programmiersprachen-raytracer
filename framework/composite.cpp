@@ -56,6 +56,7 @@ Hit Composite::intersect(Ray const& ray) const
     double closest_dis = INFINITY;
     std::shared_ptr<Shape> closest_shape = nullptr;
 
+    //iterate all 
     for (auto shape : m_content)
     {
         double temp_dis;
