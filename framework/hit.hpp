@@ -34,6 +34,15 @@ struct Hit
 	float m_distance;
 	glm::vec3 m_intersection;
 	std::shared_ptr<Shape> m_shape;
+
+	friend std::ostream& operator<<(std::ostream& os, Hit const& hit)
+    {
+        os  << "hit: " << hit.m_hit << "\n"
+            << "distance: " << hit.m_distance << "\n"
+            << "intersection: " << hit.m_intersection.x << " " << hit.m_intersection.y << " " << hit.m_intersection.z << "\n"
+            << "shape: " << hit.m_shape -> get_name() << "\n";
+        return os;
+    }
 };
 
 #endif //HIT_HPP

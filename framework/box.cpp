@@ -149,6 +149,8 @@ Hit Box::intersect(Ray const& ray) const
 
     return true;
     */
+    auto ptr = std::make_shared<Box>(*this);
+    Hit hit(ptr);
 
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
@@ -160,13 +162,13 @@ Hit Box::intersect(Ray const& ray) const
 
     float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
     float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
-    tmin = std::max(t0y, std::min(t0y, t1y));
-    tmax = std::min(t1y, std::max(t0y, t1y));
+    tmin = std::max(tmin, std::min(t0y, t1y));
+    tmax = std::min(tmax, std::max(t0y, t1y));
 
     float t0z = (m_min.z - nray.m_origin.z) / nray.m_direction.z;
     float t1z = (m_max.z - nray.m_origin.z) / nray.m_direction.z;
-    tmin = std::max(t0z, std::min(t0z, t1z));
-    tmax = std::min(t1z, std::max(t0z, t1z));
+    tmin = std::max(tmin, std::min(t0z, t1z));
+    tmax = std::min(tmax, std::max(t0z, t1z));
 
     if(tmax > std::max(tmin, 0.0f))
     {
@@ -175,10 +177,9 @@ Hit Box::intersect(Ray const& ray) const
             ray.m_origin.y + tmin*ray.m_direction.y,
             ray.m_origin.z + tmin*ray.m_direction.z};
 
-        bool boolhit = true;
-        auto ptr = std::make_shared<Box>(*this);
-
-        Hit hit(boolhit, tmin, intersect, ptr);
+        hit.m_hit = true;
+        hit.m_distance = tmin;
+        hit.m_intersection = intersect;
     
 /*
         //finds the side of the box where the ray intersects
@@ -213,12 +214,6 @@ Hit Box::intersect(Ray const& ray) const
     }
     else
     {
-        bool boolhit = false;
-        float dis = INFINITY;
-        glm::vec3 intersect{INFINITY};
-        auto ptr = std::make_shared<Box>(*this);
-
-        Hit hit(boolhit, dis, intersect, ptr);
         return hit;
     }
 }
