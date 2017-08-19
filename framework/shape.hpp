@@ -14,6 +14,8 @@
 #include <glm/gtx/intersect.hpp>
 #include <memory>
 
+struct Hit;
+
 class Shape
 {
 public:

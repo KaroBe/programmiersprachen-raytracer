@@ -5,6 +5,7 @@
 #define  BUW_SPHERE_HPP
 
 #include "shape.hpp"
+#include "hit.hpp"
 #include <glm/vec3.hpp>
 
 class Sphere : public Shape

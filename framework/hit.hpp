@@ -21,7 +21,7 @@ struct Hit
 		m_intersection{glm::vec3{INFINITY}},
 		m_shape{nullptr}
 	{};
-/*
+
 	//doesn't hit shape
 	Hit(std::shared_ptr<Shape> const& s) :
 		m_hit{false},
@@ -30,7 +30,7 @@ struct Hit
 		m_shape{s}
 	{};
 
-	Hit(bool h, double d, glm::vec3 const& i, std::shared_ptr<Shape> const& s) :
+	Hit(bool h, float d, glm::vec3 const& i, std::shared_ptr<Shape> const& s) :
 		m_hit{h},
 		m_distance{d},
 		m_intersection{i},
@@ -38,11 +38,11 @@ struct Hit
 	{};
 
 	//add = operator overloading
-*/
+
 	bool m_hit;
-	double m_distance;
+	float m_distance;
 	glm::vec3 m_intersection;
-	std::weak_ptr<Shape> m_shape;
+	std::shared_ptr<Shape> m_shape;
 };
 
 #endif //HIT_HPP

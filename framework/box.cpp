@@ -152,10 +152,13 @@ Hit Box::intersect(Ray const& ray) const
 
     Hit hit();
 
+    Ray nray {ray.m_origin,ray.m_direction};
+    nray.m_direction = glm::normalize(ray.m_direction);
+
     float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
     float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
-    tmin = std::min(t0x, t1x);
-    tmax = std::max(t0x, t1xstd::min(t0z, t1z));
+    float tmin = std::min(t0x, t1x);
+    float tmax = std::max(t0x, t1x);
 
     float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
     float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
@@ -167,7 +170,7 @@ Hit Box::intersect(Ray const& ray) const
     tmin = std::max(t0z, std::min(t0z, t1z));
     tmax = std::min(t1z, std::max(t0z, t1z));
 
-    if(tmax > std::max(tmin, 0.0))
+    if(tmax > std::max(tmin, 0.0f))
     {
         glm::vec3 intersect
             {ray.m_origin.x + tmin*ray.m_direction.x,
