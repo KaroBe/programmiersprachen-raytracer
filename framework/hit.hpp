@@ -4,6 +4,7 @@
 #ifndef HIT_HPP
 #define HIT_HPP
 
+#include <iostream>
 #include <glm/vec3.hpp>
 #include <cmath>
 #include "shape.hpp"
