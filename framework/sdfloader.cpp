@@ -1,15 +1,5 @@
 #include "sdfloader.hpp"
 
-    //SDFloader::SDFloader() :
-    //m_vecMaterials{std::vector<Material> vec_material}
-    //  {};
-    
-    /*
-    void SDFloader::addToMaterial(Material const& material)
-    {
-        vec_material.push_back(material);
-    }
-    */
 
     Scene SDFloader::load(std::string const& inputFile)
     {
