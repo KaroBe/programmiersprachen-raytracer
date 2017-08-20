@@ -8,14 +8,29 @@
 #include <iostream>
 
 //include classes for testing
+
+//Shapes
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "composite.hpp"
+
+//DTOs
 #include "material.hpp"
 #include "color.hpp"
+#include "ray.hpp"
+
+//raytracing-related DTOs
 #include "scene.hpp"
+#include "hit.hpp"
+#include "camera.hpp"
+#include "light.hpp"
+
+//the hard working classes
 #include "sdfloader.hpp"
 #include "composite.hpp"
+#include "renderer.hpp"
+
 
 // ----------------------------------
 // SHAPE TESTS
@@ -319,6 +334,7 @@ TEST_CASE("new intersect tests", "intersect")
         std::cout << "ray 4b: " << box.intersect(ray4b) << std::endl;
     }
 
+
 /*
     SECTION("composite")
     {
@@ -344,3 +360,41 @@ int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
 }
+
+
+
+// ----------------------------------
+// TESTS FÜR DEN GANZEN NEUEN SHIT
+// ----------------------------------
+
+
+TEST_CASE("hit methods", "hit_struct")
+{
+    Hit default_hit;
+    REQUIRE(default_hit.m_hit == false);
+    REQUIRE(default_hit.m_distance == INFINITY);
+    REQUIRE(default_hit.m_intersection == glm::vec3(INFINITY));
+    REQUIRE(default_hit.m_shape == nullptr);
+    
+    auto s = std::make_shared<Box>("some_box");
+
+    Hit no_hit(s);
+    REQUIRE(no_hit.m_hit == false);
+    REQUIRE(no_hit.m_distance == INFINITY);
+    REQUIRE(no_hit.m_intersection == glm::vec3(INFINITY));
+    REQUIRE(no_hit.m_shape == s);
+
+
+    Hit hit(true,0.123f,glm::vec3{1.789f},s);
+    REQUIRE(hit.m_hit == true);
+    REQUIRE(hit.m_distance == 0.123f);
+    REQUIRE(hit.m_intersection == glm::vec3(1.789f));
+    REQUIRE(hit.m_shape == s);
+
+    default_hit.m_shape = s;
+    REQUIRE(default_hit == no_hit);
+
+    Hit copy_hit = hit;
+    REQUIRE(copy_hit == hit);
+}
+

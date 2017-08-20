@@ -39,6 +39,19 @@ struct Hit
 		m_shape{s}
 	{};
 
+	// ggf mit swap / move dings ersetzen für mehr perfomanz ?
+	Hit& operator=(Hit const& temp_hit)
+	{
+		if(this != &temp_hit)
+		{
+			m_hit = temp_hit.m_hit;
+			m_distance = temp_hit.m_distance;
+			m_intersection = temp_hit.m_intersection;
+			m_shape = temp_hit.m_shape;
+		}
+		return *this;
+	}
+
 	bool operator==(Hit const& other)
     {
         if(m_hit==other.m_hit and 
@@ -50,12 +63,7 @@ struct Hit
         }
         else
         	return false;
-    }
-    
-	bool m_hit;
-	float m_distance;
-	glm::vec3 m_intersection;
-	std::shared_ptr<Shape> m_shape;
+    };
 
 	friend std::ostream& operator<<(std::ostream& os, Hit const& hit)
     {
@@ -64,7 +72,12 @@ struct Hit
             << "intersection: " << hit.m_intersection.x << " " << hit.m_intersection.y << " " << hit.m_intersection.z << "\n"
             << "shape: " << hit.m_shape -> get_name() << "\n";
         return os;
-    }
+	}
+
+	bool m_hit;
+	float m_distance;
+	glm::vec3 m_intersection;
+	std::shared_ptr<Shape> m_shape;
 };
 
 #endif //HIT_HPP

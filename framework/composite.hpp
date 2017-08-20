@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #include "shape.hpp"
+#include "hit.hpp"
 #include <material.hpp>
 #include <glm/vec3.hpp>
 
