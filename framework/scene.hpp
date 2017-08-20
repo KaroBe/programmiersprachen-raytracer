@@ -26,11 +26,14 @@ struct Scene
 
     //Materials
     std::map<std::string, Material> m_materials;
-
     
+    // der hat hier eigentlich nichts mehr verloren, da das
+    //sammeln der Shapes in der eingelesenen datei aufgaben-
+    //bereich des sdfloaders ist
+    // ggf noch ändern, in map in sdfloader, die temporär die
+    // objekte hält
     //Shapes
     std::vector<std::shared_ptr<Shape>> m_shapes;
-    
 
     //Composite
     std::shared_ptr<Shape> m_composite;

@@ -101,7 +101,43 @@
 
                         else if(word == "composite")
                         {
-                            //todo!!
+                            std::string comp_name;
+                            stream >> comp_name;
+
+                            scene.m_composite = std::make_shared<Composite>(comp_name);
+
+                            while (!stream.eof())
+                            {
+                                stream >> shape_name;
+
+                                /*using some lambda expression here
+                                not very elegant, maybe change later, but works for now
+                                erklärung des lambdas:
+                                [&shape_name] macht die variable shape_name für das lambda sichtbar als referenz
+                                (Shape const& obj) übergibt die Shape, die find() gerade anfasst an den funktionskörper
+                                kein Rückgabetyp, dh der Typ von return wird automatisch erfasst
+                                {...} gibt zurück, ob der aktuelle shape die gesuchte ist
+                                */
+
+                                //std::vector<Shape>::iterator = auto
+                                auto find_shape = find(scene.m_shapes.begin(), scene.m_shapes.end(),
+                                    [&shape_name](Shape const& obj) {return obj.m_name == shape_name;})
+                                if (find_shape != scene.m_shapes.end())
+                                {
+                                    //iterator dereferenzieren und shared pointer auf gefundene shape erstellen
+                                    std::shared_ptr<Shape> new_shape = std::make_shared(*find_shape);
+                                    //diesen dann dem composite hinzufügen
+                                    scene.m_composite.add_shape(new_shape);
+                                }
+                                else
+                                {
+                                    std::cout << "ERROR: Shape cannot be found!" << std::endl;
+                                }
+                            }
+
+                            std::cout << "Added composite:\n" << *scene.m_composite << std::endl;
+
+
                         }
 
                     }
