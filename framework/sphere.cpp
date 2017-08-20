@@ -82,5 +82,18 @@ Hit Sphere::intersect(Ray const& ray) const
 	glm::vec3 intersection = ray.m_origin + normal_direction * distance;
 	auto ptr = std::make_shared<Sphere>(*this);
 	Hit hit(x, distance, intersection, ptr);
+
+	//get normale
+	hit.m_normale = this -> get_normale(hit);
+	std::cout << "\nI changed normal to : \n" << hit.m_normale.x << hit.m_normale.y 
+	<< hit.m_normale.z;
+
 	return hit;
+}
+
+glm::vec3 Sphere::get_normale(Hit const& hit) const
+{
+	std::cout << "\nI changed normal to : \n" << (hit.m_intersection - m_center).x << (hit.m_intersection - m_center).y 
+	<< (hit.m_intersection - m_center).z;
+	return hit.m_intersection - m_center;
 }

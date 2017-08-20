@@ -35,6 +35,7 @@ public:
     std::ostream& print (std::ostream& os) const override;
 
     Hit intersect(Ray const& ray) const override;
+    glm::vec3 get_normale(Hit const& hit) const;
 
 private:
     glm::vec3   m_center;

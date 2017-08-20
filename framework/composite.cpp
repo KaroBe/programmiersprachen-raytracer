@@ -59,9 +59,11 @@ Hit Composite::intersect(Ray const& ray) const
     Hit closest_hit;
 
     //iterate all 
-    for (auto shape : m_content)
+    for (std::shared_ptr<Shape> shape : m_content)
     {
-        Hit current_hit = shape->intersect(ray);        
+        std::cout << "\ngot here\n";
+        Hit current_hit = shape->intersect(ray);
+
         if (current_hit.m_hit == true && 
             current_hit.m_distance < closest_hit.m_distance)
         {

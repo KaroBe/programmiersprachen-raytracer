@@ -348,22 +348,17 @@ TEST_CASE("new intersect tests", "intersect")
         auto boxptr = std::make_shared<Box>("testbox", Material{"",c,c,c, 0.0f}, glm::vec3{5.0f}, glm::vec3{8.0f});
 
         Composite composite{"testcomposite"};
-        composite.add_shape(sphereptr);
         composite.add_shape(boxptr);
+        composite.add_shape(sphereptr);
 
         std::cout << " \n~~ Composite Test ~~\n";
-        
-        std::cout << "ray 1: " << composite.intersect(ray1) << std::endl;
-        std::cout << "ray 2: " << composite.intersect(ray2) << std::endl;
-        std::cout << "ray 3: " << composite.intersect(ray3) << std::endl;
+
+        std::cout << "\nray 1: " << composite.intersect(ray1) << std::endl;
+        std::cout << "\nray 2: " << composite.intersect(ray2) << std::endl;
+        std::cout << "\nay 3: " << composite.intersect(ray3) << std::endl;
 
         std::cout << " \n~~ Composite Test Ende ~~\n";
     }
-}
-
-int main(int argc, char *argv[])
-{
-  return Catch::Session().run(argc, argv);
 }
 
 
@@ -419,4 +414,19 @@ TEST_CASE("new color stuff", "color")
     c2 *= c3;
     REQUIRE(c2 == result2);*/
 }
+
+/*
+TEST_CASE("test glm reflect", "lala")
+{
+    glm::vec3 v1(-1.0f, 0.0f, 0.0f);
+    glm::vec3 v2(1.0f, 1.0f, 1.0f);
+    glm::vec3 reflected = glm::reflect(v1, v2);
+    std::cout << reflected.x << reflected.y << reflected.z << std::endl;
+}
+*/
+int main(int argc, char *argv[])
+{
+  return Catch::Session().run(argc, argv);
+}
+
 
