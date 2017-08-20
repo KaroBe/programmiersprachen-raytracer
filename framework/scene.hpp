@@ -35,8 +35,11 @@ struct Scene
     //Shapes
     std::vector<std::shared_ptr<Shape>> m_shapes;
 
-    //Composite
-    std::shared_ptr<Shape> m_composite;
+    //Composite //changed dis from shape to composite!!!
+    //hoffentlich nichts zerballert damit :O
+    //sollte nicht, da trotzdem ein composite als shape
+    //in diesem ober-composite gespeichert werden können sollte...
+    std::shared_ptr<Composite> m_composite;
 
     //height and width
     int m_x_res;

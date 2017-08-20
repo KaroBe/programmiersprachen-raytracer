@@ -33,10 +33,11 @@ public:
     //unique composite methods:
     void add_shape(std::shared_ptr<Shape> const& shape);
     void remove_shape(std::shared_ptr<Shape> const& shape);
-    // get_children ??
+
+    //per referenz übergeben?
+    std::vector<std::shared_ptr<Shape>> get_children();
 
 private:
-    std::string m_name;
     std::vector<std::shared_ptr<Shape>> m_content;
 };
 

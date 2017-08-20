@@ -37,12 +37,16 @@ float Composite::volume() const
 std::ostream& Composite::print (std::ostream& os) const
 {
     os  << "\nshape type: composite"
-        << "\nname:       " << m_name
+        << "\nname: " << m_name
         << "\nshapes contained:";
 
-    //wichtig: muss auto sein, weil Typ Shape abstrakt
-    // CONST ????
-    for (auto s : m_content)
+    //content enthält shape ptr
+    //darin stecken box/shape/composite
+        //WARUM AUCH IMMMER werden bei einem Composite in einem
+        //Composite tlw Inhalte nicht angezeigt???
+        //und beim printen eines Vektors von shapes, wo ja
+        //
+    for (std::shared_ptr<Shape> s : m_content)
     {
         s->print(os);
     }
@@ -80,3 +84,9 @@ void Composite::remove_shape(std::shared_ptr<Shape> const& shape)
     //note: erase-remove idiom
     m_content.erase(std::remove(m_content.begin(), m_content.end(), shape), m_content.end());
 }
+
+std::vector<std::shared_ptr<Shape>> Composite::get_children()
+{
+    return m_content;
+}
+;

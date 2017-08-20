@@ -206,6 +206,7 @@ TEST_CASE("vektor normalization", "glm::vec3")
 
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
+    std::cout << "\n ~~~~~~~~~~ SDF LOADER TEST ~~~~~~~~\n";
     SDFloader loader{};
     /*
     load.sdfLoad("/Users/lissyscholz/Documents/
@@ -221,7 +222,9 @@ TEST_CASE("SDFloader test", "[SDFloader]")
     std::string bla = "/bla";
     s2 = loader.load(bla);
     */
-    loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+    //loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+    loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene");
+    std::cout << "\n ~~~~~~~~~~ END ~~~~~~~~\n";
 
 }
 //lissylissylissy <33333
