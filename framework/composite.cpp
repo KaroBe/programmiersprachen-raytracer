@@ -67,10 +67,17 @@ Hit Composite::intersect(Ray const& ray) const
         {
             closest_hit = current_hit;
         }
-    }   
+    }
 
     return closest_hit;
 }
+
+/*
+glm::vec3 Composite::get_normal(Hit const& hit) const
+{
+    //print normal for every shape?
+}
+*/
 
 //add shape
 void Composite::add_shape(std::shared_ptr<Shape> const& shape)
@@ -89,4 +96,3 @@ std::vector<std::shared_ptr<Shape>> Composite::get_children()
 {
     return m_content;
 }
-;

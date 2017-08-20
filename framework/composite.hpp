@@ -29,6 +29,7 @@ public:
 
     //writes distance into variable distance outside the method!
     Hit intersect(Ray const& ray) const override;
+   // glm::vec3 get_normal(Hit const& hit) const;
 
     //unique composite methods:
     void add_shape(std::shared_ptr<Shape> const& shape);
