@@ -14,23 +14,8 @@
 
 struct SDFloader
 {
-/*
-public:
-
-    SDFloader();
-*/
-    //void addToMaterial(Material const& material);
-
-    void test()
-    {
-        std::cout << "i got here";
-    };
 
     Scene load(std::string const& inputFile);
-/*
-private:
-    //std::vector<Material> m_vecMaterials;
-*/
 
 };
 

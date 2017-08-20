@@ -15,6 +15,7 @@
 #include "color.hpp"
 #include "scene.hpp"
 #include "sdfloader.hpp"
+#include "composite.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
@@ -174,12 +175,6 @@ TEST_CASE("material in place of color struct", "Material")
     std::cout << mate2;
 }
 
-int main(int argc, char *argv[])
-{
-  return Catch::Session().run(argc, argv);
-}
-
-
 
 TEST_CASE("vektor normalization", "glm::vec3")
 {
@@ -323,4 +318,29 @@ TEST_CASE("new intersect tests", "intersect")
         std::cout << "ray 4: " << box.intersect(ray4) << std::endl;
         std::cout << "ray 4b: " << box.intersect(ray4b) << std::endl;
     }
+
+/*
+    SECTION("composite")
+    {
+        Color c {0.0f,0.0f,0.0f};
+        
+        Ray ray1{glm::vec3(0.0f), glm::vec3(1.0f)}; //should meet sphere first
+        Ray ray2{glm::vec3(9.0f), glm::vec3(-1.0f)};   //should meet box first
+        
+        auto sphereptr = std::make_shared<Sphere>("testsphere", Material{"",c,c,c, 0.0f}, glm::vec3{2.0f}, 1.0f);
+        auto boxptr = std::make_shared<Box>("testbox", Material{"",c,c,c, 0.0f}, glm::vec3{5.0f}, glm::vec3{8.0f});
+
+        Composite composite{"testcomposite"};
+        composite.add_shape(sphereptr);
+        composite.add_shape(boxptr);
+
+        std::cout << "ray 1: " << composite.intersect(ray1) << std::endl;
+        std::cout << "ray 2: " << composite.intersect(ray2) << std::endl;
+    }
+    */
+}
+
+int main(int argc, char *argv[])
+{
+  return Catch::Session().run(argc, argv);
 }
