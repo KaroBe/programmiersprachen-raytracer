@@ -9,12 +9,13 @@
 
 #include "renderer.hpp"
 
-Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
+Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene)
   : width_(w)
   , height_(h)
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
   , ppm_(width_, height_)
+  , m_scene(scene)
 {}
 
 void Renderer::render()
@@ -47,7 +48,7 @@ void Renderer::write(Pixel const& p)
   // flip pixels, because of opengl glDrawPixels
   size_t buf_pos = (width_*p.y + p.x);
   if (buf_pos >= colorbuffer_.size() || (int)buf_pos < 0) {
-    std::cerr << "Fatal Error Renderer::write(Pixel p) : "
+    std::cerr << "Fatal Error Renderer::write(ixel p) : "
       << "pixel out of ppm_ : "
       << (int)p.x << "," << (int)p.y
       << std::endl;
@@ -58,4 +59,13 @@ void Renderer::write(Pixel const& p)
 
   //write new pixel to ppm_writer
   ppm_.write(p);
+}
+
+Color raytrace(Ray const& ray, unsigned int depth)
+{
+  Hit closestHit = m_scene.m_composite.intersect(ray);
+  if(closestHit.m_hit)
+  {
+    //to do: stuff here
+  }
 }
