@@ -69,8 +69,15 @@ struct Hit
     {
         os  << "hit: " << hit.m_hit << "\n"
             << "distance: " << hit.m_distance << "\n"
-            << "intersection: " << hit.m_intersection.x << " " << hit.m_intersection.y << " " << hit.m_intersection.z << "\n"
-            << "shape: " << hit.m_shape -> get_name() << "\n";
+            << "intersection: " << hit.m_intersection.x << " " << hit.m_intersection.y << " " << hit.m_intersection.z << "\n";
+        if (hit.m_shape == nullptr)
+        {
+        	os << "nullptr";
+        }
+        else
+        {
+            os << "shape: " << hit.m_shape -> get_name() << "\n";
+        }
         return os;
 	}
 

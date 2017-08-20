@@ -28,7 +28,6 @@
 
 //the hard working classes
 #include "sdfloader.hpp"
-#include "composite.hpp"
 #include "renderer.hpp"
 
 
@@ -334,8 +333,6 @@ TEST_CASE("new intersect tests", "intersect")
         std::cout << "ray 4b: " << box.intersect(ray4b) << std::endl;
     }
 
-
-/*
     SECTION("composite")
     {
         Color c {0.0f,0.0f,0.0f};
@@ -350,10 +347,13 @@ TEST_CASE("new intersect tests", "intersect")
         composite.add_shape(sphereptr);
         composite.add_shape(boxptr);
 
-        std::cout << "ray 1: " << composite.intersect(ray1) << std::endl;
-        std::cout << "ray 2: " << composite.intersect(ray2) << std::endl;
+        std::cout << " \n~~ Composite Test ~~\n";
+        
+       std::cout << "ray 1: " << composite.intersect(ray1) << std::endl;
+       std::cout << "ray 2: " << composite.intersect(ray2) << std::endl;
+
+        std::cout << " \n~~ Composite Test Ende ~~\n";
     }
-    */
 }
 
 int main(int argc, char *argv[])
