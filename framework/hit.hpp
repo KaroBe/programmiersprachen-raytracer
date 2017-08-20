@@ -51,6 +51,7 @@ struct Hit
 			m_distance = temp_hit.m_distance;
 			m_intersection = temp_hit.m_intersection;
 			m_shape = temp_hit.m_shape;
+			m_normale = temp_hit.m_normale;
 		}
 		return *this;
 	}
@@ -60,7 +61,8 @@ struct Hit
         if(m_hit==other.m_hit and 
         	m_distance==other.m_distance and 
         	m_intersection==other.m_intersection and 
-        	m_shape==other.m_shape)
+        	m_shape==other.m_shape and
+        	m_normale==other.m_normale)
         {
             return true;
         }
