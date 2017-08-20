@@ -77,7 +77,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     {
       bool noObject = false;
       glm::vec3 newOrigin = closestHit.m_intersection + closestHit.m_intersection * 0.001f; //so intersect works properly
-      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection);
+      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection);  //normalized to ligght = l!!
       Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
       if(shadowHit.m_hit)  
@@ -95,6 +95,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
       if(noObject)
       {
+        //glm::vec3 ln = glm::dot(dirToLight, )
         //todo: lichtstuff here!!
       } //else: shadow
     }

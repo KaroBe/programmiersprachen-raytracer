@@ -101,18 +101,18 @@ Hit Box::intersect(Ray const& ray) const
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
 
-    float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
-    float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
+    float t0x = (m_min.x - ray.m_origin.x) / nray.m_direction.x;
+    float t1x = (m_max.x - ray.m_origin.x) / nray.m_direction.x;
     float tmin = std::min(t0x, t1x);
     float tmax = std::max(t0x, t1x);
 
-    float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
-    float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
+    float t0y = (m_min.y - ray.m_origin.y) / nray.m_direction.y;
+    float t1y = (m_max.y - ray.m_origin.y) / nray.m_direction.y;
     tmin = std::max(tmin, std::min(t0y, t1y));
     tmax = std::min(tmax, std::max(t0y, t1y));
 
-    float t0z = (m_min.z - nray.m_origin.z) / nray.m_direction.z;
-    float t1z = (m_max.z - nray.m_origin.z) / nray.m_direction.z;
+    float t0z = (m_min.z - ray.m_origin.z) / nray.m_direction.z;
+    float t1z = (m_max.z - ray.m_origin.z) / nray.m_direction.z;
     tmin = std::max(tmin, std::min(t0z, t1z));
     tmax = std::min(tmax, std::max(t0z, t1z));
 
@@ -127,34 +127,37 @@ Hit Box::intersect(Ray const& ray) const
         hit.m_distance = tmin;
         hit.m_intersection = intersect;
     
-/*
-        //finds the side of the box where the ray intersects
-        if((intersect.x) == Approx(m_min.x))
+
+        //finds the side of the box where the ray intersects and gets normale
+        if((hit.m_intersection.x) == Approx(m_min.x))
         {
-           glm::vec3 normal{-1.0f, 0.0f, 0.0f};
+           hit.m_normale = glm::vec3{-1.0f, 0.0f, 0.0f};
         }
-        else if((intersect.x) == Approx(m_max.x))
+        else if((hit.m_intersection.x) == Approx(m_max.x))
         {
-            glm::vec3 normal{1.0f, 0.0f, 0.0f};
+            hit.m_normale = glm::vec3{1.0f, 0.0f, 0.0f};
         }
-        else if((intersect.y) == Approx(m_min.y))
+        else if((hit.m_intersection.y) == Approx(m_min.y))
         {
-            glm::vec3{0.0f, -1.0f, 0.0f};
+            hit.m_normale = glm::vec3{0.0f, -1.0f, 0.0f};
         }
-        else if((intersect.y) == Approx(m_max.y))
+        else if((hit.m_intersection.y) == Approx(m_max.y))
         {
-            glm::vec3{0.0f, 1.0f, 0.0f};
+            hit.m_normale = glm::vec3{0.0f, 1.0f, 0.0f};
         }
-        else if((intersect.y) == Approx(m_min.z))
+        else if((hit.m_intersection.y) == Approx(m_min.z))
         {
-            glm::vec3{0.0f, 0.0f, -1.0f};
+            hit.m_normale = glm::vec3{0.0f, 0.0f, -1.0f};
         }
-        else if((intersect.y) == Approx(m_max.z))
+        else if((hit.m_intersection.y) == Approx(m_max.z))
         {
-            glm::vec3{0.0f, 0.0f, 1.0f};
+            hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
+        }
+        else
+        {
+            std::cout << "if klappt nicht " << std::endl;
         }
 
-*/
         return hit;
 
     }
@@ -163,3 +166,37 @@ Hit Box::intersect(Ray const& ray) const
         return hit;
     }
 }
+/*
+glm::vec3 Box::get_normale(Hit const& hit) const
+{
+     //finds the side of the box where the ray intersects and gets normale
+        if((hit.m_intersection.x) == Approx(m_min.x))
+        {
+           hit.m_normale = glm::vec3{-1.0f, 0.0f, 0.0f};
+        }
+        else if((hit.m_intersection.x) == Approx(m_max.x))
+        {
+            hit.m_normale = glm::vec3{1.0f, 0.0f, 0.0f};
+        }
+        else if((hit.m_intersection.y) == Approx(m_min.y))
+        {
+            hit.m_normale = glm::vec3{0.0f, -1.0f, 0.0f};
+        }
+        else if((hit.m_intersection.y) == Approx(m_max.y))
+        {
+            hit.m_normale = glm::vec3{0.0f, 1.0f, 0.0f};
+        }
+        else if((hit.m_intersection.y) == Approx(m_min.z))
+        {
+            hit.m_normale = glm::vec3{0.0f, 0.0f, -1.0f};
+        }
+        else if((hit.m_intersection.y) == Approx(m_max.z))
+        {
+            hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
+        }
+        else
+        {
+            std::cout << "if klappt nicht " << std::endl;
+        }
+}
+*/
