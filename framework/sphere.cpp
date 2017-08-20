@@ -14,7 +14,7 @@ Sphere::Sphere(std::string const& name) :
 	m_center{glm::vec3{0.0f}},
 	m_radius{1}
 {
-	std::cout << "Sphere constructor\n";
+	//std::cout << "Sphere constructor\n";
 }
 
 //custom constructor
@@ -25,13 +25,13 @@ Sphere::Sphere(std::string const& name, Material const& material,
 	m_center{center},
 	m_radius{radius}
 {
-	std::cout << "Sphere constructor\n";
+	//std::cout << "Sphere constructor\n";
 }
 
 //dtor
 Sphere::~Sphere()
 {
-	std::cout << "Sphere Destructor\n";
+	//std::cout << "Sphere Destructor\n";
 }
 
 //getter

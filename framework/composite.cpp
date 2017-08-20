@@ -61,7 +61,7 @@ Hit Composite::intersect(Ray const& ray) const
         if (current_hit.m_hit == true && 
             current_hit.m_distance < closest_hit.m_distance)
         {
-            //closest_hit = current_hit;
+            closest_hit = current_hit;
         }
     }   
 
