@@ -43,6 +43,21 @@ struct Color
     return *this;
   }
 
+  Color& operator*=(Color const& other)
+  {
+    r *= other.r;
+    g *= other.g;
+    b *= other.b;
+    return *this;
+  }
+
+  Color operator*(Color const& other) const
+  {
+    Color newColor(r, g, b);
+    newColor *= other;
+    return newColor;
+  }
+
   bool operator==(Color const& other)
   {
     if(r==other.r and b==other.b and g==other.g)

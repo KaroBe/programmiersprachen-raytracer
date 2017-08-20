@@ -9,13 +9,13 @@
 
 #include "renderer.hpp"
 
-Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
+Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene)
   : width_(w)
   , height_(h)
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
   , ppm_(width_, height_)
-  //, m_scene(scene)
+  , m_scene(scene)
 {}
 
 void Renderer::render()
@@ -61,16 +61,46 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
-Color raytrace(Ray const& ray, unsigned int depth)
+Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 {
-  //Hit closestHit = m_scene.m_composite.intersect(ray);
-  //if(closestHit.m_hit)
+  Hit closestHit = m_scene.m_composite -> intersect(ray);
+  Color color;
+  if(closestHit.m_hit)
   {
     //to do: stuff here
     //ambientlight funktion -> berechtnet über object.material.ka und dem ambient light den farbwert
+    Color ambient = closestHit.m_shape -> get_material().m_ka;
+    color += m_scene.m_ambient_light * ambient;
+
     //lichtquellen -> für alle lichter -> berechnet mithilfe des objects die farbe im licht
+    for(auto& light : m_scene.m_lights) 
+    {
+      bool noObject = false;
+      glm::vec3 newOrigin = closestHit.m_intersection + closestHit.m_intersection * 0.001f; //so intersect works properly
+      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection);
+      Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
+      Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
+      if(shadowHit.m_hit)  
+      {
+        float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
+        if(disToLight < shadowHit.m_distance)
+        {
+          noObject = true;
+        }
+      }
+      else  //if the ray meets no objects
+      {
+        noObject = true;
+      }
+
+      if(noObject)
+      {
+        //todo: lichtstuff here!!
+      } //else: shadow
+    }
     //if depth > 0 -> refelktion berechnen
     //rückgabe des berechneten
     //wenn kein hit: nur ambient zurückgeben
   }
+  return color;
 }

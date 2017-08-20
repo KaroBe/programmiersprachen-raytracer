@@ -403,3 +403,20 @@ TEST_CASE("hit methods", "hit_struct")
     REQUIRE(copy_hit == hit);
 }
 
+TEST_CASE("new color stuff", "color")
+{
+    Color c1(0.5f, 0.5f, 0.5f);
+    Color c2(1.0f, 0.8f, 0.4f);
+    Color c3(0.0f, 0.1f, 0.4f);
+    Color result1(0.5f, 0.4f, 0.2f);
+    Color result2(0.0f, 0.08f, 0.16f);
+
+    REQUIRE((c1 * c2) == result1);
+    c1 *= c2;
+    REQUIRE(c1 == result1);
+    /*
+    REQUIRE((c2 * c3) == result2);
+    c2 *= c3;
+    REQUIRE(c2 == result2);*/
+}
+
