@@ -21,7 +21,7 @@
 class Renderer
 {
 public:
-  Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene);
+  Renderer(unsigned w, unsigned h, std::string const& file);
 
   void render();
   void write(Pixel const& p);
@@ -38,7 +38,7 @@ private:
   std::vector<Color> colorbuffer_;
   std::string filename_;
   PpmWriter ppm_;
-  Scene m_scene;
+  //Scene m_scene;
 };
 
 #endif // #ifndef BUW_RENDERER_HPP

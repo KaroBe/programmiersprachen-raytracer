@@ -9,13 +9,13 @@
 
 #include "renderer.hpp"
 
-Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene)
+Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
   , height_(h)
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
   , ppm_(width_, height_)
-  , m_scene(scene)
+  //, m_scene(scene)
 {}
 
 void Renderer::render()
@@ -63,9 +63,14 @@ void Renderer::write(Pixel const& p)
 
 Color raytrace(Ray const& ray, unsigned int depth)
 {
-  Hit closestHit = m_scene.m_composite.intersect(ray);
-  if(closestHit.m_hit)
+  //Hit closestHit = m_scene.m_composite.intersect(ray);
+  //if(closestHit.m_hit)
   {
     //to do: stuff here
+    //ambientlight funktion -> berechtnet über object.material.ka und dem ambient light den farbwert
+    //lichtquellen -> für alle lichter -> berechnet mithilfe des objects die farbe im licht
+    //if depth > 0 -> refelktion berechnen
+    //rückgabe des berechneten
+    //wenn kein hit: nur ambient zurückgeben
   }
 }
