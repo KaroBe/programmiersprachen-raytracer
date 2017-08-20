@@ -24,6 +24,12 @@ Box::Box(std::string const& name, Material const& material,
     sortMinMax();
 }
 
+//Destructor
+Box::~Box()
+{
+    //std::cout << "Box Destruction\n";
+}
+
 void Box::sortMinMax()
 {
     if(m_min.x > m_max.x)

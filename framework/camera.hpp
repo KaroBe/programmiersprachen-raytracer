@@ -24,7 +24,7 @@ struct Camera
         m_dir{dir}, 
         m_up{up}{};
 
-    //is only name and fov x are given:
+    //if only name and fov x are given:
     Camera(std::string name, float fov_x):
         m_name{name},
         m_fov_x{fov_x},

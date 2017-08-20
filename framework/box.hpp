@@ -19,7 +19,7 @@ public:
         glm::vec3 const& min, glm::vec3 const& max);
 
     //dtor
-    ~Box(){};
+    ~Box();
 
     void sortMinMax();
 
