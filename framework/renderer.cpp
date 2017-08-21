@@ -28,14 +28,32 @@ void Renderer::render()
       //new Pixel
       Pixel p(x,y);
       
-      //calculate some nice colors
+      /*
+      //calculate some nice colors to test writing to colorbuffer n ppm
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
         p.color = Color(0.0, 1.0, float(x)/height_);
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
       }
+      */
 
-      //write Pixel to colorbuffer
+      //cast ray trough that pixel -> Ray raycast(Pixel p)
+      Ray r = raycast(p);
+      
+      if(p.x % 97 == 0 && p.y % 97 == 0)
+      {
+        std::cout << "\nray (" << p.x << ", "<< p.y << ") direction: " << r.m_direction.x << ", "
+          << r.m_direction.y <<", "
+          << r.m_direction.z;
+      }
+
+      // an dieser Stelle tritt segmentation fault core dump auf
+      // warum auch immer?
+      //trace that ray -> Color raytrace(ray)
+      //Color c = raytrace(r);
+     // p.color = c;
+
+      //write Pixel to colorbuffer_ and ppm_
       write(p);
     }
   }
@@ -59,6 +77,31 @@ void Renderer::write(Pixel const& p)
 
   //write new pixel to ppm_writer
   ppm_.write(p);
+}
+
+Ray Renderer::raycast(Pixel const& pixel) //const
+{
+  //Cast ray an shit
+/*
+  gegeben:
+  m_camera mit fov_x, eye, dir, up
+  width und height von bildausschnitt
+    daraus kann man Abstand zu Bildfläche berechnen
+    dis_pic = (w/2) / (tan(fov_x/2))
+  
+*/
+
+  //Prototyp - vielleicht sieht man ja schon was sinnvolles?
+   float dis_pic = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
+  glm::vec3 direction{
+    float(pixel.x)/float(width_)-0.5,
+    float(pixel.y)/float(height_)-0.5, 
+    -1.0f * dis_pic// distance = 0.5 / tan(fov_x/2) in negativer z richtung
+  };
+  
+  Ray ray{{0,0,0}, direction};
+
+  return ray;
 }
 
 Color Renderer::raytrace(Ray const& ray)
@@ -119,5 +162,6 @@ Color Renderer::raytrace(Ray const& ray)
   {
    color = m_scene.m_ambient_light;
   }
+
   return color;
 }
