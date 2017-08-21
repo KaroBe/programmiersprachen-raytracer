@@ -84,7 +84,7 @@ Hit Sphere::intersect(Ray const& ray) const
 	Hit hit(x, distance, intersection, ptr);
 
 	//get normale
-	hit.m_normale = this -> get_normale(hit);
+	hit.m_normale = glm::normalize(this -> get_normale(hit));
 	//std::cout << "\nI changed normal to : \n" << hit.m_normale.x << hit.m_normale.y 
 	//<< hit.m_normale.z;
 

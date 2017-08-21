@@ -179,37 +179,3 @@ Hit Box::intersect(Ray const& ray) const
         return hit;
     }
 }
-/*
-glm::vec3 Box::get_normale(Hit const& hit) const
-{
-     //finds the side of the box where the ray intersects and gets normale
-        if((hit.m_intersection.x) == Approx(m_min.x))
-        {
-           hit.m_normale = glm::vec3{-1.0f, 0.0f, 0.0f};
-        }
-        else if((hit.m_intersection.x) == Approx(m_max.x))
-        {
-            hit.m_normale = glm::vec3{1.0f, 0.0f, 0.0f};
-        }
-        else if((hit.m_intersection.y) == Approx(m_min.y))
-        {
-            hit.m_normale = glm::vec3{0.0f, -1.0f, 0.0f};
-        }
-        else if((hit.m_intersection.y) == Approx(m_max.y))
-        {
-            hit.m_normale = glm::vec3{0.0f, 1.0f, 0.0f};
-        }
-        else if((hit.m_intersection.y) == Approx(m_min.z))
-        {
-            hit.m_normale = glm::vec3{0.0f, 0.0f, -1.0f};
-        }
-        else if((hit.m_intersection.y) == Approx(m_max.z))
-        {
-            hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
-        }
-        else
-        {
-            std::cout << "if klappt nicht " << std::endl;
-        }
-}
-*/
