@@ -112,7 +112,10 @@ Color Renderer::raytrace(Ray const& ray)
     }
     //if depth > 0 -> refelktion berechnen
     //rückgabe des berechneten
-    //wenn kein hit: nur ambient zurückgeben
+    else    //wenn kein hit: nur ambient zurückgeben
+    {
+      return m_scene.m_ambient_light;
+    }
   }
   return color;
 }
