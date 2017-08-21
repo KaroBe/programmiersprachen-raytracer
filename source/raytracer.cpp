@@ -12,9 +12,17 @@ int main(int argc, char* argv[])
   unsigned const height = 600;
   std::string const filename = "./checkerboard.ppm";
 
+  //load scene with sdf - loader
+  //SDFloader loader{};
+  //Scene scene = loader.load(/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene"));
+  
   Scene scene;
+
+  //make Renderer with that scene, and w/h of file we want
   Renderer app{width, height, filename, scene};
 
+  //Open thread that can use the app variable and renders the
+  //app
   std::thread thr([&app]() { app.render(); });
 
   Window win{glm::ivec2{width,height}};
@@ -23,6 +31,7 @@ int main(int argc, char* argv[])
     if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
       win.close();
     }
+    //print colorbuffer of renderer app to the window
     win.show(app.colorbuffer());
   }
 

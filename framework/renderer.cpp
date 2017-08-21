@@ -28,14 +28,23 @@ void Renderer::render()
       //new Pixel
       Pixel p(x,y);
       
-      //calculate some nice colors
+      /*
+      //calculate some nice colors to test writing to colorbuffer n ppm
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
         p.color = Color(0.0, 1.0, float(x)/height_);
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
       }
+      */
 
-      //write Pixel to colorbuffer
+      //cast ray trough that pixel -> Ray raycast(Pixel p)
+      Ray r = raycast(p);
+
+      //trace that ray -> Color raytrace(ray)
+      Color c = raytrace(r);
+      Pixel.color = c;
+
+      //write Pixel to colorbuffer_ and ppm_
       write(p);
     }
   }
@@ -59,6 +68,11 @@ void Renderer::write(Pixel const& p)
 
   //write new pixel to ppm_writer
   ppm_.write(p);
+}
+
+Ray Renderer::raycast(Pixel const& pixel) //const
+{
+  //Cast ray an shit
 }
 
 Color Renderer::raytrace(Ray const& ray)
@@ -105,17 +119,19 @@ Color Renderer::raytrace(Ray const& ray)
         float rv = glm::dot(r, v);
         float rvm = std::pow(rv, (closestHit.m_shape ->get_material().m_m));
 
-        Color diffuse = closestHit.m_shape -> getMaterial().m_kd;
-        Color specular = closestHit.m_shape -> getMaterial().m_ks;
-        color += (light -> m_color) * (diffuse * ln + specular * rvm);
+        Color diffuse = closestHit.m_shape -> get_material().m_kd;
+        Color specular = closestHit.m_shape -> get_material().m_ks;
+        // operator für color * float fehtl
+        //color += (light -> m_color) * (diffuse * ln + specular * rvm);
       } //else: shadow
     }
-    //if depth > 0 -> refelktion berechnen
-    //rückgabe des berechneten
-    else    //wenn kein hit: nur ambient zurückgeben
-    {
-      return m_scene.m_ambient_light;
-    }
   }
+  //if depth > 0 -> refelktion berechnen
+  //rückgabe des berechneten
+  else    //wenn kein hit: nur ambient zurückgeben
+  {
+    return m_scene.m_ambient_light;
+  }
+
   return color;
 }
