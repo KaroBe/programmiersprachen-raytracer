@@ -101,30 +101,42 @@ Hit Box::intersect(Ray const& ray) const
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
 
-    float t0x = (m_min.x - ray.m_origin.x) / nray.m_direction.x;
-    float t1x = (m_max.x - ray.m_origin.x) / nray.m_direction.x;
-    float tmin = std::min(t0x, t1x);
-    float tmax = std::max(t0x, t1x);
+    glm::vec3 invers = invers_dir(nray);
 
-    float t0y = (m_min.y - ray.m_origin.y) / nray.m_direction.y;
-    float t1y = (m_max.y - ray.m_origin.y) / nray.m_direction.y;
-    tmin = std::max(tmin, std::min(t0y, t1y));
-    tmax = std::min(tmax, std::max(t0y, t1y));
+    float t0 = (m_min.x - nray.m_origin.x) * invers.x;
+    float t1 = (m_max.x - nray.m_origin.x) * invers.x;
+    float tmin = std::min(t0, t1);
+    float tmax = std::max(t0, t1);
+    //std::cout << "min: " << tmin << std::endl;
+    //std::cout << "max: " << tmax << std::endl;
 
-    float t0z = (m_min.z - ray.m_origin.z) / nray.m_direction.z;
-    float t1z = (m_max.z - ray.m_origin.z) / nray.m_direction.z;
-    tmin = std::max(tmin, std::min(t0z, t1z));
-    tmax = std::min(tmax, std::max(t0z, t1z));
+    t0 = (m_min.y - nray.m_origin.y) * invers.y;
+    t1 = (m_max.y - nray.m_origin.y) * invers.y;
+    tmin = std::max(tmin, std::min(t0, t1));
+    tmax = std::min(tmax, std::max(t0, t1));
+    //std::cout << "min: " << tmin << std::endl;
+    //std::cout << "max: " << tmax << std::endl;
+
+    t0 = (m_min.z - nray.m_origin.z) * invers.z;
+    t1 = (m_max.z - nray.m_origin.z) * invers.z;
+    tmin = std::max(tmin, std::min(t0, t1));
+    tmax = std::min(tmax, std::max(t0, t1));
+    //std::cout << "min: " << tmin << std::endl;
+    //std::cout << "max: " << tmax << std::endl;
 
     if(tmax > std::max(tmin, 0.0f))
     {
-        glm::vec3 intersect
-            {ray.m_origin.x + tmin*ray.m_direction.x,
-            ray.m_origin.y + tmin*ray.m_direction.y,
-            ray.m_origin.z + tmin*ray.m_direction.z};
-
         hit.m_hit = true;
-        hit.m_distance = tmin;
+        hit.m_distance = sqrt(tmin * tmin *
+                (nray.m_direction.x * nray.m_direction.x + 
+                nray.m_direction.y * nray.m_direction.y + 
+                nray.m_direction.z * nray.m_direction.z));
+       
+        glm::vec3 intersect
+            {ray.m_origin.x + hit.m_distance * nray.m_direction.x,
+            ray.m_origin.y + hit.m_distance * nray.m_direction.y,
+            ray.m_origin.z + hit.m_distance * nray.m_direction.z};
+       
         hit.m_intersection = intersect;
     
 
@@ -145,16 +157,17 @@ Hit Box::intersect(Ray const& ray) const
         {
             hit.m_normale = glm::vec3{0.0f, 1.0f, 0.0f};
         }
-        else if((hit.m_intersection.y) == Approx(m_min.z))
+        else if((hit.m_intersection.z) == Approx(m_min.z))
         {
             hit.m_normale = glm::vec3{0.0f, 0.0f, -1.0f};
         }
-        else if((hit.m_intersection.y) == Approx(m_max.z))
+        else if((hit.m_intersection.z) == Approx(m_max.z))
         {
             hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
         }
         else
         {
+
             std::cout << "if klappt nicht " << std::endl;
         }
 

@@ -430,3 +430,20 @@ int main(int argc, char *argv[])
 }
 
 
+TEST_CASE("intersect", "box")
+{
+    Ray ray1{glm::vec3{1.0f}, glm::vec3{1.0f}};
+    Ray ray2{glm::vec3{0.0f}, glm::vec3{1.0f}};
+    Ray ray3{glm::vec3{1.5f, 1.5f,0.0f}, glm::vec3{0.0f, 0.0f, 2.0f}};
+    Color c {0.0f,0.0f,0.0f};
+    Box box {"test_box",
+            Material{"",c,c,c, 0.0f},
+            glm::vec3{1.0f}, //min
+            glm::vec3{2.0f}};  //max
+
+
+    std::cout << "ray 1 : " << box.intersect(ray1) << std::endl;
+    std::cout << "ray 2 : " << box.intersect(ray2) << std::endl;
+    std::cout << "ray 3 : " << box.intersect(ray3) << std::endl;
+}
+

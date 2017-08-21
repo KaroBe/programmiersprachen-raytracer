@@ -22,6 +22,14 @@ struct Ray
         	<< ray.m_direction.z;
         return os;
     }
+
+    friend glm::vec3 invers_dir(Ray const& ray)
+    {
+        glm::vec3 invers{1.0f / ray.m_direction.x,
+                        1.0f / ray.m_direction.y,
+                        1.0f / ray.m_direction.z};
+        return invers;
+    }
 };
 
 #endif
