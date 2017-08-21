@@ -16,14 +16,17 @@ int main(int argc, char* argv[])
   //SDFloader loader{};
   //Scene scene = loader.load(/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene"));
   
+  std::cout << "?";
   Scene scene;
 
   //make Renderer with that scene, and w/h of file we want
   Renderer app{width, height, filename, scene};
+  std::cout << "renderer generiert";
 
   //Open thread that can use the app variable and renders the
   //app
   std::thread thr([&app]() { app.render(); });
+  std::cout << "gerendert!";
 
   Window win{glm::ivec2{width,height}};
 
