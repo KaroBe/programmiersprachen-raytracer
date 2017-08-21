@@ -15,6 +15,30 @@
 
 struct Scene
 {
+    Scene() :
+        m_camera{},
+        m_ambient_light{},
+        m_lights{},
+        m_materials{},
+        m_shapes{},
+        m_composite{nullptr},
+        m_x_res{0},
+        m_y_res{0},
+        m_fileOut{""}{}
+
+    Scene(Camera const& camera, Color const& ambient, 
+        std::vector<std::shared_ptr<Light>> const& lights, std::map<std::string, Material> const& materials,
+        std::vector<std::shared_ptr<Shape>> const& shapes, std::shared_ptr<Composite> const& composite,
+        int x, int y, std::string const& file) :
+            m_camera{camera},
+            m_ambient_light{ambient},
+            m_lights{lights},
+            m_materials{materials},
+            m_shapes{shapes},
+            m_composite{composite},
+            m_x_res{x},
+            m_y_res{y},
+            m_fileOut{file}{}
     //Camera
     Camera m_camera;
 

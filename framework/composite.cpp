@@ -61,7 +61,7 @@ Hit Composite::intersect(Ray const& ray) const
     //iterate all 
     for (std::shared_ptr<Shape> shape : m_content)
     {
-        std::cout << "\ngot here\n";
+
         Hit current_hit = shape->intersect(ray);
 
         if (current_hit.m_hit == true && 

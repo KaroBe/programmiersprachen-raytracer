@@ -76,10 +76,11 @@ Color Renderer::raytrace(Ray const& ray)
     for(auto& light : m_scene.m_lights) 
     {
       bool noObject = false;
-      glm::vec3 newOrigin = closestHit.m_intersection + closestHit.m_intersection * 0.001f; //so intersect works properly
-      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection);  //normalized to ligght = l!!
+      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection); //normalize that light!!!
+      glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
       Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
+      std::cout << shadowHit << std::endl;
       if(shadowHit.m_hit)  
       {
         float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
@@ -95,27 +96,28 @@ Color Renderer::raytrace(Ray const& ray)
 
       if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
       {
-        float ln = glm::dot(dirToLight, closestHit.m_normale);
+        float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
         //glm::vec3 ln(dirToLight.x * closestHit.m_normale.x,
         //            dirToLight.y * closestHit.m_normale.y,
         //            dirToLight.y * closestHit.m_normale.z);
 
         glm::vec3 r = glm::normalize(glm::reflect(dirToLight, closestHit.m_normale));
         glm::vec3 v = glm::normalize(glm::vec3{-ray.m_direction.x, -ray.m_direction.y, -ray.m_direction.z});
-        float rv = glm::dot(r, v);
+        float rv = std::max(glm::dot(r, v), 0.0f);
         float rvm = std::pow(rv, (closestHit.m_shape ->get_material().m_m));
 
-        Color diffuse = closestHit.m_shape -> getMaterial().m_kd;
-        Color specular = closestHit.m_shape -> getMaterial().m_ks;
+        Color diffuse = closestHit.m_shape -> get_material().m_kd;
+        Color specular = closestHit.m_shape -> get_material().m_ks;
         color += (light -> m_color) * (diffuse * ln + specular * rvm);
       } //else: shadow
     }
     //if depth > 0 -> refelktion berechnen
     //rückgabe des berechneten
-    else    //wenn kein hit: nur ambient zurückgeben
-    {
-      return m_scene.m_ambient_light;
-    }
+    
+  }
+  else    //wenn kein hit: nur ambient zurückgeben
+  {
+   color = m_scene.m_ambient_light;
   }
   return color;
 }

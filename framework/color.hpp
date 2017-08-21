@@ -23,7 +23,7 @@ struct Color
 
   friend std::ostream& operator<<(std::ostream& os, Color const& c)
   {
-    os << "(" << c.r << "," << c.g << "," << c.b << ")\n";
+    os << "(" << c.r << ", " << c.g << ", " << c.b << ")\n";
     return os;
   }
 
@@ -57,6 +57,14 @@ struct Color
     newColor *= other;
     return newColor;
   }
+  
+  Color& operator*=(float other) //Fürs Skalarprodukt in givacolor!
+  {
+    r *= other;
+    g *= other;
+    b *= other;
+    return *this;
+  }
 
   bool operator==(Color const& other)
   {
@@ -79,6 +87,13 @@ struct Color
   {
     auto tmp(a);
     tmp -= b;
+    return tmp;
+  }
+
+  friend Color operator*(Color const& a, float b)  //Fürs Skalarprodukt in givacolor!
+  {
+    auto tmp(a);
+    tmp *= b;
     return tmp;
   }
 };
