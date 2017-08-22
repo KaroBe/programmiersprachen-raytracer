@@ -422,6 +422,34 @@ TEST_CASE("intersect", "box")
     std::cout << "ray 3 : " << box.intersect(ray3) << std::endl;
 }
 
+
+TEST_CASE("test glm reflect", "lala")
+{
+    glm::vec3 v1(-0.4f, -0.4f, -0.8f);
+    glm::vec3 v2(0.0f, 0.0f, -1.0f);
+    glm::vec3 reflected = glm::reflect(v1, v2);
+    std::cout << reflected.x << reflected.y << reflected.z << std::endl;
+}
+
+
+TEST_CASE("new color stuff", "color")
+{
+    Color c1(0.5f, 0.5f, 0.5f);
+    Color c2(1.0f, 0.8f, 0.4f);
+    Color c3(0.0f, 0.1f, 0.4f);
+
+    float f1 = 2.0f;
+    float f2 = 0.5f;
+    float f3 = 6.5f;
+
+    
+    
+    std::cout << c1 << " * " << f1 << " = " << c1*f1 << std::endl;
+    std::cout << c2 << " * " << f2 << " = " << c2*f2 << std::endl;
+    std::cout << c3 << " * " << f3 << " = " << c3*f3 << std::endl;
+}
+
+
 TEST_CASE("raytrace", "renderer")
 {
     Color a{0.9f, 0.0f, 0.0f};
@@ -432,8 +460,8 @@ TEST_CASE("raytrace", "renderer")
     Material e("", c, a, b, 0.2f);  
         
     Ray ray1{glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(3.0f, 3.0f, 6.0f)}; //should meet sphere first
-    Ray ray2{glm::vec3(9.0f), glm::vec3(-1.0f)};   //should meet box first  
-    Ray ray3{glm::vec3(0.0f), glm::vec3(-1.0f)};   //should meet nothing
+    Ray ray2{glm::vec3(10.0f), glm::vec3(-1.0f)};   //should meet box first  
+    Ray ray3{glm::vec3(0.0f), glm::vec3(1.0f)};   //should meet nothing
     
     auto sphereptr = std::make_shared<Sphere>("testsphere", Material{"",a,b,c, 0.8f}, glm::vec3{2.0f}, 1.0f);
     auto boxptr = std::make_shared<Box>("testbox", Material{"",c,a,b, 0.2f}, glm::vec3{5.0f}, glm::vec3{8.0f});
@@ -465,34 +493,9 @@ TEST_CASE("raytrace", "renderer")
     Scene scene(camera, ambient, lights, materials, shapes, compositeptr, 100, 100, filename);
     Renderer renderer(100, 100, " ", scene);
     
-    std::cout << renderer.raytrace(ray1) << std::endl;
+    std::cout << "ray1: " << renderer.raytrace(ray1, 1) << std::endl;
+    std::cout << "ray2: " << renderer.raytrace(ray2, 1) << std::endl;
+    std::cout << "ray3: " << renderer.raytrace(ray3, 1) << std::endl;
     //std::cout << composite.intersect(ray1) << std::endl;
 }
 
-
-TEST_CASE("test glm reflect", "lala")
-{
-    glm::vec3 v1(-0.4f, -0.4f, -0.8f);
-    glm::vec3 v2(0.0f, 0.0f, -1.0f);
-    glm::vec3 reflected = glm::reflect(v1, v2);
-    std::cout << reflected.x << reflected.y << reflected.z << std::endl;
-}
-
-/*
-TEST_CASE("new color stuff", "color")
-{
-    Color c1(0.5f, 0.5f, 0.5f);
-    Color c2(1.0f, 0.8f, 0.4f);
-    Color c3(0.0f, 0.1f, 0.4f);
-
-    float f1 = 2.0f;
-    float f2 = 0.5f;
-    float f3 = 6.5f;
-
-    
-    
-    std::cout << c1 << " * " << f1 << " = " << c1*f1 << std::endl;
-    std::cout << c2 << " * " << f2 << " = " << c2*f2 << std::endl;
-    std::cout << c3 << " * " << f3 << " = " << c3*f3 << std::endl;
-}
-*/

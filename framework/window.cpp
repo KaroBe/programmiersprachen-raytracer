@@ -52,7 +52,7 @@ Window::Window(glm::ivec2 const& windowsize)
   : m_window{nullptr}
   , m_windowSize(windowsize)
   , m_framebufferSize{windowsize}
-  , m_title("Fensterchen")
+  , m_title("Der beste Raytracer aller Zeiten")
 {
   if (!glfwInit()) {
     throw "Could not init glfw";

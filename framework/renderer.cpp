@@ -104,7 +104,7 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   return ray;
 }
 
-Color Renderer::raytrace(Ray const& ray)
+Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 {
   Hit closestHit = m_scene.m_composite -> intersect(ray);
   Color color;
@@ -123,7 +123,7 @@ Color Renderer::raytrace(Ray const& ray)
       glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
       Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-      std::cout << shadowHit << std::endl;
+      //std::cout << shadowHit << std::endl;
       if(shadowHit.m_hit)  
       {
         float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
@@ -155,6 +155,15 @@ Color Renderer::raytrace(Ray const& ray)
       } //else: shadow
     }
     //if depth > 0 -> refelktion berechnen
+    if(depth > 0)
+    {
+      glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
+      Ray mirrorRay{(closestHit.m_intersection + (0.001f * mirrorDirection)), mirrorDirection};
+      Color mirrorColor = raytrace(mirrorRay, depth-1);
+      //color += 
+
+    }
+
     //rückgabe des berechneten
     
   }

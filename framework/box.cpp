@@ -165,11 +165,6 @@ Hit Box::intersect(Ray const& ray) const
         {
             hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
         }
-        else
-        {
-
-            std::cout << "if klappt nicht " << std::endl;
-        }
 
         return hit;
 
