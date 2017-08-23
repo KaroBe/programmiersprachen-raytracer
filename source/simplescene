@@ -1,17 +1,18 @@
 # materials
 define material red 1 0 0 1 0 0 1 0 0 1
 define material blue 0 0 1 0 0 1 0 0 1 1
+define material yellow 0 1 0 0 1 0 0 1 0 1
 # geometry
 define shape box rbottom -2 -2 -10000 -1 -1 -9999 red
-define shape sphere bsphere 2 2 -10000 1 blue
-define shape sphere two_sphere 0 0 -100 50 blue
+define shape sphere bsphere 2 2 -10000 2 blue
+define shape sphere two_sphere -4 -4 -10000 1 yellow
 #composite
-define shape composite leaf two_sphere
-define shape composite root rbottom bsphere leaf
+# define shape composite leaf two_sphere
+define shape composite root rbottom bsphere two_sphere
 # light - from right above
-# define light sun 0 0 -10000 .5 .5 .5 100
+define light sun 0 20 0 0 0 1 100
 ambient 0.5 0.5 0.5
 # camera
 define camera eye 45.0 0 0 0 0 0 0 -1 0 1 0
 # ... and go
-render eye image.ppm 800 600
+render eye image.ppm 600 600

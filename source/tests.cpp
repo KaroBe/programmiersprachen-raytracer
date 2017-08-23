@@ -498,10 +498,13 @@ TEST_CASE("raytrace", "renderer")
     std::cout << "ray3: " << renderer.raytrace(ray3, 1) << std::endl;
     //std::cout << composite.intersect(ray1) << std::endl;
 }
-
+/*
 TEST_CASE("simplescene", "raytrace")
 {
     SDFloader loader{};
     loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
 
+
+
 }
+*/
