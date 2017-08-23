@@ -160,7 +160,9 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
       Ray mirrorRay{(closestHit.m_intersection + (0.001f * mirrorDirection)), mirrorDirection};
       Color mirrorColor = raytrace(mirrorRay, depth-1);
-      //color += 
+      Color diffuse = closestHit.m_shape -> get_material().m_kd;
+      Color specular = closestHit.m_shape -> get_material().m_ks;
+      color += diffuse * specular * mirrorColor;
 
     }
 

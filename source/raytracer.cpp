@@ -1,5 +1,6 @@
 #include <renderer.hpp>
 #include <window.hpp>
+#include "sdfloader.hpp"
 
 #include <GLFW/glfw3.h>
 #include <thread>
@@ -13,11 +14,11 @@ int main(int argc, char* argv[])
   std::string const filename = "./checkerboard.ppm";
 
   //load scene with sdf - loader
-  //SDFloader loader{};
-  //Scene scene = loader.load(/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene"));
+  SDFloader loader{};
+  Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
   
-  std::cout << "?";
-  Scene scene;
+  //std::cout << "?";
+  //Scene scene;
 
   //make Renderer with that scene, and w/h of file we want
   Renderer app{width, height, filename, scene};
