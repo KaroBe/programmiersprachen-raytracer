@@ -42,13 +42,6 @@ void Renderer::render()
       pcolor = raytrace(r, 2);
       p.color = pcolor;
 
-      if(p.x % 97 == 0 && p.y % 97 == 0)
-      {
-        std::cout << "\nray (" << p.x << ", "<< p.y << ") direction: " << r.m_direction.x << ", "
-          << r.m_direction.y <<", "
-          << r.m_direction.z;
-      }
-
       // an dieser Stelle tritt segmentation fault core dump auf
       // warum auch immer?
       //trace that ray -> Color raytrace(ray)
@@ -68,6 +61,7 @@ void Renderer::write(Pixel const& p)
   // flip pixels, because of opengl glDrawPixels
   size_t buf_pos = (width_*p.y + p.x);
   if (buf_pos >= colorbuffer_.size() || (int)buf_pos < 0) {
+    std::cout << "HIER WURDE EIN PIXEL NICHT AUSGEGEBEN";
     std::cerr << "Fatal Error Renderer::write(ixel p) : "
       << "pixel out of ppm_ : "
       << (int)p.x << "," << (int)p.y
@@ -83,25 +77,36 @@ void Renderer::write(Pixel const& p)
 
 Ray Renderer::raycast(Pixel const& pixel) //const
 {
-  //Cast ray an shit
-/*
-  gegeben:
-  m_camera mit fov_x, eye, dir, up
-  width und height von bildausschnitt
-    daraus kann man Abstand zu Bildfläche berechnen
-    dis_pic = (w/2) / (tan(fov_x/2))
-  
-*/
+  //Prototyp nach Jana Vorbild
 
-  //Prototyp - vielleicht sieht man ja schon was sinnvolles?
-   float dis_pic = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
-  glm::vec3 direction{
-    float(pixel.x)/float(width_)-0.5,
-    float(pixel.y)/float(height_)-0.5, 
-    -1.0f * dis_pic// distance = 0.5 / tan(fov_x/2) in negativer z richtung
-  };
-  
+  float dis_film = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
+
+  float x = float(pixel.x)/float(width_)-0.5;
+  float y = float(pixel.y)/float(height_)-0.5;
+  float z = -1.0f * dis_film;
+
+  glm::vec3 direction = {x,y,z};
+
+  direction = glm::normalize(direction);
+
   Ray ray{{0,0,0}, direction};
+
+/*
+  //Cast ray an shit - Karos nicht funktionierende Variante
+  float NDCx = (pixel.x + 0.5f) / width_;
+  float NDCy = (pixel.y + 0.5f) / height_;
+
+  float x = (2*NDCx -1) * tan(m_scene.m_camera.m_fov_x / 2 * M_PI/180) * (width_/height_);
+  float y = (1-2*NDCy)  * tan(m_scene.m_camera.m_fov_x / 2 * M_PI/180);
+
+  glm::vec3 direction(x,y,-1);
+
+  //std::cout << "\nunnormalisiert: " << direction.x << ", " << direction.y << ", " << direction.z;
+  
+  direction = glm::normalize(direction);
+  Ray ray{{0,0,0}, direction};
+
+*/
 
   return ray;
 }
@@ -121,24 +126,35 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     for(auto& light : m_scene.m_lights) 
     {
       bool noObject = false;
+
+      //Vector von Intersection zu Lichtquelle berechnen
       glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection); //normalize that light!!!
+
+      //bisschen verschieben, damit intersect richtig funktioniert
       glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
       Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
+      
+      //Liegt Objekt zwischen Shape und Lichtquelle?
+      //Trifft der Ray eine andere Shape?
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
       //std::cout << shadowHit << std::endl;
+      
+      //wenn OShape getroffen wird:
       if(shadowHit.m_hit)  
       {
+        //liegt diese Shape zwischen Lichtquelle und Intersection?
         float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
         if(disToLight < shadowHit.m_distance)
         {
           noObject = true;
         }
       }
-      else  //if the ray meets no objects
+      else //wenn kein Objekt dazwischen liegt:
       {
         noObject = true;
       }
 
+      //Wenn kein Objekt getroffen wird: ???? was passiert hier?
       if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
       {
         float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
@@ -154,8 +170,11 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         Color diffuse = closestHit.m_shape -> get_material().m_kd;
         Color specular = closestHit.m_shape -> get_material().m_ks;
         color += (light -> m_color) * (diffuse * ln + specular * rvm);
-      } //else: shadow
+      }
+      //else: shadow -> Wenn Objekt getroffen wird, wird Objekt nicht von Lichtquelle beeinflusst
     }
+
+    /*
     //if depth > 0 -> refelktion berechnen
     if(depth > 0)
     {
@@ -167,14 +186,13 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       color += diffuse * specular * mirrorColor;
 
     }
-
-    //rückgabe des berechneten
-    
+    */    
   }
   else    //wenn kein hit: nur ambient zurückgeben
   {
    color = m_scene.m_ambient_light;
   }
 
+  //rückgabe des berechneten
   return color;
 }

@@ -16,10 +16,8 @@ int main(int argc, char* argv[])
   */
   //load scene with sdf - loader
   SDFloader loader{};
-  Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
-  
-  //std::cout << "?";
-  //Scene scene;
+  //Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+  Scene scene = loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene");
 
   //make Renderer with that scene, and w/h of file we want
   Renderer app{scene.m_x_res, scene.m_y_res, scene.m_fileOut, scene};
