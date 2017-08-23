@@ -10,7 +10,7 @@ define shape sphere two_sphere -4 -4 -10000 1 yellow
 # define shape composite leaf two_sphere
 define shape composite root rbottom bsphere two_sphere
 # light - from right above
-define light sun 0 20 0 0 0 1 100
+define light sun 0 0 -9998 1 1 1 100
 ambient 0.5 0.5 0.5
 # camera
 define camera eye 45.0 0 0 0 0 0 0 -1 0 1 0

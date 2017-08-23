@@ -153,7 +153,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
         Color diffuse = closestHit.m_shape -> get_material().m_kd;
         Color specular = closestHit.m_shape -> get_material().m_ks;
-        color += (light -> m_color) * (diffuse * ln + specular * rvm);
+        Color intensity = light -> m_color * light -> m_brightness;
+        color += intensity * (diffuse * ln + specular * rvm);
       } //else: shadow
     }
     //if depth > 0 -> refelktion berechnen
