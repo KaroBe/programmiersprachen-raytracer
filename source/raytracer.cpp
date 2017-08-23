@@ -9,10 +9,11 @@
 
 int main(int argc, char* argv[])
 {
+  /*
   unsigned const width = 800;
   unsigned const height = 600;
   std::string const filename = "./checkerboard.ppm";
-
+  */
   //load scene with sdf - loader
   SDFloader loader{};
   Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
@@ -21,7 +22,7 @@ int main(int argc, char* argv[])
   //Scene scene;
 
   //make Renderer with that scene, and w/h of file we want
-  Renderer app{width, height, filename, scene};
+  Renderer app{scene.m_x_res, scene.m_y_res, scene.m_fileOut, scene};
   std::cout << "renderer generiert";
 
   //Open thread that can use the app variable and renders the
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
   std::thread thr([&app]() { app.render(); });
   std::cout << "gerendert!";
 
-  Window win{glm::ivec2{width,height}};
+  Window win{glm::ivec2{scene.m_x_res,scene.m_y_res}};
 
   while (!win.should_close()) {
     if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {

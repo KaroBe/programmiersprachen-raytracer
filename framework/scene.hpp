@@ -29,7 +29,7 @@ struct Scene
     Scene(Camera const& camera, Color const& ambient, 
         std::vector<std::shared_ptr<Light>> const& lights, std::map<std::string, Material> const& materials,
         std::vector<std::shared_ptr<Shape>> const& shapes, std::shared_ptr<Composite> const& composite,
-        int x, int y, std::string const& file) :
+        unsigned int x, unsigned int y, std::string const& file) :
             m_camera{camera},
             m_ambient_light{ambient},
             m_lights{lights},
@@ -66,8 +66,8 @@ struct Scene
     std::shared_ptr<Composite> m_composite;
 
     //height and width
-    int m_x_res;
-    int m_y_res;
+    unsigned int m_x_res;
+    unsigned int m_y_res;
 
     //fileout
     std::string m_fileOut;

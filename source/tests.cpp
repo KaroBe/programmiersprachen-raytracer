@@ -222,8 +222,8 @@ TEST_CASE("SDFloader test", "[SDFloader]")
     std::string bla = "/bla";
     s2 = loader.load(bla);
     */
-    //loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
-    loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene");
+    loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+   // loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/simplescene");
     std::cout << "\n ~~~~~~~~~~ END ~~~~~~~~\n";
 
 }
@@ -499,3 +499,9 @@ TEST_CASE("raytrace", "renderer")
     //std::cout << composite.intersect(ray1) << std::endl;
 }
 
+TEST_CASE("simplescene", "raytrace")
+{
+    SDFloader loader{};
+    loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
+
+}

@@ -247,6 +247,17 @@
                         std::cout << "camera not found" << std::endl;
                     }
                 }
+                else if(word == "ambient")
+                {
+                    Color ambient;
+
+                    stream >> ambient.r;
+                    stream >> ambient.g;
+                    stream >> ambient.b;
+
+                    scene.m_ambient_light = ambient;
+                    std::cout << "ambient light added: " << scene.m_ambient_light << std::endl;
+                }
             }
             return scene;
         }

@@ -27,7 +27,7 @@ void Renderer::render()
 
       //new Pixel
       Pixel p(x,y);
-      
+      Color pcolor{0.0, 0.0, 0.0};
       /*
       //calculate some nice colors to test writing to colorbuffer n ppm
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
@@ -39,7 +39,9 @@ void Renderer::render()
 
       //cast ray trough that pixel -> Ray raycast(Pixel p)
       Ray r = raycast(p);
-      
+      pcolor = raytrace(r, 2);
+      p.color = pcolor;
+
       if(p.x % 97 == 0 && p.y % 97 == 0)
       {
         std::cout << "\nray (" << p.x << ", "<< p.y << ") direction: " << r.m_direction.x << ", "
