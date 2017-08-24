@@ -20,5 +20,3 @@ define light sun	0 100 -10	 1 1 1 10
 ambient 0.1 0.1 0.1
 # camera
 define camera eye 90.0	 0 0 0 		0 0 -1 	0 1 0 		0
-# ... and go
-render eye image.ppm 1000 1000

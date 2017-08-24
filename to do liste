@@ -1,20 +1,12 @@
 to do liste für 7.1
 -einlesen einer szene im sdf-format und rendern dieser Szene
-	-materialen definieren
-	-shapes definieren (box und sphere)
-		-beliebig viele shapes
-		-jede shape kan eigenes material haben 
-		-shaps werfen schatten
-	-licht definieren
-		-beliebig viele lichtquellen
 	-kamera defineren
-		-kamera ist fest am ursprung und blickt in richtung negative z-achse
+		-kamera kann sich bewegen und so transformation blabla
 	-rendern
-		-renderer erstellt pixel und berechnet farbe mit intersect etcsudsudo apt-get install vpnc network-manager-vpnc	o apt-get install vpnc network-manager-vpnc
+		-das hinbekommen das es nicht quadritisch ist das fenster und nicht verzerrt
 		
-KLassen:
+Klassen:
 	renderer:
-		braucht eine funktion raytrace die das berechnet mit dem intersect blabla -> also die farbe berechnet
-		raycast berechnet strahl von ursprung zur bildebene
+		refraction
 	stfloader:
 		der andere schmurks wie transform blabla
