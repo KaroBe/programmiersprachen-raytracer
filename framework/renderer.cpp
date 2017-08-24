@@ -77,6 +77,7 @@ void Renderer::write(Pixel const& p)
 
 Ray Renderer::raycast(Pixel const& pixel) //const
 {
+/*
   //Prototyp nach Jana Vorbild
 
   float dis_film = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
@@ -89,6 +90,13 @@ Ray Renderer::raycast(Pixel const& pixel) //const
 
   direction = glm::normalize(direction);
 
+  Ray ray{{0,0,0}, direction};
+*/
+
+  glm::vec3 direction{float(pixel.x) * 1.0 / float(width_) - 0.5,
+      float(pixel.y) * 1.0 / float(height_) - 0.5, 
+      -1.0 * (0.5 / tan(m_scene.m_camera.m_fov_x/2))}; // distance to canvas = 0.5 / tan(angle / 2)
+  direction=glm::normalize(direction);
   Ray ray{{0,0,0}, direction};
 
 /*
@@ -105,7 +113,6 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   
   direction = glm::normalize(direction);
   Ray ray{{0,0,0}, direction};
-
 */
 
   return ray;
@@ -169,9 +176,10 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
         Color diffuse = closestHit.m_shape -> get_material().m_kd;
         Color specular = closestHit.m_shape -> get_material().m_ks;
-        color += (light -> m_color) * (diffuse * ln + specular * rvm);
-      }
-      //else: shadow -> Wenn Objekt getroffen wird, wird Objekt nicht von Lichtquelle beeinflusst
+
+        Color intensity = light -> m_color * light -> m_brightness;
+        color += intensity * (diffuse * ln + specular * rvm);
+      } //else: shadow
     }
 
     /*
