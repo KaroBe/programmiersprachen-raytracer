@@ -94,12 +94,12 @@ Ray Renderer::raycast(Pixel const& pixel) //const
 */
 
   //Prototyp - vielleicht sieht man ja schon was sinnvolles?
-   float dis_pic = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
-  glm::vec3 direction{
-    float(pixel.x)/float(width_)-0.5,
-    float(pixel.y)/float(height_)-0.5, 
-    -1.0f * dis_pic// distance = 0.5 / tan(fov_x/2) in negativer z richtung
-  };
+    float dis_pic = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
+    glm::vec3 direction{
+      float(pixel.x)/float(width_)-0.5,
+      float(pixel.y)/float(height_)-0.5, 
+      -1.0f * dis_pic// distance = 0.5 / tan(fov_x/2) in negativer z richtung
+    };
   
   Ray ray{{0,0,0}, direction};
 
@@ -125,7 +125,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
       Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-      //std::cout << shadowHit << std::endl;
+      //std::cout << "shadow hit: " << shadowHit << std::endl;
       if(shadowHit.m_hit)  
       {
         float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
@@ -158,6 +158,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       } //else: shadow
     }
     //if depth > 0 -> refelktion berechnen
+    /*
     if(depth > 0)
     {
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
@@ -166,8 +167,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       Color diffuse = closestHit.m_shape -> get_material().m_kd;
       Color specular = closestHit.m_shape -> get_material().m_ks;
       color += diffuse * specular * mirrorColor;
-
     }
+    */
 
     //rückgabe des berechneten
     
