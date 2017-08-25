@@ -5,20 +5,23 @@ define material green 	0 0.9 0 	0.01 0.3 0.01 	0.01 0.3 0.3 	0.5
 define material grey	0.3 0.3 0.3	0.3 0.3 0.3     0.3 0.3 0.3
 define material white   1.0 1.0 1.0     1.0 1.0 1.0     1.0 1.0 1.0     0.5
 # geometry
-define shape sphere close_sphere 0 0 -10 1 green
-define shape sphere far_sphere 0 2 -20 1 green
-define shape sphere left_sphere -5 0 -10 2.5 red
-define shape sphere right_sphere 5 0 -10 2.5 blue
-define shape sphere low_sphere 0 -5 -10 1 red
-define shape sphere up_sphere 0 5 -10 1 blue
-define shape box floor -20 -10 -20  20 -9.5 0 white
+define shape sphere close_sphere  0  0 -10  1   green
+define shape sphere far_sphere    0  2 -20  1   green
+define shape sphere left_sphere  -5  0 -10  2.5 red
+define shape sphere right_sphere  5  0 -10  2.5 blue
+define shape sphere low_sphere    0 -5 -10  1   red
+define shape sphere up_sphere     0  5 -10  1   blue
+define shape box floor 		-20 -10  -20  	20 -9.5  0 	white
+define shape box ceiling 	-20  9.5 -20  	20  10   0 	white
+define shape box floor 		-21 -9.5 -20   -20  9.5  0 	white
+define shape box floor 		 20 -9.5 -20  	21  9.5  0 	white
 #composite
 #define shape composite boxes close_box
 define shape composite spheres close_sphere left_sphere up_sphere low_sphere right_sphere floor far_sphere
 #define shape composite root spheres
 # light - from right above
-define light sun	0 100 -10	 1 1 1 10
-ambient 0.1 0.1 0.1
+define light sun	0 100 -10	 0.4 0.4 0.4 10
+ambient 0.3 0.3 0.3
 # camera
 define camera eye 90.0	 0 0 0 		0 0 -1 	0 1 0 		0
 # ... and go

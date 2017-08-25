@@ -40,6 +40,9 @@ void Renderer::render()
       //cast ray trough that pixel -> Ray raycast(Pixel p)
       Ray r = raycast(p);
       pcolor = raytrace(r, 2);
+      pcolor.r = pcolor.r / (pcolor.r + 1); //tonemapping
+      pcolor.g = pcolor.g / (pcolor.g + 1);
+      pcolor.b = pcolor.b / (pcolor.b + 1);
       p.color = pcolor;
 
       // an dieser Stelle tritt segmentation fault core dump auf
@@ -141,13 +144,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       //Liegt Objekt zwischen Shape und Lichtquelle?
       //Trifft der Ray eine andere Shape?
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-<<<<<<< HEAD
-      //std::cout << shadowHit << std::endl;
-      
-      //wenn OShape getroffen wird:
-=======
-      //std::cout << "shadow hit: " << shadowHit << std::endl;
->>>>>>> 8af7c417b339899a071312b3dd26f3aef96f2e52
+
       if(shadowHit.m_hit)  
       {
         //liegt diese Shape zwischen Lichtquelle und Intersection?
@@ -162,7 +159,6 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         noObject = true;
       }
 
-      //Wenn kein Objekt getroffen wird: ???? was passiert hier?
       if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
       {
         float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
@@ -182,10 +178,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         color += intensity * (diffuse * ln + specular * rvm);
       } //else: shadow
     }
-
-    /*
     //if depth > 0 -> refelktion berechnen
-    /*
     if(depth > 0)
     {
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
@@ -194,15 +187,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       Color diffuse = closestHit.m_shape -> get_material().m_kd;
       Color specular = closestHit.m_shape -> get_material().m_ks;
       color += diffuse * specular * mirrorColor;
-    }
-<<<<<<< HEAD
-    */    
-=======
-    */
-
-    //rückgabe des berechneten
-    
->>>>>>> 8af7c417b339899a071312b3dd26f3aef96f2e52
+      color *= 0.5f;
+    }  
   }
   else    //wenn kein hit: nur ambient zurückgeben
   {
