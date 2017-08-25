@@ -1,34 +1,36 @@
 # materials
-define material red 	0.9 0 0 	1 0 0 	0.7 0.01 0.01 	0.5
-define material blue 	0 0 0.9 	0.01 0.01 0.3	0.01 0.01 0.3	0.5
-define material green 	0 0.9 0 	0.01 0.3 0.01 	0.01 0.3 0.3 	0.5
-define material grey	0.3 0.3 0.3		0.3 0.3 0.3 	0.3 0.3 0.3	0.5
-define material mirror	1 1 1	1 1 1  1 1 1	1
+define material red 	0.9 0 0 	0.7 0.1 0.1 	0.5 0.5 0.5 	1
+define material blue 	0.01 0.01 0.9 	0.01 0.01 0.3	0.8 0.8 0.8	1
+define material green 	0.01 0.4 0.1 	0.1 0.3 0.1 	0.3 0.3 0.3 	1
+#define material grey	0.7 0.5 0.5		0.3 0.3 0.3 	0.3 0.3 0.3	1
+define material grey	0.1 0.1 0.1		0.3 0.3 0.3 	0.3 0.3 0.3	1
+define material mirror	0.5 0.5 0.5		0.3 0.3 0.3 	0.3 0.3 0.3 1
 
 # geometry
-define shape sphere close_sphere 0 0 -10 1 green
-define shape sphere far_sphere 0 3.5 -20 1 green
+define shape sphere close_sphere 0 0 -10 3 green
+define shape sphere far_sphere 0 18 -30 5 green
 define shape sphere left_sphere -5 0 -10 2.5 red
-define shape sphere right_sphere 5 0 -10 2.5 blue
+define shape sphere right_sphere 10 0 -5 5 blue
 define shape sphere low_sphere 0 -5 -10 1 red
 define shape sphere up_sphere 0 5 -10 1 blue
 
-define shape box floating_box 	-5 0 -10 -5 0 -10
-define shape box floor 			-20 -10 -20  20 -9.5 0 grey
-define shape box background 	-20 -10 -21 20 30 -20 grey
+define shape box floating_box 	-22 -12 -22 -20 -7 -15 green
+define shape box floor 			-30 -15 -50  30 -9.5 5 grey
+define shape box background 	-20 -10 -21 20 30 -20 mirror
 define shape box left_wall 		-21 -10 -20 -20 30 0 grey
 define shape box right_wall 	21 -10 -20 20 30 0 grey
 
 define shape mirror_box 		-5 -1 -19.5	5 10 -19 mirror
 
+define shape box room 	-20 -10 -20 30 10 30 grey
+
 #composite
-#define shape composite boxes close_box
-define shape composite spheres left_sphere right_sphere far_sphere up_sphere low_sphere floor background left_wall right_wall mirror_box
-#define shape composite root spheres 
+define shape composite room close_sphere far_sphere right_sphere floor floating_box
+define shape composite root low_sphere room
 
 # light - from right above
-define light sun	0 100 -10		0.1 0.1 0.1 	5
-define light red_floor_lamp	18 -5 	0 0.1 0.1 0.1 	10
+define light sun		0 200 0		0.01 0.01 0.01 	50
+define light floor_lamp	-19 -9 -19		0.1 0.1 0.1 	10
 
 ambient 0.3 0.3 0.3
 

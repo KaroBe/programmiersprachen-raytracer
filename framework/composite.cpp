@@ -38,7 +38,7 @@ std::ostream& Composite::print (std::ostream& os) const
 {
     os  << "\nshape type: composite"
         << "\nname: " << m_name
-        << "\nshapes contained:";
+        << "\n\ncontains the following shapes:\n";
 
     //content enthält shape ptr
     //darin stecken box/shape/composite
@@ -46,9 +46,14 @@ std::ostream& Composite::print (std::ostream& os) const
         //Composite tlw Inhalte nicht angezeigt???
         //und beim printen eines Vektors von shapes, wo ja
         //
+
+    if(m_content.size() == 0)
+    {
+        os << "no shapes contained";
+    }
     for (std::shared_ptr<Shape> s : m_content)
     {
-        s->print(os);
+        os << *s;
     }
     return os;
 }
@@ -61,7 +66,6 @@ Hit Composite::intersect(Ray const& ray) const
     //iterate all 
     for (std::shared_ptr<Shape> shape : m_content)
     {
-
         Hit current_hit = shape->intersect(ray);
 
         if (current_hit.m_hit == true && 

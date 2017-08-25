@@ -42,12 +42,6 @@ void Renderer::render()
       pcolor = raytrace(r, 2);
       p.color = pcolor;
 
-      // an dieser Stelle tritt segmentation fault core dump auf
-      // warum auch immer?
-      //trace that ray -> Color raytrace(ray)
-      //Color c = raytrace(r);
-     // p.color = c;
-
       //write Pixel to colorbuffer_ and ppm_
       write(p);
     }
@@ -93,10 +87,16 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   Ray ray{{0,0,0}, direction};
 */
 
-  glm::vec3 direction{float(pixel.x) * 1.0 / float(width_) - 0.5,
-      float(pixel.y) * 1.0 / float(height_) - 0.5, 
-      -1.0 * (0.5 / tan(m_scene.m_camera.m_fov_x/2))}; // distance to canvas = 0.5 / tan(angle / 2)
+  float dis_film = (0.5 / tan(m_scene.m_camera.m_fov_x/2));
+
+  float x = float(pixel.x) * 1.0 / float(width_) - 0.5;
+  float y = float(pixel.y) * 1.0 / float(height_) - 0.5;
+  float z = -1.0 * dis_film;
+
+  glm::vec3 direction{x,y,z}; // distance to canvas = 0.5 / tan(angle / 2)
+  
   direction=glm::normalize(direction);
+  
   Ray ray{{0,0,0}, direction};
 
 /*
