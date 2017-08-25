@@ -40,6 +40,9 @@ void Renderer::render()
       //cast ray trough that pixel -> Ray raycast(Pixel p)
       Ray r = raycast(p);
       pcolor = raytrace(r, 2);
+      pcolor.r = pcolor.r / (pcolor.r + 1); //tonemapping
+      pcolor.g = pcolor.g / (pcolor.g + 1);
+      pcolor.b = pcolor.b / (pcolor.b + 1);
       p.color = pcolor;
 
       //write Pixel to colorbuffer_ and ppm_
@@ -141,9 +144,9 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       //Liegt Objekt zwischen Shape und Lichtquelle?
       //Trifft der Ray eine andere Shape?
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-     
       //wenn OShape getroffen wird:
       //std::cout << "shadow hit: " << shadowHit << std::endl;
+
 
       if(shadowHit.m_hit)  
       {
@@ -159,7 +162,6 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         noObject = true;
       }
 
-      //Wenn kein Objekt getroffen wird: ???? was passiert hier?
       if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
       {
         float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
@@ -181,16 +183,22 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     }
 
     //if depth > 0 -> refelktion berechnen
-    
+
     if(depth > 0)
     {
+      //https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/adding-reflection-and-refraction
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
       Ray mirrorRay{(closestHit.m_intersection + (0.001f * mirrorDirection)), mirrorDirection};
       Color mirrorColor = raytrace(mirrorRay, depth-1);
-      Color diffuse = closestHit.m_shape -> get_material().m_kd;
-      Color specular = closestHit.m_shape -> get_material().m_ks;
-      color += diffuse * specular * mirrorColor;
-    }
+      
+      float opac = closestHit.m_shape -> get_material().m_opac;
+      glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
+      Ray refractRay{(closestHit.m_intersection + (0.001f * refractDirection)), refractDirection};
+      Color refractColor = raytrace(refractRay, depth-1);
+
+      float kr = closestHit.m_shape -> get_material().m_refrac;
+      color += mirrorColor * kr + refractColor * (1-kr);
+    }  
   }
   else    //wenn kein hit: nur ambient zurückgeben
   {

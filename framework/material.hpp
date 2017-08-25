@@ -13,16 +13,30 @@ struct Material
         m_ka{Color{0.0f,0.0f,0.0f}},
         m_kd{Color{0.0f,0.0f,0.0f}},
         m_ks{Color{0.0f,0.0f,0.0f}},
-        m_m{0.0f}
+        m_m{0.0f},
+        m_refrac{0.0f},
+        m_opac{0.0f}
     {};
 
-    //Custom Constructor
+    //constructor so i dont have to change the old stuff
     Material(std::string name, Color ka, Color kd, Color ks, float m) :
         m_name{name},
         m_ka{ka},
         m_kd{kd},
         m_ks{ks},
-        m_m{m}
+        m_m{m},
+        m_refrac{0.0f},
+        m_opac{0.0f}
+        {};
+    //Custom Constructor
+    Material(std::string name, Color ka, Color kd, Color ks, float m, float r, float o) :
+        m_name{name},
+        m_ka{ka},
+        m_kd{kd},
+        m_ks{ks},
+        m_m{m},
+        m_refrac{r},
+        m_opac{o}
         {};
 
     //Member Varibles:
@@ -31,6 +45,8 @@ struct Material
     Color m_kd;         //diffuse Reflexion
     Color m_ks;         //spiegelnde Reflexion
     float m_m;          //Exponent für spiegelnde Reflexion
+    float m_refrac;     //refraction index
+    float m_opac;    //lichtdurchlässigkeit
 
     // << Output Operator
     friend std::ostream& operator<<(std::ostream& os, Material const& material)
@@ -39,14 +55,16 @@ struct Material
             << "ka: " << material.m_ka
             << "kd: " << material.m_kd
             << "ks: " << material.m_ks
-            << "m: " << material.m_m << "\n";
+            << "m: " << material.m_m << "\n"
+            << "refrac: " << material.m_refrac << "\n"
+            << "opac: " << material.m_opac << "\n";
         return os;
     }
 
     bool operator==(Material const& other)
     {
         if(m_ka==other.m_ka and m_kd==other.m_kd and m_ks==other.m_ks
-            and m_m==other.m_m)
+            and m_m==other.m_m and m_refrac == other.m_refrac and m_opac == other.m_opac)
         {
             return true;
         }

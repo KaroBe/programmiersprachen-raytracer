@@ -37,6 +37,10 @@
                             stream >> in_material.m_ks.r;
                             stream >> in_material.m_ks.g;
                             stream >> in_material.m_ks.b;
+                            stream >> in_material.m_m;
+                            stream >> in_material.m_refrac;
+                            stream >> in_material.m_opac;
+
 
                             //addToMaterial(material);
                             //scene.m_materials.push_back(in_material.m_name, in_material);
