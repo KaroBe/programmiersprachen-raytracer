@@ -141,13 +141,10 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       //Liegt Objekt zwischen Shape und Lichtquelle?
       //Trifft der Ray eine andere Shape?
       Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-<<<<<<< HEAD
-      //std::cout << shadowHit << std::endl;
-      
+     
       //wenn OShape getroffen wird:
-=======
       //std::cout << "shadow hit: " << shadowHit << std::endl;
->>>>>>> 8af7c417b339899a071312b3dd26f3aef96f2e52
+
       if(shadowHit.m_hit)  
       {
         //liegt diese Shape zwischen Lichtquelle und Intersection?
@@ -183,9 +180,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       } //else: shadow
     }
 
-    /*
     //if depth > 0 -> refelktion berechnen
-    /*
+    
     if(depth > 0)
     {
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
@@ -195,14 +191,6 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       Color specular = closestHit.m_shape -> get_material().m_ks;
       color += diffuse * specular * mirrorColor;
     }
-<<<<<<< HEAD
-    */    
-=======
-    */
-
-    //rückgabe des berechneten
-    
->>>>>>> 8af7c417b339899a071312b3dd26f3aef96f2e52
   }
   else    //wenn kein hit: nur ambient zurückgeben
   {

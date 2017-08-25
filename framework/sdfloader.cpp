@@ -14,251 +14,257 @@
             
             while(std::getline(input, line))
             {   
-                std::stringstream stream;
-                stream << line; 
-                stream >> word; 
-                if(word == "define")
+                if(line.length() != 0)
                 {
-                    stream >> word;
-
-                    if(word == "material")
-                    {
-                        Material in_material;
-                        
-                        stream >> in_material.m_name;
-                        stream >> in_material.m_ka.r;
-                        stream >> in_material.m_ka.g;
-                        stream >> in_material.m_ka.b;
-                        stream >> in_material.m_kd.r;
-                        stream >> in_material.m_kd.g;
-                        stream >> in_material.m_kd.b;
-                        stream >> in_material.m_ks.r;
-                        stream >> in_material.m_ks.g;
-                        stream >> in_material.m_ks.b;
-
-                        //addToMaterial(material);
-                        //scene.m_materials.push_back(in_material.m_name, in_material);
-                        scene.m_materials[in_material.m_name] = in_material;
-                        std::cout <<"Added material:\n" << in_material << std::endl;
-                    }
-
-                    else if(word == "shape")
+                    std::stringstream stream;
+                    stream << line; 
+                    stream >> word; 
+                    if(word == "define")
                     {
                         stream >> word;
-                        if(word == "box")
-                        {   //find name min max etc. in sdf file
-                            std::string name;
-                            stream >> name;
 
-                            glm::vec3 min;
-                            stream >> min.x;
-                            stream >> min.y;
-                            stream >> min.z;
-
-                            glm::vec3 max;
-                            stream >> max.x;
-                            stream >> max.y;
-                            stream >> max.z;
-
-                            std::string materialName;
-                            stream >> materialName;
-                            Material mat = scene.m_materials[materialName];
-
-                            //construct box with min max etc. found earlier
-                            auto boxptr = std::make_shared<Box>(name, mat, min, max);
-                            scene.m_shapes.push_back(boxptr);
-                            std::cout << "Added box:\n" << *boxptr << std::endl;
-
-                            //Box in_box(name, mat, min, max);
-                            //std::cout << "Added box:\n" << in_box <<std::endl;
-                            //std::shared_ptr<Shape> p1(in_box);
-                            //scene.m_shapes.push_back(std::make_shared<Shape>(in_box));
-                        }
-                        else if(word == "sphere")
+                        if(word == "material")
                         {
-                            std::string name;
-                            stream >> name;
+                            Material in_material;
+                            
+                            stream >> in_material.m_name;
+                            stream >> in_material.m_ka.r;
+                            stream >> in_material.m_ka.g;
+                            stream >> in_material.m_ka.b;
+                            stream >> in_material.m_kd.r;
+                            stream >> in_material.m_kd.g;
+                            stream >> in_material.m_kd.b;
+                            stream >> in_material.m_ks.r;
+                            stream >> in_material.m_ks.g;
+                            stream >> in_material.m_ks.b;
 
-                            glm::vec3 center;
-                            stream >> center.x;
-                            stream >> center.y;
-                            stream >> center.z;
-
-                            float rad;
-                            stream >> rad;
-
-                            std::string materialName;
-                            stream >> materialName;
-                            Material mat = scene.m_materials[materialName];
-
-                            //Sphere in_sphere(name, mat, center, rad);
-                            //std::cout << "Added sphere:\n" << in_sphere <<std::endl;
-
-                            auto sphereptr = std::make_shared<Sphere>(name, mat, center, rad);
-                            scene.m_shapes.push_back(sphereptr);
-                            std::cout << "Added sphere:\n" << *sphereptr << std::endl;
+                            //addToMaterial(material);
+                            //scene.m_materials.push_back(in_material.m_name, in_material);
+                            scene.m_materials[in_material.m_name] = in_material;
+                            std::cout <<"Added material:\n" << in_material << std::endl;
                         }
 
-                        else if(word == "composite")
+                        else if(word == "shape")
                         {
-                            std::cout << "\n ADDING A NEW Composite \n";
-                            std::string comp_name;
-                            stream >> comp_name;
+                            stream >> word;
+                            if(word == "box")
+                            {   //find name min max etc. in sdf file
+                                std::string name;
+                                stream >> name;
 
-                            //neues Composite anlegen
-                            Composite new_comp(comp_name);
+                                glm::vec3 min;
+                                stream >> min.x;
+                                stream >> min.y;
+                                stream >> min.z;
 
-                            std::cout << "\nCURRENT CONTENT OF SCENE.M_SHAPES: *****+ \n";
-                            for (std::shared_ptr<Shape> p : scene.m_shapes)
-                            {
-                                std::cout << *p;
+                                glm::vec3 max;
+                                stream >> max.x;
+                                stream >> max.y;
+                                stream >> max.z;
+
+                                std::string materialName;
+                                stream >> materialName;
+                                Material mat = scene.m_materials[materialName];
+
+                                //construct box with min max etc. found earlier
+                                auto boxptr = std::make_shared<Box>(name, mat, min, max);
+                                scene.m_shapes.push_back(boxptr);
+                                std::cout << "Added box:\n" << *boxptr << std::endl;
+
+                                //Box in_box(name, mat, min, max);
+                                //std::cout << "Added box:\n" << in_box <<std::endl;
+                                //std::shared_ptr<Shape> p1(in_box);
+                                //scene.m_shapes.push_back(std::make_shared<Shape>(in_box));
                             }
-                            std::cout << "\n*END OF CONTENT *****+ \n";
-
-                            //add the new composite to the scene
-                            scene.m_composite = std::make_shared<Composite>(new_comp);
-
-                            //add shapes to the scene
-                            while (!stream.eof())
+                            else if(word == "sphere")
                             {
-                                std::string shape_name;
-                                stream >> shape_name;
+                                std::string name;
+                                stream >> name;
 
-                                /*using some lambda expression here
-                                not very elegant, maybe change later, but works for now
-                                erklärung des lambdas:
-                                [&shape_name] macht die variable shape_name für das lambda sichtbar als referenz
-                                (Shape const& obj) übergibt die Shape, die find() gerade anfasst an den funktionskörper
-                                kein Rückgabetyp, dh der Typ von return wird automatisch erfasst
-                                {...} gibt zurück, ob der aktuelle shape die gesuchte ist
-                                */
-                                /*
-                                //std::vector<Shape>::iterator = auto
-                                auto find_shape = find(scene.m_shapes.begin(), scene.m_shapes.end(),
-                                    [&shape_name](Shape const& obj) {return obj.get_name() == shape_name;});
-                                */
+                                glm::vec3 center;
+                                stream >> center.x;
+                                stream >> center.y;
+                                stream >> center.z;
 
-                                // Shapes dem Composite hinzufügen:
-                                std::shared_ptr<Shape> found_shape;
-                                for (std::shared_ptr<Shape> s : scene.m_shapes)
+                                float rad;
+                                stream >> rad;
+
+                                std::string materialName;
+                                stream >> materialName;
+                                Material mat = scene.m_materials[materialName];
+
+                                //Sphere in_sphere(name, mat, center, rad);
+                                //std::cout << "Added sphere:\n" << in_sphere <<std::endl;
+
+                                auto sphereptr = std::make_shared<Sphere>(name, mat, center, rad);
+                                scene.m_shapes.push_back(sphereptr);
+                                std::cout << "Added sphere:\n" << *sphereptr << std::endl;
+                            }
+
+                            else if(word == "composite")
+                            {
+                                std::cout << "\n ADDING A NEW Composite \n";
+                                std::string comp_name;
+                                stream >> comp_name;
+
+                                //neues Composite anlegen
+                                Composite new_comp(comp_name);
+
+                                std::cout << "\nCURRENT CONTENT OF SCENE.M_SHAPES: *****+ \n";
+                                for (std::shared_ptr<Shape> p : scene.m_shapes)
                                 {
-                                    if(s->get_name() == shape_name)
+                                    std::cout << *p;
+                                }
+                                std::cout << "\n*END OF CONTENT *****+ \n";
+
+                                //add the new composite to the scene
+                                scene.m_composite = std::make_shared<Composite>(new_comp);
+
+                                //add shapes to the scene
+                                while (!stream.eof())
+                                {
+                                    std::string shape_name;
+                                    stream >> shape_name;
+
+                                    /*using some lambda expression here
+                                    not very elegant, maybe change later, but works for now
+                                    erklärung des lambdas:
+                                    [&shape_name] macht die variable shape_name für das lambda sichtbar als referenz
+                                    (Shape const& obj) übergibt die Shape, die find() gerade anfasst an den funktionskörper
+                                    kein Rückgabetyp, dh der Typ von return wird automatisch erfasst
+                                    {...} gibt zurück, ob der aktuelle shape die gesuchte ist
+                                    */
+                                    /*
+                                    //std::vector<Shape>::iterator = auto
+                                    auto find_shape = find(scene.m_shapes.begin(), scene.m_shapes.end(),
+                                        [&shape_name](Shape const& obj) {return obj.get_name() == shape_name;});
+                                    */
+
+                                    // Shapes dem Composite hinzufügen:
+                                    std::shared_ptr<Shape> found_shape;
+                                    for (std::shared_ptr<Shape> s : scene.m_shapes)
                                     {
-                                        found_shape = s;
+                                        if(s->get_name() == shape_name)
+                                        {
+                                            found_shape = s;
+                                        }
                                     }
+                                    if (!found_shape)
+                                    {
+                                        std::cout << "\nERROR shape not found";
+                                    }
+                                    else
+                                    {
+                                        scene.m_composite->add_shape(found_shape);
+                                        std::cout << "\ni added " << found_shape->get_name();
+                                    }                                
                                 }
-                                if (!found_shape)
+
+
+                                scene.m_shapes.push_back(std::make_shared<Composite>(new_comp));
+
+                                //Fertiges Composite ausgeben:
+                                std::cout << "\nAdded composite:\n" << *scene.m_composite << std::endl;
+                                /*
+                                std::vector<std::shared_ptr<Shape>> v = scene.m_composite->get_children();
+
+                                for (std::shared_ptr<Shape> p : v)
                                 {
-                                    std::cout << "\nERROR shape not found";
+                                    std::cout << *p;
                                 }
-                                else
-                                {
-                                    scene.m_composite->add_shape(found_shape);
-                                    std::cout << "\ni added " << found_shape->get_name();
-                                }                                
+                                */
+
                             }
 
+                        }
+                        else if(word == "light")
+                        {
+                            std::string name;
+                            stream >> name;
 
-                            scene.m_shapes.push_back(std::make_shared<Composite>(new_comp));
+                            glm::vec3 position;
+                            stream >> position.x;
+                            stream >> position.y;
+                            stream >> position.z;
 
-                            //Fertiges Composite ausgeben:
-                            std::cout << "\nAdded composite:\n" << *scene.m_composite << std::endl;
-                            /*
-                            std::vector<std::shared_ptr<Shape>> v = scene.m_composite->get_children();
+                            Color color;
+                            stream >> color.r;
+                            stream >> color.g;
+                            stream >> color.b;
 
-                            for (std::shared_ptr<Shape> p : v)
-                            {
-                                std::cout << *p;
-                            }
-                            */
+                            float bright;
+                            stream >> bright;
 
+                            auto lightptr = std::make_shared<Light>(name, position, color, bright);
+                            scene.m_lights.push_back(lightptr);
+                            std::cout << "light added:\n" << *lightptr << std::endl;
+                        }
+
+                        else if(word == "camera")
+                        {
+                            std::string name;
+                            stream >> name;
+
+                            float fov_x;
+                            stream >> fov_x;
+
+                            glm::vec3 eye;
+                            stream >> eye.x;
+                            stream >> eye.y;
+                            stream >> eye.z;
+
+                            glm::vec3 dir;
+                            stream >> dir.x;
+                            stream >> dir.y;
+                            stream >> dir.z;
+
+                            glm::vec3 up;
+                            stream >> up.x;
+                            stream >> up.y;
+                            stream >> up.z;
+
+                            Camera camera(name, fov_x, eye, dir, up);
+                            scene.m_camera = camera;
+                            std::cout << "camera added:\n" << camera << std::endl;
                         }
 
                     }
-                    else if(word == "light")
+                    else if(word == "render")
                     {
-                        std::string name;
-                        stream >> name;
+                        std::string camname;
+                        stream >> camname;
 
-                        glm::vec3 position;
-                        stream >> position.x;
-                        stream >> position.y;
-                        stream >> position.z;
+                        if(camname == scene.m_camera.m_name)
+                        {
+                            stream >> scene.m_fileOut;
+                            stream >> scene.m_x_res;
+                            stream >> scene.m_y_res;
+                            std::cout << "rendering:\ncamera: " << camname << "\n" 
+                                << "fileout: " << scene.m_fileOut << "\n"
+                                << "x resolution: " << scene.m_x_res << "\n"
+                                << "y resolution: " << scene.m_y_res << "\n";
+                        }
+                        else
+                        {
+                            std::cout << "camera not found" << std::endl;
+                        }
+                    }
+                    else if(word == "ambient")
+                    {
+                        Color ambient;
 
-                        Color color;
-                        stream >> color.r;
-                        stream >> color.g;
-                        stream >> color.b;
+                        stream >> ambient.r;
+                        stream >> ambient.g;
+                        stream >> ambient.b;
 
-                        float bright;
-                        stream >> bright;
-
-                        auto lightptr = std::make_shared<Light>(name, position, color, bright);
-                        scene.m_lights.push_back(lightptr);
-                        std::cout << "light added:\n" << *lightptr << std::endl;
+                        scene.m_ambient_light = ambient;
+                        std::cout << "ambient light added: " << scene.m_ambient_light << std::endl;
                     }
 
-                    else if(word == "camera")
-                    {
-                        std::string name;
-                        stream >> name;
-
-                        float fov_x;
-                        stream >> fov_x;
-
-                        glm::vec3 eye;
-                        stream >> eye.x;
-                        stream >> eye.y;
-                        stream >> eye.z;
-
-                        glm::vec3 dir;
-                        stream >> dir.x;
-                        stream >> dir.y;
-                        stream >> dir.z;
-
-                        glm::vec3 up;
-                        stream >> up.x;
-                        stream >> up.y;
-                        stream >> up.z;
-
-                        Camera camera(name, fov_x, eye, dir, up);
-                        scene.m_camera = camera;
-                        std::cout << "camera added:\n" << camera << std::endl;
-                    }
-
-                }
-                else if(word == "render")
-                {
-                    std::string camname;
-                    stream >> camname;
-
-                    if(camname == scene.m_camera.m_name)
-                    {
-                        stream >> scene.m_fileOut;
-                        stream >> scene.m_x_res;
-                        stream >> scene.m_y_res;
-                        std::cout << "rendering:\ncamera: " << camname << "\n" 
-                            << "fileout: " << scene.m_fileOut << "\n"
-                            << "x resolution: " << scene.m_x_res << "\n"
-                            << "y resolution: " << scene.m_y_res << "\n";
-                    }
-                    else
-                    {
-                        std::cout << "camera not found" << std::endl;
-                    }
-                }
-                else if(word == "ambient")
-                {
-                    Color ambient;
-
-                    stream >> ambient.r;
-                    stream >> ambient.g;
-                    stream >> ambient.b;
-
-                    scene.m_ambient_light = ambient;
-                    std::cout << "ambient light added: " << scene.m_ambient_light << std::endl;
-                }
-            }
+                } //endif length != 0
+            
+            } //end while getline()
+            
             return scene;
         }
         else
