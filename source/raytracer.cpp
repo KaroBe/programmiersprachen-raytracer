@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
   std::thread thr([&app]() { app.render(); });
   std::cout << "gerendert!";
 
+/*
   Window win{glm::ivec2{scene.m_x_res,scene.m_y_res}};
 
   while (!win.should_close()) {
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
     //print colorbuffer of renderer app to the window
     win.show(app.colorbuffer());
   }
-
+*/
   thr.join();
 
   return 0;

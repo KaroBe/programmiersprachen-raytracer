@@ -107,42 +107,21 @@
 
                             else if(word == "composite")
                             {
-                                std::cout << "\n ADDING A NEW Composite \n";
                                 std::string comp_name;
                                 stream >> comp_name;
 
                                 //neues Composite anlegen
                                 Composite new_comp(comp_name);
-
-                                std::cout << "\nCURRENT CONTENT OF SCENE.M_SHAPES: *****+ \n";
-                                for (std::shared_ptr<Shape> p : scene.m_shapes)
-                                {
-                                    std::cout << *p;
-                                }
-                                std::cout << "\n*END OF CONTENT *****+ \n";
+                                std::shared_ptr<Composite> comp_ptr = std::make_shared<Composite>(new_comp);
 
                                 //add the new composite to the scene
-                                scene.m_composite = std::make_shared<Composite>(new_comp);
+                                scene.m_composite = comp_ptr;
 
                                 //add shapes to the scene
                                 while (!stream.eof())
                                 {
                                     std::string shape_name;
                                     stream >> shape_name;
-
-                                    /*using some lambda expression here
-                                    not very elegant, maybe change later, but works for now
-                                    erklärung des lambdas:
-                                    [&shape_name] macht die variable shape_name für das lambda sichtbar als referenz
-                                    (Shape const& obj) übergibt die Shape, die find() gerade anfasst an den funktionskörper
-                                    kein Rückgabetyp, dh der Typ von return wird automatisch erfasst
-                                    {...} gibt zurück, ob der aktuelle shape die gesuchte ist
-                                    */
-                                    /*
-                                    //std::vector<Shape>::iterator = auto
-                                    auto find_shape = find(scene.m_shapes.begin(), scene.m_shapes.end(),
-                                        [&shape_name](Shape const& obj) {return obj.get_name() == shape_name;});
-                                    */
 
                                     // Shapes dem Composite hinzufügen:
                                     std::shared_ptr<Shape> found_shape;
@@ -160,23 +139,14 @@
                                     else
                                     {
                                         scene.m_composite->add_shape(found_shape);
-                                        std::cout << "\ni added " << found_shape->get_name();
                                     }                                
                                 }
 
-
-                                scene.m_shapes.push_back(std::make_shared<Composite>(new_comp));
+                                scene.m_shapes.push_back(comp_ptr);
 
                                 //Fertiges Composite ausgeben:
-                                std::cout << "\nAdded composite:\n" << *scene.m_composite << std::endl;
-                                /*
-                                std::vector<std::shared_ptr<Shape>> v = scene.m_composite->get_children();
-
-                                for (std::shared_ptr<Shape> p : v)
-                                {
-                                    std::cout << *p;
-                                }
-                                */
+                                std::cout << "\nAdded composite: ~~~~~~~~~~~~\n" << *scene.m_composite << std::endl;
+                                std::cout << "\n~~~~~~~~~~~~\n";
 
                             }
 
@@ -268,7 +238,9 @@
                 } //endif length != 0
             
             } //end while getline()
-            
+
+            std::cout << "\nSDF-loading done. This is the structure of your scene: \n";
+            std::cout << *scene.m_composite;
             return scene;
         }
         else
