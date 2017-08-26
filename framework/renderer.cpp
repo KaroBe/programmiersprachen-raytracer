@@ -186,18 +186,23 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
     if(depth > 0)
     {
-      //https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/adding-reflection-and-refraction
+      //zur erinnerung: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/adding-reflection-and-refraction
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
       Ray mirrorRay{(closestHit.m_intersection + (0.001f * mirrorDirection)), mirrorDirection};
       Color mirrorColor = raytrace(mirrorRay, depth-1);
-      
+
       float opac = closestHit.m_shape -> get_material().m_opac;
       glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
       Ray refractRay{(closestHit.m_intersection + (0.001f * refractDirection)), refractDirection};
       Color refractColor = raytrace(refractRay, depth-1);
 
       float kr = closestHit.m_shape -> get_material().m_refrac;
-      color += mirrorColor * kr + refractColor * (1-kr);
+      Color ks = closestHit.m_shape -> get_material().m_ks;
+      //color = color * (mirrorColor * kr + refractColor * (1-kr));
+
+      color = color * 0.5f + color * 0.5f * mirrorColor * ks * kr; //reflected color
+      color += refractColor;
+      //color = color * 0.5f + color * 0.5f * refractColor * ks * (1.0f - kr); //refracted color
     }  
   }
   else    //wenn kein hit: nur ambient zurückgeben
