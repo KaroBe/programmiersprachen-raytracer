@@ -193,7 +193,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
       float opac = closestHit.m_shape -> get_material().m_opac;
       glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
-      Ray refractRay{(closestHit.m_intersection + (0.001f * refractDirection)), refractDirection};
+      Ray refractRay{(closestHit.m_intersection - (0.001f * refractDirection)), refractDirection};
       Color refractColor = raytrace(refractRay, depth-1);
 
       float kr = closestHit.m_shape -> get_material().m_refrac;
@@ -201,8 +201,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       //color = color * (mirrorColor * kr + refractColor * (1-kr));
 
       color = color * 0.5f + color * 0.5f * mirrorColor * ks * kr; //reflected color
-      color += refractColor;
-      //color = color * 0.5f + color * 0.5f * refractColor * ks * (1.0f - kr); //refracted color
+      //color = color + refractColor;
+      color = color * 0.5f + color * 0.5f * refractColor * ks * (1.0f - kr); //refracted color
     }  
   }
   else    //wenn kein hit: nur ambient zurückgeben

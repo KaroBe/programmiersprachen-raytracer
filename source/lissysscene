@@ -1,8 +1,8 @@
 # materials
-define material red 	0.9 0 0 	0.7 0.01 0.01 	0.7 0.01 0.01 	0.5 1 1
-define material blue 	0 0 0.9 	0.01 0.01 0.3	0.01 0.01 0.3	0.5 1 1
-define material white   1.0 1.0 1.0     1.0 1.0 1.0     1.0 1.0 1.0     0.5 1 1
-define material glas  	0.1 0.1 0.1	0.1 0.1 0.1	0.1 0.1 0.1	0.5 100 1
+define material red 	0.9 0 0 	0.7 0.01 0.01 	0.7 0.01 0.01 	0.8 1 1
+define material blue 	0 0 0.9 	0.01 0.01 0.3	0.01 0.01 0.3	0.8 1 1
+define material white   1.0 1.0 1.0     1.0 1.0 1.0     1.0 1.0 1.0     0.8 1 1
+# define material glas  0.1 0.1 0.1	0.1 0.1 0.1	0.1 0.1 0.1	0.8 100 1
 
 # geometry
 
