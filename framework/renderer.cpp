@@ -89,7 +89,6 @@ Ray Renderer::raycast(Pixel const& pixel) //const
 
   Ray ray{{0,0,0}, direction};
 */
-
   float dis_film = (0.5 / tan(m_scene.m_camera.m_fov_x/2));
 
   float x = float(pixel.x) * 1.0 / float(width_) - 0.5;
@@ -107,8 +106,8 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   float NDCx = (pixel.x + 0.5f) / width_;
   float NDCy = (pixel.y + 0.5f) / height_;
 
-  float x = (2*NDCx -1) * tan(m_scene.m_camera.m_fov_x / 2 * M_PI/180) * (width_/height_);
-  float y = (1-2*NDCy)  * tan(m_scene.m_camera.m_fov_x / 2 * M_PI/180);
+  float x = (2*NDCx -1) * tan((m_scene.m_camera.m_fov_x / 2) * (M_PI/180)) * (width_/height_);
+  float y = (1-2*NDCy)  * tan((m_scene.m_camera.m_fov_x / 2) * (M_PI/180));
 
   glm::vec3 direction(x,y,-1);
 
@@ -182,7 +181,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
       } //else: shadow
     }
 
-    //if depth > 0 -> refelktion berechnen
+    //if depth > 0 -> reflektion berechnen
 
     if(depth > 0)
     {
@@ -193,7 +192,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
       float opac = closestHit.m_shape -> get_material().m_opac;
       glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
-      Ray refractRay{(closestHit.m_intersection + (0.001f * refractDirection)), refractDirection};
+      Ray refractRay{(closestHit.m_intersection + (-0.001f * refractDirection)), refractDirection};
       Color refractColor = raytrace(refractRay, depth-1);
 
       float kr = closestHit.m_shape -> get_material().m_refrac;
