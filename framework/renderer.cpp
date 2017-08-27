@@ -44,6 +44,7 @@ void Renderer::render()
       pcolor.g = pcolor.g / (pcolor.g + 1);
       pcolor.b = pcolor.b / (pcolor.b + 1);
       p.color = pcolor;
+      std::cout << "x: " << x << " y: " << y << " Color: " << p.color << std::endl;
 
       //write Pixel to colorbuffer_ and ppm_
       write(p);
@@ -132,53 +133,57 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     //lichtquellen -> für alle lichter -> berechnet mithilfe des objects die farbe im licht
     for(auto& light : m_scene.m_lights) 
     {
-      bool noObject = false;
+        if(color.r < 1.0f || color.g < 1.0f ||color.b < 1.0f)
+        {
+        bool noObject = false;
 
-      //Vector von Intersection zu Lichtquelle berechnen
-      glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection); //normalize that light!!!
+        //Vector von Intersection zu Lichtquelle berechnen
+        glm::vec3 dirToLight = glm::normalize(light -> m_pos - closestHit.m_intersection); //normalize that light!!!
 
-      //bisschen verschieben, damit intersect richtig funktioniert
-      glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
-      Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
-      
-      //Liegt Objekt zwischen Shape und Lichtquelle?
-      //Trifft der Ray eine andere Shape?
-      Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
-      //wenn OShape getroffen wird:
-      //std::cout << "shadow hit: " << shadowHit << std::endl;
+        //bisschen verschieben, damit intersect richtig funktioniert
+        glm::vec3 newOrigin = closestHit.m_intersection + dirToLight * 0.001f; //so intersect works properly
+        Ray rayToLight{newOrigin, dirToLight}; //vec from hit to lightsource
+        
+        //Liegt Objekt zwischen Shape und Lichtquelle?
+        //Trifft der Ray eine andere Shape?
+        Hit shadowHit = m_scene.m_composite -> intersect(rayToLight); //does the vec meet another object?
+        //wenn OShape getroffen wird:
+        //std::cout << "shadow hit: " << shadowHit << std::endl;
 
 
-      if(shadowHit.m_hit)  
-      {
-        //liegt diese Shape zwischen Lichtquelle und Intersection?
-        float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
-        if(disToLight < shadowHit.m_distance)
+        if(shadowHit.m_hit)  
+        {
+          //liegt diese Shape zwischen Lichtquelle und Intersection?
+          float disToLight = glm::length(light -> m_pos - closestHit.m_intersection); //is the objects infront of light?
+          if(disToLight < shadowHit.m_distance)
+          {
+            noObject = true;
+          }
+        }
+        else //wenn kein Objekt dazwischen liegt:
         {
           noObject = true;
         }
-      }
-      else //wenn kein Objekt dazwischen liegt:
-      {
-        noObject = true;
-      }
 
-      if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
-      {
-        float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
-        //glm::vec3 ln(dirToLight.x * closestHit.m_normale.x,
-        //            dirToLight.y * closestHit.m_normale.y,
-        //            dirToLight.y * closestHit.m_normale.z);
+        if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
+        {
+          float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
+          //glm::vec3 ln(dirToLight.x * closestHit.m_normale.x,
+          //            dirToLight.y * closestHit.m_normale.y,
+          //            dirToLight.y * closestHit.m_normale.z);
 
-        glm::vec3 r = glm::normalize(glm::reflect(dirToLight, closestHit.m_normale));
-        glm::vec3 v = glm::normalize(glm::vec3{-ray.m_direction.x, -ray.m_direction.y, -ray.m_direction.z});
-        float rv = std::max(glm::dot(r, v), 0.0f);
-        float rvm = std::pow(rv, (closestHit.m_shape ->get_material().m_m));
+          glm::vec3 r = glm::normalize(glm::reflect(dirToLight, closestHit.m_normale));
+          glm::vec3 v = glm::normalize(glm::vec3{-ray.m_direction.x, -ray.m_direction.y, -ray.m_direction.z});
+          float rv = std::max(glm::dot(r, v), 0.0f);
+          float rvm = std::pow(rv, (closestHit.m_shape ->get_material().m_m));
 
-        Color diffuse = closestHit.m_shape -> get_material().m_kd;
-        Color specular = closestHit.m_shape -> get_material().m_ks;
+          Color diffuse = closestHit.m_shape -> get_material().m_kd;
+          Color specular = closestHit.m_shape -> get_material().m_ks;
 
-        Color intensity = light -> m_color * light -> m_brightness;
-        color += intensity * (diffuse * ln + specular * rvm);
+          Color intensity = light -> m_color * light -> m_brightness;
+          color += intensity * (diffuse * ln + specular * rvm);
+        }
+
       } //else: shadow
     }
 
@@ -188,24 +193,27 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     {
       //zur erinnerung: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/adding-reflection-and-refraction
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
-      Ray mirrorRay{(closestHit.m_intersection + (0.001f * mirrorDirection)), mirrorDirection};
+      Ray mirrorRay{(closestHit.m_intersection + (0.0001f * mirrorDirection)), mirrorDirection};
       Color mirrorColor = raytrace(mirrorRay, depth-1);
-
-      float opac = closestHit.m_shape -> get_material().m_opac;
-      glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
-      Ray refractRay{(closestHit.m_intersection - (0.001f * refractDirection)), refractDirection};
-      Color refractColor = raytrace(refractRay, depth-1);
-
       float kr = closestHit.m_shape -> get_material().m_refrac;
       Color ks = closestHit.m_shape -> get_material().m_ks;
-      //color = color * (mirrorColor * kr + refractColor * (1-kr));
 
       color = color * 0.5f + color * 0.5f * mirrorColor * ks * kr; //reflected color
-      //color = color + refractColor;
-      color = color * 0.5f + color * 0.5f * refractColor * ks * (1.0f - kr); //refracted color
+
+      if(color.r < 1.0f || color.g < 1.0f ||color.b < 1.0f)
+      {
+        float opac = closestHit.m_shape -> get_material().m_opac;
+        glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
+        Ray refractRay{(closestHit.m_intersection + (0.00001f * refractDirection)), refractDirection};
+        Color refractColor = raytrace(refractRay, depth-1);
+
+        //color = color * (mirrorColor * kr + refractColor * (1-kr));
+        //color = color + refractColor;
+        color += refractColor * ks * (1.0f - kr); //refracted color
+      }
     }  
   }
-  else    //wenn kein hit: nur ambient zurückgeben
+  else    //wenn kein hit: nur ambient zurückgeben 
   {
    color = m_scene.m_ambient_light;
   }
