@@ -28,6 +28,22 @@ Material Shape::get_material() const
     return m_material;
 }
 
+glm::mat4 Shape::get_world_transformation () const
+{
+    return m_world_transformation;
+}
+
+glm::mat4 Shape::get_world_transformation_inv() const
+{
+    return m_world_transformation_inv;
+}
+
+void Shape::set_world_transformation (glm::mat4 t_mat)
+{
+    m_world_transformation = t_mat;
+    m_world_transformation_inv = glm::inverse(m_world_transformation);
+}
+
 std::ostream& Shape::print (std::ostream& os) const
 {
     os  << "\nname:       " << m_name

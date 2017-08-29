@@ -3,7 +3,9 @@
 #include <catch.hpp>
 
 //other stuff needed
+#define GLM_FORCE_RADIANS
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -506,8 +508,24 @@ TEST_CASE("simplescene", "raytrace")
     Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/simplescene");
     Renderer app{scene.m_x_res, scene.m_y_res, scene.m_fileOut, scene};
     app.render();
-
-
-
 }
 */
+TEST_CASE("glm::transform, rotate")
+{
+    glm::vec3 transl(0.1f, 0.2f, 0.3f);
+    auto translated = glm::translate(glm::mat4(), transl);
+    std::cout << "translated:" << std::endl;
+    std::cout << translated[0].w << translated[1].w << translated[2].w << translated[3].w << std::endl;
+    std::cout << translated[0].x << translated[1].x << translated[2].x << translated[3].x << std::endl;
+    std::cout << translated[0].y << translated[1].y << translated[2].y << translated[3].y << std::endl;
+    std::cout << translated[0].z << translated[1].z << translated[2].z << translated[3].z << std::endl;
+
+
+    glm::vec3 rotate(0.1f, 0.2f, 0.3f);
+    auto rotated = glm::rotate(glm::mat4(), 180.0f, rotate);
+    std::cout << "rotated:" << std::endl;
+    std::cout << rotated[0].w << rotated[1].w << rotated[2].w << rotated[3].w << std::endl;
+    std::cout << rotated[0].x << rotated[1].x << rotated[2].x << rotated[3].x << std::endl;
+    std::cout << rotated[0].y << rotated[1].y << rotated[2].y << rotated[3].y << std::endl;
+    std::cout << rotated[0].z << rotated[1].z << rotated[2].z << rotated[3].z << std::endl;
+}

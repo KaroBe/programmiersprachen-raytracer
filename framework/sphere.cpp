@@ -57,6 +57,24 @@ float Sphere::volume () const
 	return (4.0f/3.0f)*M_PI*pow(m_radius,3.0f);
 }
 
+
+void Sphere::translate (glm::mat4 t_mat)
+{
+	glm::vec4 center_mat {m_center, 1.0f};
+    Sphere.m_center = glm::vec3(center_mat * t_mat);
+}
+
+void Sphere::rotate (float angle)
+{
+    //add rotation matrix??
+}
+
+void Sphere::scale (float factor)
+{
+    //add scale matrix??
+}
+
+
 //override print
 std::ostream& Sphere::print (std::ostream& os) const
 {

@@ -30,13 +30,18 @@ public:
     virtual float area() const = 0;
     virtual float volume() const = 0;
     
-    //virtual matrix translate () const = 0;
-    //virtual matrix rotate () const = 0;
-    //virtual matrix scale () const = 0;
+    virtual void translate (glm::mat4 t_mat) = 0;
+    virtual void rotate (float angle) = 0;
+    virtual void scale (float factor) = 0;
 
     //virtual methods
     virtual std::string get_name() const; 
     virtual Material get_material() const;
+
+    virtual glm::mat4 get_world_transformation();
+    virtual glm::mat4 get_world_transformation_inv();
+    
+    virtual void set_world_transformation(glm::met4 t_mat);
 
     //fried -> should normally be outside the class, but uses Shape
     //member variables, therefore marked as friend and able to 
@@ -54,6 +59,8 @@ public:
 protected:
     std::string m_name;
     Material m_material;
+    glm::mat4 m_world_transformation;
+    glm::mat4 m_world_transformation_inv;
 };
 
 #endif //BUW_SHAPE_HPP

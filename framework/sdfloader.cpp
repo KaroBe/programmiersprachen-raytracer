@@ -234,34 +234,89 @@
                         scene.m_ambient_light = ambient;
                         std::cout << "ambient light added: " << scene.m_ambient_light << std::endl;
                     }
-                    /*
+
                     else if(word == "transform")
                     {
-                        std::string name;
-                        stream >> name;
-                        stream >> word;
+                        std::string object_name;
+                        stream >> object_name;
 
-                        if(word == "translate")
+                        // Shapes dem Composite hinzufügen:
+                        std::shared_ptr<Shape> found_object;
+                        for (std::shared_ptr<Shape> s : scene.m_shapes)
                         {
-                            //translate shape <name>
-                            std::cout << "Shape " << name << " was translated." << std::endl;
+                            if(s->get_name() == object_name)
+                            {
+                                found_object = s;
+                            }
                         }
-                        else if(word == "rotate")
+                        if (!found_object)
                         {
-                            //rotate shape <name>
-                            std::cout << "Shape " << name << " was rotated."<< std::endl;
+                            if(object_name == scene.m_camera.m_name)
+                            {
+                                if(word == "translate")
+                                {
+                                    glm::vec3 vector;
+                                    stream >> vector.x;
+                                    stream >> vector.y;
+                                    stream >> vector.z;
+
+                                    //scene.m_camera.translate(vector);
+                                }
+                                else if(word == "rotate")
+                                {
+                                    float angle;
+                                    stream >> angle;
+                                    glm::vec3 vector;
+                                    stream >> vector.x;
+                                    stream >> vector.y;
+                                    stream >> vector.z;
+
+                                    //scene.m_camera.rotate(angle, vector);
+                                }
+                                else if(word == "scale")
+                                {
+                                    float value;
+                                    stream << value;
+
+                                    //scene.m_camera.scale(value);
+                                }
+                            }
+                            else
+                            {
+                                std::cout << "\nERROR object not found";
+                            }
                         }
-                        else if(word == "scale")
+                        else //if object is a shape
                         {
-                            //scale shape <name>
-                            std::cout << "Shape " << name << " was scaled."<< std::endl;
-                        }
-                        else
-                        {
-                            std::cout << "Invalid transformation" << std::endl;
-                        }
+                            if(word == "translate")
+                            {
+                                glm::vec3 vector;
+                                stream >> vector.x;
+                                stream >> vector.y;
+                                stream >> vector.z;
+
+                                //found_object.translate(vector);
+                            }
+                            else if(word == "rotate")
+                            {
+                                float angle;
+                                stream >> angle;
+                                glm::vec3 vector;
+                                stream >> vector.x;
+                                stream >> vector.y;
+                                stream >> vector.z;
+
+                                //found_object.rotate(angle, vector);
+                            }
+                            else if(word == "scale")
+                            {
+                                float value;
+                                stream << value;
+
+                                //found_object.scale(value);
+                            }
+                        } 
                     }
-                    */
 
                 } //endif length != 0
             

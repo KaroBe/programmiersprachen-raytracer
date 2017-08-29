@@ -10,3 +10,27 @@ Klassen:
 		refraction
 	stfloader:
 		der andere schmurks wie transform blabla
+
+
+GLM INFOZEUG
+
+https://glm.g-truc.net/0.9.2/api/a00245.html#ga4683c446c8432476750ade56f2537397 :
+
+    glm::mat4 glm::rotate(
+        glm::mat4 const& m,
+        float angle,
+        glm::vec3 const& axis
+        );
+
+    glm::mat4 glm::scale(
+        glm::mat4 const& m,
+        glm::vec3 const& factors
+        );
+
+    glm::mat4 glm::translate(
+        glm::mat4 const& m,
+        glm::vec3 const& translation
+        );
+
+aber per hand eingeben ist wahrscheinlich einfacher als rausfinden, die die genau funktionieren
+

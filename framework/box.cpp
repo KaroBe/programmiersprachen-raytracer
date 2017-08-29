@@ -79,6 +79,21 @@ float Box::volume () const
     return diff.x * diff.y * diff.z;
 }
 
+void Box::translate (glm::mat4 t_mat)
+{
+    //add translation matrix??
+}
+
+void Box::rotate (float angle)
+{
+    //add rotation matrix??
+}
+
+void Box::scale (float factor)
+{
+    //add scale matrix??
+}
+
 //override print
 std::ostream& Box::print (std::ostream& os) const
 {
