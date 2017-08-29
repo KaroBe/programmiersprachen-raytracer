@@ -38,4 +38,4 @@ ambient 0.3 0.3 0.3
 define camera eye 90.0	 0 0 0 		0 0 -1 	0 1 0 		0
 
 # ... and go
-render eye image.ppm 1000 1000
+render eye image.ppm 1400 1000
