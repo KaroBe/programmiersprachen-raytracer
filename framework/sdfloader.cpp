@@ -234,6 +234,34 @@
                         scene.m_ambient_light = ambient;
                         std::cout << "ambient light added: " << scene.m_ambient_light << std::endl;
                     }
+                    /*
+                    else if(word == "transform")
+                    {
+                        std::string name;
+                        stream >> name;
+                        stream >> word;
+
+                        if(word == "translate")
+                        {
+                            //translate shape <name>
+                            std::cout << "Shape " << name << " was translated." << std::endl;
+                        }
+                        else if(word == "rotate")
+                        {
+                            //rotate shape <name>
+                            std::cout << "Shape " << name << " was rotated."<< std::endl;
+                        }
+                        else if(word == "scale")
+                        {
+                            //scale shape <name>
+                            std::cout << "Shape " << name << " was scaled."<< std::endl;
+                        }
+                        else
+                        {
+                            std::cout << "Invalid transformation" << std::endl;
+                        }
+                    }
+                    */
 
                 } //endif length != 0
             

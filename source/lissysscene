@@ -1,4 +1,3 @@
-
 # materials
 define material red 	0.9 0 0 	0.7 0.01 0.01 	0.7 0.01 0.01 	0.8 0.5 1
 define material blue 	0 0 0.9 	0.01 0.01 0.3	0.01 0.01 0.3	0.8 0.5 1
@@ -6,9 +5,10 @@ define material white   1.0 1.0 1.0     1.0 1.0 1.0     1.0 1.0 1.0     0.8 0.5 
 # define material glas  0.1 0.1 0.1	0.1 0.1 0.1	0.1 0.1 0.1	0.8 100 1
 
 # geometry
-define shape sphere left_sphere  -5  0 -7  2.5 red
+
+define shape sphere left_sphere  -5  0 -10  2.5 red
 define shape sphere right_sphere  5  0 -10  2.5 blue
-#define shape box floor 		-20 -30 -20  	 20 -20  20 	white
+define shape box floor 		-20 -30 -20  	 20 -20  20 	white
 define shape box ceiling 	-20  20 -20	 20  30  20 	white
 define shape box wallleft	-30 -21 -21	-20  21  21	white
 define shape box wallright	 20 -21 -21	 30  21  21	white
@@ -24,4 +24,4 @@ ambient 0.3 0.3 0.3
 # camera
 define camera eye 90.0	 0 0 0 		0 0 -1 	0 1 0 		0
 # ... and go
-render eye image.ppm 1600 1000
+render eye image.ppm 1500 1000

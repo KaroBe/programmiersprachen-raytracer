@@ -29,6 +29,10 @@ public:
     //pure virtual methods (no implementation in base class)
     virtual float area() const = 0;
     virtual float volume() const = 0;
+    
+    //virtual matrix translate () const = 0;
+    //virtual matrix rotate () const = 0;
+    //virtual matrix scale () const = 0;
 
     //virtual methods
     virtual std::string get_name() const; 
