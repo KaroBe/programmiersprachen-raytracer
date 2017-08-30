@@ -74,6 +74,23 @@ int main(int argc, char* argv[])
       }
 
       //Shapes
+      sdf_output << "# Shapes"
+
+      // PROBLEM ! ggf typ-variable in shape einbauen?
+      // weiß sonst nicht wirklich wie man das im nachhinein
+      // auslesen soll
+      // und man kann auch nicht einfacg in shape print_definition
+      // einbauen, weil man dann bei composite an seine Grenzen stößt:
+      // m_composite würde zuerst ausgedruckt, und die Reihenfolge wird
+      // falsch rum :sob:
+      for (std::shared_ptr<Shape> shape : scene.m_content)
+      {
+        if(composite)
+        else if (box)
+        else if (sphere)        
+
+      }      
+
 /*
       shapes - erst boxen/spheres dann composites. composites wie
       tree der von unten ausgelesen wird, an letzter stelle steht

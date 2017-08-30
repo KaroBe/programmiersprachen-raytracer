@@ -54,6 +54,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Shape const& s);
 
     virtual std::ostream& print (std::ostream& os) const;
+   
+    // ???? vll lösung für sdf creator programm 
+    // std::ostream& print_definition (std::ostream& os) const = 0;
 
     //distance is overwritten with distance between origin and shape
 
