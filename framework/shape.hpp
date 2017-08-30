@@ -41,8 +41,8 @@ public:
     virtual std::string get_name() const; 
     virtual Material get_material() const;
 
-    virtual glm::mat4 get_world_transformation();
-    virtual glm::mat4 get_world_transformation_inv();
+    virtual glm::mat4 get_world_transformation() const;
+    virtual glm::mat4 get_world_transformation_inv() const;
     
     virtual void set_world_transformation(glm::mat4 t_mat);
 

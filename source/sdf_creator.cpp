@@ -41,20 +41,23 @@ int main(int argc, char* argv[])
     // koordinaten, sondern die world_transformation-matrix, wobei man
     // dann auch die inverse ändern muss
     //-> müssen wir erstmal die transformationssachen implementieren
-    float x = 0;
-    std::string file_name = m_scene.m_fileOut;
-    file_name = file_name + "_" + std::to_string(x);
+
+    unsigned int x = 1;
+    std::string file_name = "image_" + std::to_string(x);
 
     std::ofstream sdf_output;
     sdf_output.open(file_name);
+
+    std::cout << "\ngettin here lol\n";
 
     if(sdf_output.is_open())
     {
       //Materials
       sdf_output << "# Materials \n";
-      for (Material material : m_materials)
+      for (std::pair<std::string, Material> m : scene.m_materials)
       {
-        sdf << "define material "
+        Material material = m.second;
+        sdf_output << "define material "
             << material.m_name << " "
             << material.m_ka.r << " "
             << material.m_ka.g << " "
@@ -67,7 +70,7 @@ int main(int argc, char* argv[])
             << material.m_ks.b << " "
             << material.m_m << " "
             << material.m_refrac << " "
-            << material.m_opac << "\n"
+            << material.m_opac << "\n";
       }
 
       //Shapes
@@ -101,7 +104,7 @@ int main(int argc, char* argv[])
 
     sdf_output.close();
 
-  /*}*/
+  }
 
   return 0;
   //die generierten sdf_files kann man dann mit raytracer.cpp rendern
