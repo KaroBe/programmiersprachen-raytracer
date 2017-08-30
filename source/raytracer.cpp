@@ -9,11 +9,9 @@
 
 int main(int argc, char* argv[])
 {
-  /*
-  unsigned const width = 800;
-  unsigned const height = 600;
-  std::string const filename = "./checkerboard.ppm";
-  */
+  // TODO: Schleife oder so hinzufügen, die alle sdf-dateien aus einem
+  //Ordner nacheinander einliest
+
   //load scene with sdf - loader
   SDFloader loader{};
   //Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/lissysscene");
