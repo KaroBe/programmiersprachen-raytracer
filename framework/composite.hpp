@@ -38,6 +38,7 @@ public:
     //per referenz übergeben?
     std::vector<std::shared_ptr<Shape>> get_children();
 
+
     //necerssery so compossite isnt virtual
     virtual void translate (glm::mat4 t_mat) override;
     virtual void rotate (float angle) override;

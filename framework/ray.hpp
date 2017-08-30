@@ -34,7 +34,7 @@ struct Ray
         return invers;
     }
 };
-
+/*
 //Hilfsfunktion
 // ray_t = ray_o.transform(mat)
 Ray transform_ray (glm::mat4 const& mat, Ray const& ray)
@@ -49,5 +49,5 @@ Ray transform_ray (glm::mat4 const& mat, Ray const& ray)
     //gabe zurückumwandeln in vec3 s
     return {glm::vec3(origin_mat*mat), glm::vec3(direction_mat*mat)};
 }
-
+*/
 #endif
