@@ -102,3 +102,18 @@ std::vector<std::shared_ptr<Shape>> Composite::get_children()
 {
     return m_content;
 }
+
+void Composite::translate (glm::mat4 t_mat)
+{
+    //do nothing? 
+}
+
+void Composite::rotate (float angle)
+{
+    //do nothing? 
+}
+
+void Composite::scale (float factor)
+{
+    //do nothing? 
+}

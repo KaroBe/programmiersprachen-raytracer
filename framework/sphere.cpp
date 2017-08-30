@@ -61,7 +61,7 @@ float Sphere::volume () const
 void Sphere::translate (glm::mat4 t_mat)
 {
 	glm::vec4 center_mat {m_center, 1.0f};
-    Sphere.m_center = glm::vec3(center_mat * t_mat);
+    m_center = glm::vec3(center_mat * t_mat);
 }
 
 void Sphere::rotate (float angle)

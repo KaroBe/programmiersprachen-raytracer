@@ -38,10 +38,10 @@ public:
     virtual std::string get_name() const; 
     virtual Material get_material() const;
 
-    virtual glm::mat4 get_world_transformation();
-    virtual glm::mat4 get_world_transformation_inv();
+    virtual glm::mat4 get_world_transformation() const;
+    virtual glm::mat4 get_world_transformation_inv() const;
     
-    virtual void set_world_transformation(glm::met4 t_mat);
+    virtual void set_world_transformation(glm::mat4 t_mat);
 
     //fried -> should normally be outside the class, but uses Shape
     //member variables, therefore marked as friend and able to 

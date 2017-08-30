@@ -4,7 +4,10 @@
 #ifndef BUW_RAY_HPP
 #define BUW_RAY_HPP
 
+#define GLM_FORCE_RADIANS
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <cmath>
 
 struct Ray
 {
