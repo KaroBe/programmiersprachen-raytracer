@@ -5,6 +5,7 @@
 #define BUW_COMPOSITE_HPP
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -26,6 +27,8 @@ public:
     float volume() const override;
 
     std::ostream& print (std::ostream& os) const override;
+    void print_definition (std::stringstream& s) const override;
+    void print_all_definitions (std::fstream& fs) const;
 
     //writes distance into variable distance outside the method!
     Hit intersect(Ray const& ray) const override;
@@ -37,7 +40,6 @@ public:
 
     //per referenz übergeben?
     std::vector<std::shared_ptr<Shape>> get_children();
-
 
     //necerssery so compossite isnt virtual
     virtual void translate (glm::mat4 t_mat) override;

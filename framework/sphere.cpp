@@ -88,6 +88,14 @@ std::ostream& Sphere::print (std::ostream& os) const
 	return os;
 }
 
+void Sphere::print_definition (std::stringstream& s) const
+{
+		s << "define shape sphere " << m_name << " " 
+        << m_center.x << " " << m_center.y << " " << m_center.z
+        << m_radius
+        << m_material.m_name << "\n";
+}
+
 Hit Sphere::intersect(Ray const& ray) const
 {
 	float distance = INFINITY;

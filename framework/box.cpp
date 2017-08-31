@@ -107,6 +107,14 @@ std::ostream& Box::print (std::ostream& os) const
     return os;
 }
 
+void Box::print_definition (std::stringstream& s) const
+{
+    s << "define shape box " << m_name << " " 
+        << m_min.x << " " << m_min.y << " " << m_min.z << " " 
+        << m_max.x << " " << m_max.y << " " << m_max.z << " " 
+        << m_material.m_name << "\n";
+}
+
 //override intersect
 Hit Box::intersect(Ray const& ray) const
 {

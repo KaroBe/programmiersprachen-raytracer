@@ -40,6 +40,7 @@ public:
 
     //override print
     std::ostream& print (std::ostream& os) const override;
+    void print_definition (std::stringstream& s) const override;
 
     Hit intersect(Ray const& ray) const override;
    // glm::vec3 get_normale(Hit const& hit) const;

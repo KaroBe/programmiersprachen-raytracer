@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     unsigned int x = 1;
     std::string file_name = "image_" + std::to_string(x);
 
-    std::ofstream sdf_output;
+    std::fstream sdf_output;
     sdf_output.open(file_name);
 
     std::cout << "\ngettin here lol\n";
@@ -74,33 +74,11 @@ int main(int argc, char* argv[])
       }
 
       //Shapes
-      sdf_output << "# Shapes"
+      sdf_output << "# Shapes\n";
 
-      // PROBLEM ! ggf typ-variable in shape einbauen?
-      // weiß sonst nicht wirklich wie man das im nachhinein
-      // auslesen soll
-      // und man kann auch nicht einfacg in shape print_definition
-      // einbauen, weil man dann bei composite an seine Grenzen stößt:
-      // m_composite würde zuerst ausgedruckt, und die Reihenfolge wird
-      // falsch rum :sob:
-      for (std::shared_ptr<Shape> shape : scene.m_content)
-      {
-        if(composite)
-        else if (box)
-        else if (sphere)        
+      scene.m_composite->print_all_definitions(sdf_output);
 
-      }      
-
-/*
-      shapes - erst boxen/spheres dann composites. composites wie
-      tree der von unten ausgelesen wird, an letzter stelle steht
-      das scene.m_composite
-      vector mit shapes gibt es noch(?) aber eigentlich:
-      m_composite rekursiv nach weiteren composites durchsuchen
-*/
-
-/*
-      transformationen
+      //Transformationen
       ??? sind in den shapes gespeichert -> einen stream für transformationen
       parallel zum auslesen der Shapes füllen, nachdem man mit
       shapes fertig ist, dessen inhalt in sdf_output schreiben

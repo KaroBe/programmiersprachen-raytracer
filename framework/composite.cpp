@@ -58,6 +58,47 @@ std::ostream& Composite::print (std::ostream& os) const
     return os;
 }
 
+void Composite::print_all_definitions (std::fstream& fs) const
+{
+    std::stringstream inorder;
+
+    //write composite definiton to ostream
+    print_definition(inorder);
+
+    //write definitons of objects in the composite to the os
+    for (std::shared_ptr<Shape> s : m_content)
+    {
+        s->print_definition(inorder);
+    }
+
+    //reverse the whole thing
+    std::string line;
+    std::vector<std::string> lines;
+
+    while(std::getline(inorder, line))
+    {
+        lines.push_back(line);
+    }
+    
+    auto it = lines.rbegin();
+    while (it != lines.rend())
+    {
+        fs << *it << "\n";
+        ++it;
+    }  
+}
+
+void Composite::print_definition (std::stringstream& s) const
+{
+    s << "define shape composite " << m_name << " ";
+    for (std::shared_ptr<Shape> shape : m_content)
+    {
+        std::string name = shape->get_name();
+        s << name << " ";
+    }
+    s << "\n";
+}
+
 //intersect
 Hit Composite::intersect(Ray const& ray) const
 {
@@ -77,13 +118,6 @@ Hit Composite::intersect(Ray const& ray) const
 
     return closest_hit;
 }
-
-/*
-glm::vec3 Composite::get_normal(Hit const& hit) const
-{
-    //print normal for every shape?
-}
-*/
 
 //add shape
 void Composite::add_shape(std::shared_ptr<Shape> const& shape)
