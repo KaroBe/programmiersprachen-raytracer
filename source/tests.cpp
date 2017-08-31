@@ -512,7 +512,7 @@ TEST_CASE("simplescene", "raytrace")
 */
 TEST_CASE("glm::transform, rotate")
 {
-    glm::vec3 transl(0.1f, 0.2f, 0.3f);
+    glm::vec3 transl(1.0f, 2.0f, 3.0f);
     auto translated = glm::translate(glm::mat4(), transl);
     std::cout << "translated:" << std::endl;
     std::cout << translated[0].w << translated[1].w << translated[2].w << translated[3].w << std::endl;
@@ -521,7 +521,7 @@ TEST_CASE("glm::transform, rotate")
     std::cout << translated[0].z << translated[1].z << translated[2].z << translated[3].z << std::endl;
 
 
-    glm::vec3 rotate(0.1f, 0.2f, 0.3f);
+    glm::vec3 rotate(1.0f, 2.0f, 3.0f);
     auto rotated = glm::rotate(glm::mat4(), 180.0f, rotate);
     std::cout << "rotated:" << std::endl;
     std::cout << rotated[0].w << rotated[1].w << rotated[2].w << rotated[3].w << std::endl;

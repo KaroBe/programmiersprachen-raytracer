@@ -31,11 +31,6 @@ public:
     //override volume
     float volume () const override;
 
-    
-    virtual void translate (glm::mat4 t_mat) override;
-    virtual void rotate (float angle) override;
-    virtual void scale (float factor) override;
-
     //override print
     std::ostream& print (std::ostream& os) const override;
 
