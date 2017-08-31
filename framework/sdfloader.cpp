@@ -275,8 +275,10 @@
                                 }
                                 else if(word == "scale")
                                 {
-                                    float value;
-                                    stream << value;
+                                    glm::vec3 value;
+                                    stream << value.x;
+                                    stream << value.y;
+                                    stream << value.z;
 
                                     //scene.m_camera.scale(value);
                                 }
@@ -295,7 +297,7 @@
                                 stream >> vector.y;
                                 stream >> vector.z;
 
-                                //found_object.translate(vector);
+                                found_object -> translate(vector);
                             }
                             else if(word == "rotate")
                             {
@@ -306,14 +308,16 @@
                                 stream >> vector.y;
                                 stream >> vector.z;
 
-                                //found_object.rotate(angle, vector);
+                                found_object -> rotate(angle, vector);
                             }
                             else if(word == "scale")
                             {
-                                float value;
-                                stream << value;
+                                glm::vec3 value;
+                                stream << value.x;
+                                stream << value.y;
+                                stream << value.z;
 
-                                //found_object.scale(value);
+                                found_object -> scale(value);
                             }
                         } 
                     }

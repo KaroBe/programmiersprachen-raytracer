@@ -6,15 +6,57 @@
 //Constructor
 Shape::Shape (std::string const& name, Material const& material) :
     m_name{name},
-    m_material{material}
+    m_material{material},
+    m_world_transformation{},
+    m_world_transformation_inv{}
 {
     //std::cout << "Shape Construction\n";
 }
+
+Shape::Shape (std::string const& name, Material const& material, glm::mat4 transformation) :
+    m_name{name},
+    m_material{material},
+    m_world_transformation{transformation},
+    m_world_transformation_inv{glm::inverse(transformation)}
+    {}
 
 //Destructor
 Shape::~Shape()
 {
     //std::cout << "Shape Destruction\n";
+}
+
+void Shape::translate(glm::vec3 vector)
+{
+    glm::mat4 T;
+    T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
+    T[1] = glm::vec4{0.0f, 1.0f, 0.0f, 0.0f};
+    T[2] = glm::vec4{0.0f, 0.0f, 1.0f, 0.0f};
+    T[3] = glm::vec4{vector.x, vector.y, vector.z, 1.0f};
+    m_world_transformation = T * m_world_transformation;
+    m_world_transformation_inv = glm::inverse(m_world_transformation);
+}
+
+void Shape::scale(glm::vec3 factor)
+{
+    glm::mat4 T;
+    T[0] = glm::vec4{factor.x, 0.0f, 0.0f, 0.0f};
+    T[1] = glm::vec4{0.0f, factor.y, 0.0f, 0.0f};
+    T[2] = glm::vec4{0.0f, 0.0f, factor.z, 0.0f};
+    T[3] = glm::vec4{0.0f, 0.0f, 0.0f, 1.0f};
+    m_world_transformation = T * m_world_transformation;
+    m_world_transformation_inv = glm::inverse(m_world_transformation);
+}
+
+void Shape::rotate(float angle, glm::vec3 vector)
+{
+    glm::mat4 T;
+    T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
+    T[1] = glm::vec4{0.0f, cos(angle), sin(angle), 0.0f};
+    T[2] = glm::vec4{0.0f, -sin(angle), cos(angle), 0.0f};
+    T[3] = glm::vec4{0.0f, 0.0f, 0.0f, 1.0f};
+    m_world_transformation = T * m_world_transformation;
+    m_world_transformation_inv = glm::inverse(m_world_transformation);
 }
 
 //Getter

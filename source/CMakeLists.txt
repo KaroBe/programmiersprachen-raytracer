@@ -17,15 +17,15 @@ add_dependencies(raytracer glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 install(TARGETS raytracer DESTINATION .)
 
 #sdf generator
-add_executable(sdf_creator sdf_creator.cpp)
+# add_executable(sdf_creator sdf_creator.cpp)
 
-target_link_libraries(sdf_creator ${FRAMEWORK_NAME} ${LIBRARIES}
-  glfw
-  ${GLFW_LIBRARIES}
-  )
-add_dependencies(sdf_creator glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
+# target_link_libraries(sdf_creator ${FRAMEWORK_NAME} ${LIBRARIES}
+#   glfw
+#   ${GLFW_LIBRARIES}
+#   )
+# add_dependencies(sdf_creator glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
-install(TARGETS sdf_creator DESTINATION .)
+# install(TARGETS sdf_creator DESTINATION .)
 
 # Build tests
 add_executable(tests

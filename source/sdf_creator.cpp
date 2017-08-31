@@ -83,19 +83,14 @@ int main(int argc, char* argv[])
       parallel zum auslesen der Shapes füllen, nachdem man mit
       shapes fertig ist, dessen inhalt in sdf_output schreiben
 
-      lights
+      //lights
       vector
       
-      ambient light
+      //ambient light
       scene.m_ambient_light
 
-      camera
-      m_camera
+      //camera
       
-      camera transformationen
-      ??? es sind ja iwie keine drei transformationsmatrixes haha mehr
-      sondern nur noch eine transformation? oder was?
-*/
 
     sdf_output.close();
 

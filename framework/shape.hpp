@@ -25,6 +25,7 @@ class Shape
 public:
 
     Shape(std::string const& name, Material const& material);
+    Shape(std::string const& name, Material const& material, glm::mat4 transformation);
 
     virtual ~Shape();
 
@@ -35,9 +36,9 @@ public:
     //VLL BESSER WENN NUR IN BOX UND SPHERE IMPLEMENTIERT?
     //weil so muss man auch in composite was implementieren und
     //das macht halt keinen Sinn
-    virtual void translate (glm::mat4 t_mat) = 0;
-    virtual void rotate (float angle) = 0;
-    virtual void scale (float factor) = 0;
+    virtual void translate (glm::vec3 vector);
+    virtual void scale (glm::vec3 factor);
+    virtual void rotate (float angle, glm::vec3 vector);
 
     //virtual methods
     virtual std::string get_name() const; 
