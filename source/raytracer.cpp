@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
   //Open thread that can use the app variable and renders the
   //app
   std::thread thr([&app]() { app.render(); });
-  std::cout << "gerendert!";
+  //std::cout << "gerendert!";
 
 /*
   Window win{glm::ivec2{scene.m_x_res,scene.m_y_res}};

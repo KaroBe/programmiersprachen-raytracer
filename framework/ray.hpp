@@ -37,16 +37,24 @@ struct Ray
 
     //Hilfsfunktion
     // ray_t = ray_o.transform(mat)
-    friend Ray transform_ray (glm::mat4 const& mat, Ray const& ray)
+    friend Ray transform_ray(glm::mat4 const& mat, Ray const& ray)
     {
         //origin/direction in homogene Koordinaten umwandeln
         //Punkt mit 1 ergänzen
-        glm::vec4 origin_mat {ray.m_origin, 1.0f};
-        //Vector mit 0 ergänzen
-        glm::vec4 direction_mat {ray.m_direction, 0.0f};
-        //mit transformationsmatrix multiplizieren und bei Rück
-        //gabe zurückumwandeln in vec3 s
-        return {glm::vec3(origin_mat*mat), glm::vec3(direction_mat*mat)};
+        glm::vec3 newOrigin(mat * glm::vec4{ray.m_origin, 1.0f});
+        glm::vec3 newDirection(mat * glm::vec4{ray.m_direction, 0.0f});
+
+        Ray newRay{newOrigin, newDirection};
+
+        //return {glm::vec3(origin_mat*mat), glm::vec3(direction_mat*mat)};
+        return newRay;
+
+    }
+    
+    friend glm::vec3 transform_vec(glm::mat4 const& mat, glm::vec3 const& vec)
+    {
+        glm::vec3 newVec(mat* glm::vec4{vec, 0.0f});
+        return newVec;
     }
 };
 #endif

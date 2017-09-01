@@ -236,7 +236,8 @@
                     }
 
                     else if(word == "transform")
-                    {
+                    {   
+                        std::cout << "\ntranslating" << std::endl;
                         std::string object_name;
                         stream >> object_name;
 
@@ -247,8 +248,10 @@
                             if(s->get_name() == object_name)
                             {
                                 found_object = s;
+                                std::cout << "found object: " << object_name << std::endl;
                             }
                         }
+                        stream >> word;
                         if (!found_object)
                         {
                             if(object_name == scene.m_camera.m_name)
@@ -296,7 +299,7 @@
                                 stream >> vector.x;
                                 stream >> vector.y;
                                 stream >> vector.z;
-
+                                std::cout << "translating " << object_name << std::endl;
                                 found_object -> translate(vector);
                             }
                             else if(word == "rotate")
@@ -307,7 +310,7 @@
                                 stream >> vector.x;
                                 stream >> vector.y;
                                 stream >> vector.z;
-
+                                std::cout << "rotating " << object_name << std::endl;
                                 found_object -> rotate(angle, vector);
                             }
                             else if(word == "scale")
@@ -316,7 +319,7 @@
                                 stream << value.x;
                                 stream << value.y;
                                 stream << value.z;
-
+                                std::cout << "scaling " << object_name << std::endl;
                                 found_object -> scale(value);
                             }
                         } 

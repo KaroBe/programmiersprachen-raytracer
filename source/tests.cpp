@@ -515,17 +515,52 @@ TEST_CASE("glm::transform, rotate")
     glm::vec3 transl(1.0f, 2.0f, 3.0f);
     auto translated = glm::translate(glm::mat4(), transl);
     std::cout << "translated:" << std::endl;
-    std::cout << translated[0].w << translated[1].w << translated[2].w << translated[3].w << std::endl;
-    std::cout << translated[0].x << translated[1].x << translated[2].x << translated[3].x << std::endl;
+    
+    std::cout << "\n" << translated[0].x << translated[1].x << translated[2].x << translated[3].x << std::endl;
     std::cout << translated[0].y << translated[1].y << translated[2].y << translated[3].y << std::endl;
     std::cout << translated[0].z << translated[1].z << translated[2].z << translated[3].z << std::endl;
+    std::cout << translated[0].w << translated[1].w << translated[2].w << translated[3].w << std::endl;
 
 
     glm::vec3 rotate(1.0f, 2.0f, 3.0f);
     auto rotated = glm::rotate(glm::mat4(), 180.0f, rotate);
     std::cout << "rotated:" << std::endl;
-    std::cout << rotated[0].w << rotated[1].w << rotated[2].w << rotated[3].w << std::endl;
-    std::cout << rotated[0].x << rotated[1].x << rotated[2].x << rotated[3].x << std::endl;
+    
+    std::cout << "\n" << rotated[0].x << rotated[1].x << rotated[2].x << rotated[3].x << std::endl;
     std::cout << rotated[0].y << rotated[1].y << rotated[2].y << rotated[3].y << std::endl;
     std::cout << rotated[0].z << rotated[1].z << rotated[2].z << rotated[3].z << std::endl;
+    std::cout << rotated[0].w << rotated[1].w << rotated[2].w << rotated[3].w << std::endl;
+}
+
+TEST_CASE("transformations")
+{
+    Color c {0.0f,0.0f,0.0f};
+    Sphere sphere{"testsphere", Material{"",c,c,c, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, 1.0f};
+    auto mat = sphere.get_world_transformation();
+
+    std::cout << "\n" << mat[0].x << mat[1].x << mat[2].x << mat[3].x << std::endl;
+    std::cout << mat[0].y << mat[1].y << mat[2].y << mat[3].y << std::endl;
+    std::cout << mat[0].z << mat[1].z << mat[2].z << mat[3].z << std::endl;
+    std::cout << mat[0].w << mat[1].w << mat[2].w << mat[3].w << std::endl;
+
+    sphere.translate(glm::vec3(1.0f, 0.0f, 0.0f));  
+
+    mat = sphere.get_world_transformation();  
+
+    std::cout << "\n"  << mat[0].x << mat[1].x << mat[2].x << mat[3].x << std::endl;
+    std::cout << mat[0].y << mat[1].y << mat[2].y << mat[3].y << std::endl;
+    std::cout << mat[0].z << mat[1].z << mat[2].z << mat[3].z << std::endl;
+    std::cout << mat[0].w << mat[1].w << mat[2].w << mat[3].w << std::endl;
+
+    mat = glm::inverse(mat);
+
+    std::cout << "\n"  << mat[0].x << mat[1].x << mat[2].x << mat[3].x << std::endl;
+    std::cout << mat[0].y << mat[1].y << mat[2].y << mat[3].y << std::endl;
+    std::cout << mat[0].z << mat[1].z << mat[2].z << mat[3].z << std::endl;
+    std::cout << mat[0].w << mat[1].w << mat[2].w << mat[3].w << std::endl;
+
+    Ray ray{glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{2.0f, 3.0f, 4.0f}};
+    auto newRay = transform_ray(mat, ray);
+
+    std::cout << newRay << std::endl;
 }

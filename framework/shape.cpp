@@ -7,18 +7,14 @@
 Shape::Shape (std::string const& name, Material const& material) :
     m_name{name},
     m_material{material},
-    m_world_transformation{},
-    m_world_transformation_inv{}
+    m_world_transformation{ 1.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0},
+    m_world_transformation_inv{glm::inverse(m_world_transformation)}
 {
     //std::cout << "Shape Construction\n";
 }
-
-Shape::Shape (std::string const& name, Material const& material, glm::mat4 transformation) :
-    m_name{name},
-    m_material{material},
-    m_world_transformation{transformation},
-    m_world_transformation_inv{glm::inverse(transformation)}
-    {}
 
 //Destructor
 Shape::~Shape()
