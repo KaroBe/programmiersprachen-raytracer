@@ -9,49 +9,34 @@
 
 int main(int argc, char* argv[])
 {
-  //std::string karo_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/";
-  std::string karo_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/build/source/";
-  std::string lissy_path = "/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/";
+  // TODO: Schleife oder so hinzufügen, die alle sdf-dateien aus einem
+  //Ordner nacheinander einliest
 
-  std::string user;
-  std::cout << "\n~~~~~~~~~~~~ LE RAYTRACER ~~~~~~~~\nare you lissy [l] or karo [k] ? \n";
-  std::cin >> user;
+  //load scene with sdf - loader
+  SDFloader loader{};
+  Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/lissysscene");
+  //Scene scene = loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/lissysscene");
 
-  std::string path;
-  if(user == "l" or user == "lissy")
-  {
-    path = lissy_path;
+  //make Renderer with that scene, and w/h of file we want
+  Renderer app{scene.m_x_res, scene.m_y_res, scene.m_fileOut, scene};
+  std::cout << "renderer generiert";
+
+  //Open thread that can use the app variable and renders the
+  //app
+  std::thread thr([&app]() { app.render(); });
+  //std::cout << "gerendert!";
+
+/*
+  Window win{glm::ivec2{scene.m_x_res,scene.m_y_res}};
+  while (!win.should_close()) {
+    if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+      win.close();
+    }
+    //print colorbuffer of renderer app to the window
+    win.show(app.colorbuffer());
   }
-  else if(user == "k" or user == "karo")
-  {
-    path = karo_path;
-  }
-  else
-  {
-    std::cout << "\nwho dat? try again...\n";
-    return 0;
-  }
-
-  for (int i = 0; i<10; i++)
-  {
-    //path += "lissysscene";
-    std::string current_path = path + "sdf_" + std::to_string(i);
-    std::cout << "\n "<< current_path << "\n";
-
-    //load scene with sdf - loader
-    SDFloader loader{};
-    //Scene scene = loader.load();
-    Scene scene = loader.load(current_path);
-
-    //make Renderer with that scene, and w/h of file we want
-    Renderer app{scene.m_x_res, scene.m_y_res, scene.m_fileOut, scene};
-    std::cout << "\nRenderer generiert";
-
-    //Open thread that can use the app variable and renders the
-    //app
-    std::thread thr([&app]() { app.render(); });
-    thr.join();
-  }
+*/
+  thr.join();
 
   return 0;
 }
