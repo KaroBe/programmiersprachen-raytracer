@@ -101,10 +101,12 @@ void Box::print_definition (std::stringstream& s) const
 }
 
 //override intersect
-Hit Box::intersect(Ray const& ray) const
+Hit Box::intersect(Ray const& ray_in) const
 {
     auto ptr = std::make_shared<Box>(*this);
     Hit hit(ptr);
+
+    auto ray = transform_ray(m_world_transformation_inv, ray_in);
 
     Ray nray {ray.m_origin,ray.m_direction};
     nray.m_direction = glm::normalize(ray.m_direction);
@@ -141,9 +143,9 @@ Hit Box::intersect(Ray const& ray) const
                 nray.m_direction.z * nray.m_direction.z));
        
         glm::vec3 intersect
-            {ray.m_origin.x + hit.m_distance * nray.m_direction.x,
-            ray.m_origin.y + hit.m_distance * nray.m_direction.y,
-            ray.m_origin.z + hit.m_distance * nray.m_direction.z};
+            {ray_in.m_origin.x + hit.m_distance * nray.m_direction.x,
+            ray_in.m_origin.y + hit.m_distance * nray.m_direction.y,
+            ray_in.m_origin.z + hit.m_distance * nray.m_direction.z};
        
         hit.m_intersection = intersect;
     
