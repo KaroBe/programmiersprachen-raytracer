@@ -25,35 +25,38 @@ int main(int argc, char* argv[])
 
   //skalierung
   std::vector<std::pair<std::string, glm::vec3>> scales;
-  scales.push_back(std::make_pair("left_sphere",glm::vec3{0.0f,0.0f,0.0f}));
+  //scales.push_back(std::make_pair("left_sphere",glm::vec3{0.0f,0.0f,0.0f}));
   
   //translation
   std::vector<std::pair<std::string, glm::vec3>> translations;
-  translations.push_back(std::make_pair("left_sphere", glm::vec3{0.0f,0.0f,0.0f}));
-  translations.push_back(std::make_pair("right_sphere", glm::vec3{0.0f,0.0f,0.0f}));
-  translations.push_back(std::make_pair("eye", glm::vec3{-1.0f,0.0f,0.0f}));
+  translations.push_back(std::make_pair("left_sphere", glm::vec3{-4.0f,0.0f,0.0f}));
+  //translations.push_back(std::make_pair("right_sphere", glm::vec3{0.0f,0.0f,0.0f}));
+  //translations.push_back(std::make_pair("eye", glm::vec3{-1.0f,0.0f,0.0f}));
 
   //winkel
   std::vector<std::tuple<std::string, float, glm::vec3>> rotations;
-  rotations.push_back(std::make_tuple("left_sphere", 0.0f, glm::vec3{0.0f,0.0f,0.0f}));
+  //rotations.push_back(std::make_tuple("left_sphere", 0.0f, glm::vec3{0.0f,0.0f,0.0f}));
 
-  for (int x = 0; x<2; x++)
+  for (int x = 0; x<10; x++)
   {
     std::cout << "\nenter loop for the " << x << "th time";
     
     // Transformationen aufrechnen
-    for(std::pair<std::string, glm::vec3>& t : translations)
+    if (x != 0)
     {
-      if (t.first == "left_sphere")
+      for(std::pair<std::string, glm::vec3>& t : translations)
       {
-        t.second = t.second + glm::vec3{0.1f,0.0f,0.0f};
+        if (t.first == "left_sphere")
+        {
+          t.second = t.second + glm::vec3{0.5f,0.0f,0.0f};
+        }
+        std::cout << "\n" << t.second.x  << " " 
+                  << t.second.y << " " 
+                  << t.second.z << "\n";
       }
-      std::cout << "\n" << t.second.x  << " " 
-                << t.second.y << " " 
-                << t.second.z << "\n";
     }
 
-    std::string file_name = "image_" + std::to_string(x);
+    std::string file_name = "sdf_" + std::to_string(x);
 
     std::fstream sdf_output;
     sdf_output.open(file_name,std::fstream::in | std::fstream::app);
@@ -92,6 +95,7 @@ int main(int argc, char* argv[])
       sdf_output << "# Transformations\n";
 
       std::stringstream cam_transformations;
+      cam_transformations << " ";
 
       //translations
       for (std::pair<std::string,glm::vec3> t : translations)
@@ -153,7 +157,7 @@ int main(int argc, char* argv[])
         Light l = *l_ptr;
         sdf_output << "define light "
           << l.m_name << " "
-          << l.m_pos.x << " " << l.m_pos.y << " " << l.m_pos.z << ""
+          << l.m_pos.x << " " << l.m_pos.y << " " << l.m_pos.z << " "
           << l.m_color.r << " " << l.m_color.g << " " << l.m_color.b << " "
           << l.m_brightness << "\n";
       }
@@ -162,9 +166,13 @@ int main(int argc, char* argv[])
 
       sdf_output << "# Ambient Light\n";
 
-      sdf_output << "ambient" << scene.m_ambient_light;
+      sdf_output << "ambient" << " "
+                 << scene.m_ambient_light.r <<" "
+                 << scene.m_ambient_light.g <<" "
+                 << scene.m_ambient_light.b <<"\n";
 
       //camera
+      sdf_output << "# Camera\n";
       sdf_output << "define camera eye " << scene.m_camera.m_fov_x << " "
                 << scene.m_camera.m_eye.x << " "
                 << scene.m_camera.m_eye.y << " "
@@ -180,10 +188,9 @@ int main(int argc, char* argv[])
       sdf_output << cam_transformations.rdbuf();
 
       //render
-
       sdf_output << "# ...and go!\n";
 
-      sdf_output << "render eye " << file_name << " " << scene.m_x_res << " " << scene.m_y_res;
+      sdf_output << "render eye " << "image_" << x << " " << scene.m_x_res << " " << scene.m_y_res;
 
       sdf_output.close();
     }

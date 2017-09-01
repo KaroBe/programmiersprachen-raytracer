@@ -17,9 +17,9 @@ define shape box wallright	 20 -21 -21	 30  21  21	white
 define shape box wallfront	-20 -20 -30	 20  20 -20	white
 define shape box wallbehind	-20 -20  20	 20  20  30	white
 #composite
-#define shape composite boxes close_box
-define shape composite spheres floor ceiling wallleft wallright wallfront wallbehind left_sphere right_sphere
-#define shape composite root spheres
+#define shape composite spheres floor ceiling wallleft wallright wallfront wallbehind left_sphere right_sphere
+
+define shape composite spheres left_sphere right_sphere
 # transform
 transform left_sphere translate 1.0 0.0 0.0
 # light
