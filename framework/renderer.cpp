@@ -23,7 +23,9 @@ void Renderer::render()
   const std::size_t checkersize = 20;
 
   for (unsigned y = 0; y < height_; ++y) {
+
     std::cout << "\rProzent gerendert: " << y / (height_/ 100) << "\r";
+
     for (unsigned x = 0; x < width_; ++x) {
 
       //new Pixel
