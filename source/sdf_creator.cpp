@@ -1,4 +1,3 @@
-
 #include <renderer.hpp>
 #include <iostream>
 #include <fstream>
@@ -9,6 +8,8 @@
 #include <thread>
 #include <utility>
 #include <cmath>
+#include <algorithm>
+#include <tuple>
 
 int main(int argc, char* argv[])
 {
@@ -17,38 +18,46 @@ int main(int argc, char* argv[])
   //Scene scene = loader.load("/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/lissysscene");
   Scene scene = loader.load("/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/lissysscene");
 
-  /*
-  wir haben ausgangs-scene eingelesen
-  nun muss x mal die Parameter der Scene geändert und der sdf_creator
-  für diese Scene angeschmissen werden.
-  Dabei muss das sdf_file jeweils in einem neuen File gespeichert
-  werden... dh string m_fileOut von scene jeweils anpassen und
-  in name_x mit float x bei jeden Schleifenduchlauf erhöht werden
-  */
- /* float frames = 124;
-  for(int x = 0; i<frames; ++i)
-  {*/
 
-    //change scene parameters:
-      //transformationsmatrix auf jeweilige Objekte anwenden
-      //oder was auch immer eben farbe kein plan (disko disko party party :grin:)
-      //scene.m_name ändern
+  // WARNING: Transformationen in der Scene werden nicht beachtet, nur
+  // die, die hier festgelegt sind als Ausgangslage:
+  // variablen benennen mit 
 
-    //z.B. sphere1.center immer zehntel unit nach rechts verschieben
-    // sphere1.translate(glm::vec3{0.1f, 0.0f, 0.0f}) kp ob das ein
-    //korrekter translationsvektor ist übrigens aber würde iwie sinn machen
-    // ich denke man ändert hier wahrscheinlich nicht direkt die
-    // koordinaten, sondern die world_transformation-matrix, wobei man
-    // dann auch die inverse ändern muss
-    //-> müssen wir erstmal die transformationssachen implementieren
+  //skalierung
+  std::vector<std::pair<std::string, glm::vec3>> scales;
+  scales.push_back(std::make_pair("left_sphere",glm::vec3{0.0f,0.0f,0.0f}));
+  
+  //translation
+  std::vector<std::pair<std::string, glm::vec3>> translations;
+  translations.push_back(std::make_pair("left_sphere", glm::vec3{0.0f,0.0f,0.0f}));
+  translations.push_back(std::make_pair("right_sphere", glm::vec3{0.0f,0.0f,0.0f}));
+  translations.push_back(std::make_pair("eye", glm::vec3{-1.0f,0.0f,0.0f}));
 
-    unsigned int x = 1;
+  //winkel
+  std::vector<std::tuple<std::string, float, glm::vec3>> rotations;
+  rotations.push_back(std::make_tuple("left_sphere", 0.0f, glm::vec3{0.0f,0.0f,0.0f}));
+
+  for (int x = 0; x<2; x++)
+  {
+    std::cout << "\nenter loop for the " << x << "th time";
+    
+    // Transformationen aufrechnen
+    for(std::pair<std::string, glm::vec3>& t : translations)
+    {
+      if (t.first == "left_sphere")
+      {
+        t.second = t.second + glm::vec3{0.1f,0.0f,0.0f};
+      }
+      std::cout << "\n" << t.second.x  << " " 
+                << t.second.y << " " 
+                << t.second.z << "\n";
+    }
+
     std::string file_name = "image_" + std::to_string(x);
 
     std::fstream sdf_output;
-    sdf_output.open(file_name);
-
-    std::cout << "\ngettin here lol\n";
+    sdf_output.open(file_name,std::fstream::in | std::fstream::app);
+    sdf_output.clear();
 
     if(sdf_output.is_open())
     {
@@ -79,21 +88,109 @@ int main(int argc, char* argv[])
       scene.m_composite->print_all_definitions(sdf_output);
 
       //Transformationen
-      ??? sind in den shapes gespeichert -> einen stream für transformationen
-      parallel zum auslesen der Shapes füllen, nachdem man mit
-      shapes fertig ist, dessen inhalt in sdf_output schreiben
+
+      sdf_output << "# Transformations\n";
+
+      std::stringstream cam_transformations;
+
+      //translations
+      for (std::pair<std::string,glm::vec3> t : translations)
+      {
+        std::cout << "\ntranslation of " << t.first;
+        std::stringstream buffer;
+        buffer << "transform " << t.first << " translate "
+                  << t.second.x << " "
+                  << t.second.y << " "
+                  << t.second.z << "\n";
+        if(t.first == "eye")
+        { 
+          cam_transformations << buffer.rdbuf();
+        }
+        else
+        {
+            sdf_output << buffer.rdbuf();
+        }
+      }
+
+      //scales
+      for (std::pair<std::string,glm::vec3> s : scales)
+      {
+        std::stringstream buffer;
+        buffer << "transform " << s.first << " scale "
+                            << s.second.x << " "
+                            << s.second.y << " "
+                            << s.second.z << "\n";
+        if(s.first == "eye")
+        { 
+          cam_transformations << buffer.rdbuf();
+        }
+        else sdf_output << buffer.rdbuf();
+      }
+
+      //rotations
+      for (std::tuple<std::string,float,glm::vec3> r : rotations)
+      {
+        std::stringstream buffer;
+        glm::vec3 axis = std::get<2>(r);
+        buffer << "transform " << std::get<0>(r) << " rotate "
+                  << std::get<1>(r) << " "
+                  << axis.x << " "
+                  << axis.y << " "
+                  << axis.z << "\n";
+        if(std::get<0>(r) == "eye")
+        { 
+          cam_transformations << buffer.rdbuf();
+        }
+        else sdf_output << buffer.rdbuf();        
+      }
 
       //lights
-      vector
+
+      sdf_output << "# Lights\n";
+
+      for(std::shared_ptr<Light> l_ptr : scene.m_lights)
+      {
+        Light l = *l_ptr;
+        sdf_output << "define light "
+          << l.m_name << " "
+          << l.m_pos.x << " " << l.m_pos.y << " " << l.m_pos.z << ""
+          << l.m_color.r << " " << l.m_color.g << " " << l.m_color.b << " "
+          << l.m_brightness << "\n";
+      }
       
       //ambient light
-      scene.m_ambient_light
+
+      sdf_output << "# Ambient Light\n";
+
+      sdf_output << "ambient" << scene.m_ambient_light;
 
       //camera
-      
+      sdf_output << "define camera eye " << scene.m_camera.m_fov_x << " "
+                << scene.m_camera.m_eye.x << " "
+                << scene.m_camera.m_eye.y << " "
+                << scene.m_camera.m_eye.z << " "
+                << scene.m_camera.m_dir.x << " "
+                << scene.m_camera.m_dir.y << " "
+                << scene.m_camera.m_dir.z << " "
+                << scene.m_camera.m_up.x << " "
+                << scene.m_camera.m_up.y << " "
+                << scene.m_camera.m_up.z << "\n";
 
-    sdf_output.close();
+      //camera transformations
+      sdf_output << cam_transformations.rdbuf();
 
+      //render
+
+      sdf_output << "# ...and go!\n";
+
+      sdf_output << "render eye " << file_name << " " << scene.m_x_res << " " << scene.m_y_res;
+
+      sdf_output.close();
+    }
+    else
+    {
+      std::cout << "ERROR OPENING FILE "<< file_name;
+    }
   }
 
   return 0;

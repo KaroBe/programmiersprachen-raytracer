@@ -23,7 +23,7 @@ void Renderer::render()
   const std::size_t checkersize = 20;
 
   for (unsigned y = 0; y < height_; ++y) {
-    std::cout << "Prozent gerendert: " << y / (height_/ 100) << std::endl;
+    std::cout << "Prozent gerendert: " << y / (height_/ 100) << "\r";
     for (unsigned x = 0; x < width_; ++x) {
 
       //new Pixel
@@ -51,6 +51,7 @@ void Renderer::render()
       write(p);
     }
   }
+  std::cout << "\n";
   //save altered file
   ppm_.save(filename_);
 }
