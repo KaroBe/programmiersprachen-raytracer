@@ -19,9 +19,10 @@ define shape box left_box 	-7 -2 -12	-3 2 -8 pink
 # define shape box wallfront	-20 -20 -30	 20  20 -20	white
 # define shape box wallbehind	-20 -20  20	 20  20  30	white
 #composite
-#define shape composite boxes close_box
+#define shape composite spheres floor ceiling wallleft wallright wallfront wallbehind left_sphere right_sphere
+
 define shape composite spheres left_sphere right_sphere
-#define shape composite root spheres
+
 # transform
 transform left_sphere translate 2.0 2.0 2.0
 # transform right_box rotate 90.0 0.0 1.0 0.0

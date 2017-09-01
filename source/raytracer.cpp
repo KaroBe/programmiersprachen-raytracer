@@ -28,7 +28,6 @@ int main(int argc, char* argv[])
 
 /*
   Window win{glm::ivec2{scene.m_x_res,scene.m_y_res}};
-
   while (!win.should_close()) {
     if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
       win.close();
