@@ -179,6 +179,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
         if(noObject)  //difusses und dings anderes Licht von punktlichtquellen
         {
+          color = Color{1.0f, 1.0f, 1.0f};
+          
           float ln = std::max(glm::dot(dirToLight, closestHit.m_normale), 0.0f);
           //glm::vec3 ln(dirToLight.x * closestHit.m_normale.x,
           //            dirToLight.y * closestHit.m_normale.y,
@@ -198,6 +200,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
 
       } //else: shadow
     }
+    
 
     //if depth > 0 -> reflektion berechnen
     if(depth > 0)
@@ -223,7 +226,8 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         //color = color + refractColor;
         color += refractColor * ks * (1.0f - kr); //refracted color
       }
-    }  
+    } 
+    
   }
   else    //wenn kein hit: nur ambient zurückgeben 
   {
