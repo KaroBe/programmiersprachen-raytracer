@@ -99,7 +99,7 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   float p_y = float(pixel.y);
   float w = float(width_);
   float h = float(height_);
-  float fov_x = m_scene.m_camera.m_fov_x;
+  float fov_x = m_scene.m_camera.get_fov_x();
 
   float img_ratio = w/h;
  // std::cout << "\n " << img_ratio;

@@ -1,3 +1,4 @@
+
 #include "camera.hpp"
 
 Camera::Camera():
@@ -25,6 +26,32 @@ Camera::Camera(std::string name, float fov_x):
     m_up{0.0f, 1.0f, 0.0f}
     {};   //positive y achse
 
+
+std::string Camera::get_name()
+{
+	return m_name;
+}
+
+float Camera::get_fov_x()
+{
+	return m_fov_x;
+}
+
+glm::vec3 get_eye()
+{
+	return m_eye;
+}
+
+glm::vec3 get_dir()
+{
+	return m_dir;
+}
+
+glm::vec3 get_up()
+{
+	return m_up;
+}
+
 // << Output Operator
 std::ostream& Camera::print (std::ostream& os) const
 {
@@ -44,5 +71,5 @@ void translate (glm::vec3 vector)
 
 void rotate (float angle, glm::vec3 vector)
 {
-	
+
 }
