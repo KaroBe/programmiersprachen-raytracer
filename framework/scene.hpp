@@ -13,7 +13,6 @@
 #include "shape.hpp"
 #include "composite.hpp"
 
-
 struct Scene
 {
     Scene() :

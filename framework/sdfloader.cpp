@@ -198,9 +198,8 @@
                             stream >> up.z;
 
                             Camera camera(name, fov_x, eye, dir, up);
-                            auto cameraptr = std::make_shared<Camera>(camera);
                             scene.m_camera = camera;
-                            std::cout << "camera added:\n" << cameraptr << std::endl;
+                            camera.print(std::cout);
                         }
 
                     }
@@ -279,12 +278,6 @@
                                 }
                                 else if(word == "scale")
                                 {
-                                    /*glm::vec3 value;
-                                    stream << value.x;
-                                    stream << value.y;
-                                    stream << value.z;
-
-                                    //scene.m_camera.scale(value);*/
                                     std::cout << "\nCan't scale camera, try messing with the fov_x and resolution.";
                                 }
                             }

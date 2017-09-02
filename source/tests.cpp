@@ -564,3 +564,14 @@ TEST_CASE("transformations")
 
     std::cout << newRay << std::endl;
 }
+
+TEST_CASE("mat4 ausgabe")
+{
+    glm::mat4 testmat { 5.0f, 0.0f, 0.0f, 6.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0};
+
+    std::cout << testmat[0].x;
+    std::cout << testmat[0].w;
+}

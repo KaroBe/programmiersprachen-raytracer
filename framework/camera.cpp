@@ -26,7 +26,10 @@ Camera::Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm:
                             0.0f, 0.0f, 0.0f, 1.0},
     m_world_transformation_inv{glm::inverse(m_world_transformation)}
     {
-      //transformationsmatrix aus dir up etc berechnen
+      //aus eye, dir und up die transformationsmatrix der Kamera berechnen
+      m_world_transformation = calc_cam_tranformation();
+      std::cout << "Added eye dir up stuff when construction";
+      m_world_transformation_inv = glm::inverse(m_world_transformation);
     };
 
     //if only name and fov x are given:
@@ -79,15 +82,13 @@ std::ostream& Camera::print (std::ostream& os) const
         << "up-vector: " << m_up.x << " " << m_up.y << " " << m_up.z << " " << "\n";
     return os;
 }
-/*
-Ray Camera::calc_cam_rays (Pixel const& pixel, Scene& scene) const
+
+Ray Camera::calc_cam_rays (Pixel const& pixel, float w, float h) const
 {
 
   float p_x = float(pixel.x);
   float p_y = float(pixel.y);
-  float w = float(scene.m_x_res);
-  float h = float(scene.m_y_res);
-  float fov_x = scene.m_camera.m_fov_x;
+  float fov_x = m_fov_x;
 
   float img_ratio = w/h;
   float dis_film = (0.5 / tan(fov_x/2));
@@ -102,17 +103,59 @@ Ray Camera::calc_cam_rays (Pixel const& pixel, Scene& scene) const
   
   Ray ray{{0,0,0}, direction};
 
-  apply_cam_tranformation(ray);
+  //std::cout << "\n ray before: " << ray; 
+
+  glm::mat4 mat = m_world_transformation;
+  /*
+  std::cout << "\n" 
+     << mat[0].x << " " 
+     << mat[1].x << " "
+     << mat[2].x << " "
+     << mat[3].x << "\n"
+
+     << mat[0].y << " "
+     << mat[1].y << " "
+     << mat[2].y << " "
+     << mat[3].y << "\n"
+
+     << mat[0].z << " "
+     << mat[1].z << " "
+     << mat[2].z << " "
+     << mat[3].z << "\n"
+
+     << mat[0].w << " "
+     << mat[1].w << " "
+     << mat[2].w << " "
+     << mat[3].w << "\n";
+*/
+  ray = transform_ray(m_world_transformation, ray);
+  
+  //std::cout << "ray after: " << ray << "\n";
 
   return ray;
 }
 
-void Camera::apply_cam_tranformation (Ray& in_ray) const
+glm::mat4 Camera::calc_cam_tranformation () const
 {
-    //transform ray with cam_transf_matrix
+  //transform ray with cam_transf_matrix
+  //exe, dir, up sind attribute von *this!
 
+  glm::vec3 e = m_eye;
+  glm::vec3 n = glm::normalize(m_dir);
+  glm::vec3 up = m_up;
+
+  glm::vec3 u = glm::normalize(glm::cross(n,up));
+  glm::vec3 v = glm::normalize(glm::cross(u,n));
+
+  glm::mat4 cam_transformation;
+  cam_transformation[0] = glm::vec4{u, 0.0f};
+  cam_transformation[1] = glm::vec4{v, 0.0f};
+  cam_transformation[2] = glm::vec4{-1.0f * n, 0.0f};
+  cam_transformation[3] = glm::vec4{e, 1.0f};
+
+  return cam_transformation;
 }
-*/
+
 void Camera::translate (glm::vec3 vector)
 {
   glm::mat4 T;
