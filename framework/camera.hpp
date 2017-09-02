@@ -43,6 +43,9 @@ public:
     //Up-Vektor
     glm::vec3 m_up;
 
+    glm::mat4 m_world_transformation;
+    glm::mat4 m_world_transformation_inv;
+
 };
 
 #endif //BUW_CAMERA_HPP

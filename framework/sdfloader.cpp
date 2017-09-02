@@ -264,7 +264,7 @@
                                     stream >> vector.y;
                                     stream >> vector.z;
 
-                                    //scene.m_camera.translate(vector);
+                                    scene.m_camera.translate(vector);
                                 }
                                 else if(word == "rotate")
                                 {
@@ -275,7 +275,7 @@
                                     stream >> vector.y;
                                     stream >> vector.z;
 
-                                    //scene.m_camera.rotate(angle, vector);
+                                    scene.m_camera.rotate(angle, vector);
                                 }
                                 else if(word == "scale")
                                 {

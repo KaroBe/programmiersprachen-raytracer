@@ -6,7 +6,12 @@ Camera::Camera():
     m_fov_x{0.0f},
     m_eye{0.0f, 0.0f, 0.0f}, 
     m_dir{0.0f, 0.0f, 0.0f}, 
-    m_up{0.0f, 0.0f, 0.0f}
+    m_up{0.0f, 0.0f, 0.0f},
+    m_world_transformation{ 1.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0},
+    m_world_transformation_inv{glm::inverse(m_world_transformation)}
     {};
 
 Camera::Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm::vec3 up): 
@@ -14,8 +19,15 @@ Camera::Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm:
     m_fov_x{fov_x}, 
     m_eye{eye}, 
     m_dir{dir}, 
-    m_up{up}
-    {};
+    m_up{up},
+    m_world_transformation{ 1.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0},
+    m_world_transformation_inv{glm::inverse(m_world_transformation)}
+    {
+      //transformationsmatrix aus dir up etc berechnen
+    };
 
     //if only name and fov x are given:
 Camera::Camera(std::string name, float fov_x):
@@ -23,7 +35,12 @@ Camera::Camera(std::string name, float fov_x):
     m_fov_x{fov_x},
     m_eye{0.0f, 0.0f, 0.0f},
     m_dir{0.0f, 0.0f, -1.0f},    //negative z achse
-    m_up{0.0f, 1.0f, 0.0f}
+    m_up{0.0f, 1.0f, 0.0f},
+    m_world_transformation{ 1.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0},
+    m_world_transformation_inv{glm::inverse(m_world_transformation)}
     {};   //positive y achse
 
 
@@ -98,10 +115,19 @@ void Camera::apply_cam_tranformation (Ray& in_ray) const
 */
 void Camera::translate (glm::vec3 vector)
 {
-
+  glm::mat4 T;
+  T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
+  T[1] = glm::vec4{0.0f, 1.0f, 0.0f, 0.0f};
+  T[2] = glm::vec4{0.0f, 0.0f, 1.0f, 0.0f};
+  T[3] = glm::vec4{vector.x, vector.y, vector.z, 1.0f};
+  m_world_transformation = T * m_world_transformation;
+  m_world_transformation_inv = glm::inverse(m_world_transformation);
 }
 
 void Camera::rotate (float angle, glm::vec3 vector)
 {
-
+  angle = ((2 * M_PI) / 360) * angle;
+  glm::mat4 T = glm::rotate(glm::mat4(), angle, vector);
+  m_world_transformation = T * m_world_transformation;
+  m_world_transformation_inv = glm::inverse(m_world_transformation);
 }
