@@ -29,8 +29,8 @@ public:
     void translate (glm::vec3 vector);
     void rotate (float angle, glm::vec3 vector);
 
-    //Ray calc_cam_rays (Pixel const& pixel, Scene & scene) const;
-    //void apply_cam_tranformation (Ray& in_ray) const;
+    Ray calc_cam_rays (Pixel const& pixel, float w, float h) const;
+    glm::mat4 calc_cam_tranformation () const;
 
 private:
 
@@ -44,7 +44,6 @@ private:
     glm::vec3 m_dir;
     //Up-Vektor
     glm::vec3 m_up;
-
 };
 
 #endif //BUW_CAMERA_HPP
