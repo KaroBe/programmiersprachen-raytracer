@@ -28,6 +28,7 @@ Camera::Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm:
     {
       //aus eye, dir und up die transformationsmatrix der Kamera berechnen
       m_world_transformation = calc_cam_tranformation();
+      std::cout << "Added eye dir up stuff when construction";
       m_world_transformation_inv = glm::inverse(m_world_transformation);
     };
 
@@ -102,7 +103,34 @@ Ray Camera::calc_cam_rays (Pixel const& pixel, float w, float h) const
   
   Ray ray{{0,0,0}, direction};
 
-  transform_ray(m_world_transformation, ray);
+  //std::cout << "\n ray before: " << ray; 
+
+  glm::mat4 mat = m_world_transformation;
+  /*
+  std::cout << "\n" 
+     << mat[0].x << " " 
+     << mat[1].x << " "
+     << mat[2].x << " "
+     << mat[3].x << "\n"
+
+     << mat[0].y << " "
+     << mat[1].y << " "
+     << mat[2].y << " "
+     << mat[3].y << "\n"
+
+     << mat[0].z << " "
+     << mat[1].z << " "
+     << mat[2].z << " "
+     << mat[3].z << "\n"
+
+     << mat[0].w << " "
+     << mat[1].w << " "
+     << mat[2].w << " "
+     << mat[3].w << "\n";
+*/
+  ray = transform_ray(m_world_transformation, ray);
+  
+  //std::cout << "ray after: " << ray << "\n";
 
   return ray;
 }
