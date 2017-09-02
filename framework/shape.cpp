@@ -46,6 +46,7 @@ void Shape::scale(glm::vec3 factor)
 
 void Shape::rotate(float angle, glm::vec3 vector)
 {
+    angle = ((2 * M_PI) / 360) * angle;
     glm::mat4 T = glm::rotate(glm::mat4(), angle, vector);
     /*T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
     T[1] = glm::vec4{0.0f, cos(angle), sin(angle), 0.0f};

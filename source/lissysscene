@@ -25,7 +25,7 @@ define shape composite spheres right_box left_box
 
 # transform
 # transform left_sphere translate 2.0 2.0 2.0
-transform right_box rotate 180.0 0.0 0.0 1.0
+transform right_box rotate 0.78 0.0 0.0 1.0
 # transform right_box scale 1.0 2.0 1.0
 # light
 define light sun	0 19 -10	 0.4 0.4 0.4 10

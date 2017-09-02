@@ -27,27 +27,27 @@ Camera::Camera(std::string name, float fov_x):
     {};   //positive y achse
 
 
-std::string Camera::get_name()
+std::string Camera::get_name() const
 {
 	return m_name;
 }
 
-float Camera::get_fov_x()
+float Camera::get_fov_x() const
 {
 	return m_fov_x;
 }
 
-glm::vec3 get_eye()
+glm::vec3 Camera::get_eye() const
 {
 	return m_eye;
 }
 
-glm::vec3 get_dir()
+glm::vec3 Camera::get_dir() const
 {
 	return m_dir;
 }
 
-glm::vec3 get_up()
+glm::vec3 Camera::get_up() const
 {
 	return m_up;
 }
@@ -55,11 +55,11 @@ glm::vec3 get_up()
 // << Output Operator
 std::ostream& Camera::print (std::ostream& os) const
 {
-    os  << "camera name: " << camera.m_name << "\n"
-        << "horizontal opening angle: " << camera.m_fov_x << "\n"
-        << "position: " << camera.m_eye.x << " " << camera.m_eye.y << " " << camera.m_eye.z << " " << "\n"
-        << "direction: " << camera.m_dir.x << " " << camera.m_dir.y << " " << camera.m_dir.z << " " << "\n"
-        << "up-vector: " << camera.m_up.x << " " << camera.m_up.y << " " << camera.m_up.z << " " << "\n";
+    os  << "camera name: " << m_name << "\n"
+        << "horizontal opening angle: " << m_fov_x << "\n"
+        << "position: " << m_eye.x << " " << m_eye.y << " " << m_eye.z << " " << "\n"
+        << "direction: " << m_dir.x << " " << m_dir.y << " " << m_dir.z << " " << "\n"
+        << "up-vector: " << m_up.x << " " << m_up.y << " " << m_up.z << " " << "\n";
     return os;
 }
 
