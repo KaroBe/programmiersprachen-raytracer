@@ -302,6 +302,7 @@
                                 stream >> vector.y;
                                 stream >> vector.z;
                                 std::cout << "translating " << object_name << std::endl;
+                                std::cout << "vector: " << vector.x << " " << vector.y << " " << vector.z << std::endl;
                                 found_object -> translate(vector);
                             }
                             else if(word == "rotate")
@@ -313,15 +314,18 @@
                                 stream >> vector.y;
                                 stream >> vector.z;
                                 std::cout << "rotating " << object_name << std::endl;
+                                std::cout << "angle: " << angle << std::endl;
+                                std::cout << "vector: " << vector.x << " " << vector.y << " " << vector.z << std::endl;
                                 found_object -> rotate(angle, vector);
                             }
                             else if(word == "scale")
                             {
                                 glm::vec3 value;
-                                stream << value.x;
-                                stream << value.y;
-                                stream << value.z;
+                                stream >> value.x;
+                                stream >> value.y;
+                                stream >> value.z;
                                 std::cout << "scaling " << object_name << std::endl;
+                                std::cout << "value: " << value.x << " " << value.y << " " << value.z << std::endl;
                                 found_object -> scale(value);
                             }
                         } 

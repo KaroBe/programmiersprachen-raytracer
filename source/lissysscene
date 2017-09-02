@@ -8,8 +8,8 @@ define material pink	1.0 0.6 0.65	1.0 0.6 0.65	1.0 0.7 0.75	0.8 0.5 1
 
 # geometry
 
-# define shape sphere left_sphere   0  0 -10  2.5 pink
-# define shape sphere right_sphere  0  0 -15  2.5 turquoise
+# define shape sphere left_sphere   -5  0 -10  2.5 pink
+# define shape sphere right_sphere   5  0 -10  2.5 turquoise
 define shape box right_box 	 3 -2 -12	 7 2 -8 turquoise
 define shape box left_box 	-7 -2 -12	-3 2 -8 pink
 # define shape box floor 	-20 -30 -20  	 20 -20  20 	white
@@ -26,7 +26,7 @@ define shape composite spheres right_box left_box
 # transform
 # transform left_sphere translate 2.0 2.0 2.0
 # transform right_box rotate 45.0 0.0 0.0 1.0
-transform right_box scale 1.0 1.0 1.0
+transform right_box scale 2.0 2.0 2.0
 
 # light
 define light sun	0 19 -10	 0.4 0.4 0.4 10

@@ -46,7 +46,6 @@ struct Ray
         glm::vec3 newDirection(mat * glm::vec4{ray.m_direction, 0.0f});
 
         Ray newRay{newOrigin, newDirection};
-
         //return {glm::vec3(origin_mat*mat), glm::vec3(direction_mat*mat)};
         return newRay;
 
