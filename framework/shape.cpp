@@ -46,11 +46,11 @@ void Shape::scale(glm::vec3 factor)
 
 void Shape::rotate(float angle, glm::vec3 vector)
 {
-    glm::mat4 T;
-    T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
+    glm::mat4 T = glm::rotate(glm::mat4(), angle, vector);
+    /*T[0] = glm::vec4{1.0f, 0.0f, 0.0f, 0.0f};
     T[1] = glm::vec4{0.0f, cos(angle), sin(angle), 0.0f};
     T[2] = glm::vec4{0.0f, -sin(angle), cos(angle), 0.0f};
-    T[3] = glm::vec4{0.0f, 0.0f, 0.0f, 1.0f};
+    T[3] = glm::vec4{0.0f, 0.0f, 0.0f, 1.0f};*/
     m_world_transformation = T * m_world_transformation;
     m_world_transformation_inv = glm::inverse(m_world_transformation);
 }
