@@ -33,7 +33,7 @@ void Renderer::render()
       Color pcolor{0.0, 0.0, 0.0};
 
       //cast ray trough that pixel -> Ray raycast(Pixel p)
-      //Ray r = raycast(p);
+
       float w = float(width_);
       float h = float(height_);
       Ray r = m_scene.m_camera.calc_cam_rays(p,w,h);
@@ -71,30 +71,6 @@ void Renderer::write(Pixel const& p)
 
   //write new pixel to ppm_writer
   ppm_.write(p);
-}
-
-Ray Renderer::raycast(Pixel const& pixel) //const
-{
-  float p_x = float(pixel.x);
-  float p_y = float(pixel.y);
-  float w = float(width_);
-  float h = float(height_);
-  float fov_x = m_scene.m_camera.get_fov_x();
-
-  float img_ratio = w/h;
-  float dis_film = (0.5 / tan(fov_x/2));
-
-  float x = (pixel.x * (img_ratio / w) - (img_ratio/2));
-  float y = pixel.y * (1.0 / h) - 0.5;
-  float z = -1.0 * dis_film;
-
-  glm::vec3 direction{x,y,z};
-  
-  direction=glm::normalize(direction);
-  
-  Ray ray{{0,0,0}, direction};
-
-  return ray;
 }
 
 Color Renderer::raytrace(Ray const& ray, unsigned int depth)

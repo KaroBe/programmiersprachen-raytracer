@@ -18,11 +18,11 @@ public:
     Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm::vec3 up);
     Camera(std::string name, float fov_x);
 
-    std::string get_name();
-    float get_fov_x();
-    glm::vec3 get_eye();
-    glm::vec3 get_dir();
-    glm::vec3 get_up();
+    std::string get_name() const;
+    float get_fov_x() const;
+    glm::vec3 get_eye() const;
+    glm::vec3 get_dir() const;
+    glm::vec3 get_up() const;
 
     std::ostream& print (std::ostream& os) const;
 
@@ -31,8 +31,6 @@ public:
 
     Ray calc_cam_rays (Pixel const& pixel, float w, float h) const;
     glm::mat4 calc_cam_tranformation () const;
-
-private:
 
     //Name
     std::string m_name;
@@ -44,6 +42,9 @@ private:
     glm::vec3 m_dir;
     //Up-Vektor
     glm::vec3 m_up;
+    
+    glm::mat4 m_world_transformation;
+    glm::mat4 m_world_transformation_inv;
 };
 
 #endif //BUW_CAMERA_HPP
