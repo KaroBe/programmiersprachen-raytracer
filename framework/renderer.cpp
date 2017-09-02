@@ -26,22 +26,16 @@ void Renderer::render()
 
     std::cout << "\rProzent gerendert: " << y / (height_/ 100) << "\r";
 
-    for (unsigned x = 0; x < width_; ++x) {
-
+    for (unsigned x = 0; x < width_; ++x)
+    {
       //new Pixel
       Pixel p(x,y);
       Color pcolor{0.0, 0.0, 0.0};
-      /*
-      //calculate some nice colors to test writing to colorbuffer n ppm
-      if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
-        p.color = Color(0.0, 1.0, float(x)/height_);
-      } else {
-        p.color = Color(1.0, 0.0, float(y)/width_);
-      }
-      */
 
       //cast ray trough that pixel -> Ray raycast(Pixel p)
       Ray r = raycast(p);
+      //Ray r = m_scene.m_camera.calc_cam_rays(p,m_scene);
+      
       pcolor = raytrace(r, 2);
       pcolor.r = pcolor.r / (pcolor.r + 1); //tonemapping
       pcolor.g = pcolor.g / (pcolor.g + 1);
@@ -79,22 +73,6 @@ void Renderer::write(Pixel const& p)
 
 Ray Renderer::raycast(Pixel const& pixel) //const
 {
-/*
-  //Prototyp nach Jana Vorbild
-
-  float dis_film = (width_/2) / (tan(m_scene.m_camera.m_fov_x/2));
-
-  float x = float(pixel.x)/float(width_)-0.5;
-  float y = float(pixel.y)/float(height_)-0.5;
-  float z = -1.0f * dis_film;
-
-  glm::vec3 direction = {x,y,z};
-
-  direction = glm::normalize(direction);
-
-  Ray ray{{0,0,0}, direction};
-*/
-
   float p_x = float(pixel.x);
   float p_y = float(pixel.y);
   float w = float(width_);
@@ -102,7 +80,6 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   float fov_x = m_scene.m_camera.get_fov_x();
 
   float img_ratio = w/h;
- // std::cout << "\n " << img_ratio;
   float dis_film = (0.5 / tan(fov_x/2));
 
   float x = (pixel.x * (img_ratio / w) - (img_ratio/2));
@@ -114,19 +91,6 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   direction=glm::normalize(direction);
   
   Ray ray{{0,0,0}, direction};
-
-/*
-  //Cast ray an shit - Karos nicht funktionierende Variante
-  float NDCx = (pixel.x + 0.5f) / width_;
-  float NDCy = (pixel.y + 0.5f) / height_;
-
-  float x = (2*NDCx -1) * tan((m_scene.m_camera.m_fov_x / 2) * (M_PI/180)) * (width_/height_);
-  float y = (1-2*NDCy)  * tan((m_scene.m_camera.m_fov_x / 2) * (M_PI/180));
-
-  glm::vec3 direction(x,y,-1);
-
-  //std::cout << "\nunnormalisiert: " << direction.x << ", " << direction.y << ", " << direction.z;
-*/
 
   return ray;
 }
@@ -145,7 +109,7 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
     //lichtquellen -> für alle lichter -> berechnet mithilfe des objects die farbe im licht
     for(auto& light : m_scene.m_lights) 
     {
-        if(color.r < 1.0f || color.g < 1.0f ||color.b < 1.0f)
+        if(color.r < 1.0f || color.g < 1.0f ||color.b < 1.0f) //wenn Objekt bereits komplett schwarz...? oder was?
         {
         bool noObject = false;
 
@@ -199,34 +163,48 @@ Color Renderer::raytrace(Ray const& ray, unsigned int depth)
         }
 
       } //else: shadow
-    }
+    } //end for schleife über shapes
     
-
+    // REFLECTION AND REFRACTION
     //if depth > 0 -> reflektion berechnen
     if(depth > 0)
     {
       //zur erinnerung: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/adding-reflection-and-refraction
+      //direction des gespiegelten strahl berechnen durch reflect() methode von glm, welche den ray direction an der Normalen auf der
+      //Intersection spiegelt
       glm::vec3 mirrorDirection = glm::normalize(glm::reflect(ray.m_direction, closestHit.m_normale));
+      //mirrorRay aus origin = intersection + leichte Verschiebung und der eben berechneten Mirror-Direction aufstellen
       Ray mirrorRay{(closestHit.m_intersection + (0.0001f * mirrorDirection)), mirrorDirection};
+      //Diesen Ray wiederum Raytracen, mit einer Verringerten Tiefe, sodass die Spiegelung nur zweimal rekursiv aufgerufen wird
       Color mirrorColor = raytrace(mirrorRay, depth-1);
 
+      // kr = refractionsparameter
+      // ks = reflektionsparameter
       float kr = closestHit.m_shape -> get_material().m_refrac;
       Color ks = closestHit.m_shape -> get_material().m_ks;
 
-      color = color * 0.5f + color * 0.5f * mirrorColor * ks * kr; //reflected color
+      //Farbe des Objekts nach Spiegelung berechnet sich aus 50% color (ambient + ggf lichtquellen), 50% color * gespiegelte Farbe * ks * kr
+      color = color * 0.5f + color * 0.5f * mirrorColor * ks * kr;
 
+      //Die < 1 Bedinung ist debugging für die schwarzen Kästen, die irgendwann aufgetreten sind bei Refraction, oder?
       if(color.r < 1.0f || color.g < 1.0f ||color.b < 1.0f)
       {
+        //Die Opacity
         float opac = closestHit.m_shape -> get_material().m_opac;
+        //Je nach Opacity wird der ray an der Normalen refractiert. Bei 100% durchsichtigkeit sollte er einfach durchgehen?? 
+        //tut er aber anscheinend nicht?
         glm::vec3 refractDirection = glm::normalize(glm::refract(ray.m_direction, closestHit.m_normale, opac));
         Ray refractRay{(closestHit.m_intersection + (0.00001f * refractDirection)), refractDirection};
+        //Auch der refractierte Ray wird getraced
         Color refractColor = raytrace(refractRay, depth-1);
 
         //color = color * (mirrorColor * kr + refractColor * (1-kr));
         //color = color + refractColor;
+
+        //Die refractierte Farbe wird auf Color addiert, wobei 1-refractionsfaktor gerechnet wird?? Warum?
         color += refractColor * ks * (1.0f - kr); //refracted color
-      }
-    } 
+      } //endif refraction
+    } //endif tiefe > 0
     
   }
   else    //wenn kein hit: nur ambient zurückgeben 

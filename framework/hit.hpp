@@ -10,7 +10,7 @@
 #include <memory>
 
 //bruachen wir diesen include?? WIE FUNKTIONIERT DAS GEGENSEITIGE INCLUDEN????
-#include "shape.hpp"
+//#include "shape.hpp"
 
 class Shape;
 

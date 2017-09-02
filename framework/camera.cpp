@@ -62,14 +62,46 @@ std::ostream& Camera::print (std::ostream& os) const
         << "up-vector: " << m_up.x << " " << m_up.y << " " << m_up.z << " " << "\n";
     return os;
 }
+/*
+Ray Camera::calc_cam_rays (Pixel const& pixel, Scene& scene) const
+{
 
+  float p_x = float(pixel.x);
+  float p_y = float(pixel.y);
+  float w = float(scene.m_x_res);
+  float h = float(scene.m_y_res);
+  float fov_x = scene.m_camera.m_fov_x;
 
-void translate (glm::vec3 vector)
+  float img_ratio = w/h;
+  float dis_film = (0.5 / tan(fov_x/2));
+
+  float x = (p_x * (img_ratio / w) - (img_ratio/2));
+  float y = p_y * (1.0 / h) - 0.5;
+  float z = -1.0 * dis_film;
+
+  glm::vec3 direction{x,y,z};
+  
+  direction=glm::normalize(direction);
+  
+  Ray ray{{0,0,0}, direction};
+
+  apply_cam_tranformation(ray);
+
+  return ray;
+}
+
+void Camera::apply_cam_tranformation (Ray& in_ray) const
+{
+    //transform ray with cam_transf_matrix
+
+}
+*/
+void Camera::translate (glm::vec3 vector)
 {
 
 }
 
-void rotate (float angle, glm::vec3 vector)
+void Camera::rotate (float angle, glm::vec3 vector)
 {
 
 }

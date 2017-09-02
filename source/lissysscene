@@ -10,7 +10,7 @@ define material pink	1.0 0.6 0.65	1.0 0.6 0.65	1.0 0.7 0.75	0.8 0.5 1
 
 # define shape sphere left_sphere   0  0 -10  2.5 pink
 # define shape sphere right_sphere  0  0 -15  2.5 turquoise
-define shape box right_box 	3 -2 -12	7 2 -8 turquoise
+define shape box right_box 	 3 -2 -12	 7 2 -8 turquoise
 define shape box left_box 	-7 -2 -12	-3 2 -8 pink
 # define shape box floor 	-20 -30 -20  	 20 -20  20 	white
 # define shape box ceiling 	-20  20 -20	 20  30  20 	white
@@ -18,19 +18,22 @@ define shape box left_box 	-7 -2 -12	-3 2 -8 pink
 # define shape box wallright	 20 -21 -21	 30  21  21	white
 # define shape box wallfront	-20 -20 -30	 20  20 -20	white
 # define shape box wallbehind	-20 -20  20	 20  20  30	white
+
 #composite
 #define shape composite spheres left_sphere right_sphere
-
 define shape composite spheres right_box left_box
 
 # transform
 # transform left_sphere translate 2.0 2.0 2.0
 transform right_box rotate 0.78 0.0 0.0 1.0
 # transform right_box scale 1.0 2.0 1.0
+
 # light
 define light sun	0 19 -10	 0.4 0.4 0.4 10
 ambient 0.3 0.3 0.3
+
 # camera
 define camera eye 90.0	 0 0 0 		0 0 -1 	0 1 0 		0
+
 # ... and go
 render eye image.ppm 1500 1000

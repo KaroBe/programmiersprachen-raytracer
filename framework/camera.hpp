@@ -5,13 +5,14 @@
 #define BUW_CAMERA_HPP
 
 #include "color.hpp"
+#include "ray.hpp"
+#include "pixel.hpp"
 #include <glm/vec3.hpp>
 
 class Camera
 {
 
 public:
-
 
     Camera();
     Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm::vec3 up);
@@ -28,6 +29,8 @@ public:
     void translate (glm::vec3 vector);
     void rotate (float angle, glm::vec3 vector);
 
+    //Ray calc_cam_rays (Pixel const& pixel, Scene & scene) const;
+    //void apply_cam_tranformation (Ray& in_ray) const;
 
     //Name
     std::string m_name;
