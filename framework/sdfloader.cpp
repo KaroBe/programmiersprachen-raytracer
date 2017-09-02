@@ -198,8 +198,9 @@
                             stream >> up.z;
 
                             Camera camera(name, fov_x, eye, dir, up);
+                            auto cameraptr = std::make_shared<Camera>(camera);
                             scene.m_camera = camera;
-                            std::cout << "camera added:\n" << camera << std::endl;
+                            std::cout << "camera added:\n" << cameraptr << std::endl;
                         }
 
                     }
@@ -208,7 +209,7 @@
                         std::string camname;
                         stream >> camname;
 
-                        if(camname == scene.m_camera.m_name)
+                        if(camname == scene.m_camera.get_name())
                         {
                             stream >> scene.m_fileOut;
                             stream >> scene.m_x_res;
@@ -254,7 +255,7 @@
                         stream >> word;
                         if (!found_object)
                         {
-                            if(object_name == scene.m_camera.m_name)
+                            if(object_name == scene.m_camera.get_name())
                             {
                                 if(word == "translate")
                                 {

@@ -6,10 +6,8 @@
 
 #include "color.hpp"
 #include "ray.hpp"
+#include "pixel.hpp"
 #include <glm/vec3.hpp>
-
-//forward declaration of scene
-struct Scene;
 
 class Camera
 {
@@ -20,15 +18,21 @@ public:
     Camera(std::string name, float fov_x, glm::vec3 eye, glm::vec3 dir, glm::vec3 up);
     Camera(std::string name, float fov_x);
 
+    std::string get_name();
+    float get_fov_x();
+    glm::vec3 get_eye();
+    glm::vec3 get_dir();
+    glm::vec3 get_up();
+
     std::ostream& print (std::ostream& os) const;
 
     void translate (glm::vec3 vector);
     void rotate (float angle, glm::vec3 vector);
 
-    Ray calc_cam_rays (Pixel const& pixel, Scene const& scene) const;
-    Ray apply_cam_tranformation (Ray in_ray);
+    //Ray calc_cam_rays (Pixel const& pixel, Scene & scene) const;
+    //void apply_cam_tranformation (Ray& in_ray) const;
 
-protected:
+private:
 
     //Name
     std::string m_name;

@@ -1,3 +1,4 @@
+
 #include <renderer.hpp>
 #include <iostream>
 #include <fstream>
@@ -173,16 +174,16 @@ int main(int argc, char* argv[])
 
       //camera
       sdf_output << "# Camera\n";
-      sdf_output << "define camera eye " << scene.m_camera.m_fov_x << " "
-                << scene.m_camera.m_eye.x << " "
-                << scene.m_camera.m_eye.y << " "
-                << scene.m_camera.m_eye.z << " "
-                << scene.m_camera.m_dir.x << " "
-                << scene.m_camera.m_dir.y << " "
-                << scene.m_camera.m_dir.z << " "
-                << scene.m_camera.m_up.x << " "
-                << scene.m_camera.m_up.y << " "
-                << scene.m_camera.m_up.z << "\n";
+      sdf_output << "define camera eye " << scene.m_camera.get_fov_x() << " "
+                << scene.m_camera.get_eye().x << " "
+                << scene.m_camera.get_eye().y << " "
+                << scene.m_camera.get_eye().z << " "
+                << scene.m_camera.get_dir().x << " "
+                << scene.m_camera.get_dir().y << " "
+                << scene.m_camera.get_dir().z << " "
+                << scene.m_camera.get_up().x << " "
+                << scene.m_camera.get_up().y << " "
+                << scene.m_camera.get_up().z << "\n";
 
       //camera transformations
       sdf_output << cam_transformations.rdbuf();

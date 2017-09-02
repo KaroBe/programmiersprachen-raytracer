@@ -33,8 +33,8 @@ void Renderer::render()
       Color pcolor{0.0, 0.0, 0.0};
 
       //cast ray trough that pixel -> Ray raycast(Pixel p)
-      //Ray r = raycast(p);
-      Ray r = m_scene.m_camera.calc_cam_rays(p,m_scene);
+      Ray r = raycast(p);
+      //Ray r = m_scene.m_camera.calc_cam_rays(p,m_scene);
       
       pcolor = raytrace(r, 2);
       pcolor.r = pcolor.r / (pcolor.r + 1); //tonemapping
