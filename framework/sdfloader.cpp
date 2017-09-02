@@ -278,12 +278,13 @@
                                 }
                                 else if(word == "scale")
                                 {
-                                    glm::vec3 value;
+                                    /*glm::vec3 value;
                                     stream << value.x;
                                     stream << value.y;
                                     stream << value.z;
 
-                                    //scene.m_camera.scale(value);
+                                    //scene.m_camera.scale(value);*/
+                                    std::cout << "\nCan't scale camera, try messing with the fov_x and resolution.";
                                 }
                             }
                             else

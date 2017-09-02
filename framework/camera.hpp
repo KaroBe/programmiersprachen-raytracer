@@ -56,6 +56,8 @@ struct Camera
     //Up-Vektor
     glm::vec3 m_up;
 
+    //Brauchen wir für Kameratransformation auch Transformationsmatrix?
+    //Diese sollte dann bei der Berechnung der Rays in
 
     // << Output Operator
     friend std::ostream& operator<<(std::ostream& os, Camera const& camera)

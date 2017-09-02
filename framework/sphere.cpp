@@ -99,33 +99,6 @@ Hit Sphere::intersect(Ray const& ray_in) const
 	hit.m_normale = glm::normalize(transformedNormale);
 	
 	return hit;
-
-	/*
-	float distance = INFINITY;
-
-	auto newRay = transform_ray(m_world_transformation_inv, ray);
-	
-	auto normal_direction = glm::normalize(newRay.m_direction);
-	
-	bool x = glm::intersectRaySphere(
-		newRay.m_origin, normal_direction,
-		m_center,
-		m_radius * m_radius,
-		distance);
-	glm::vec3 intersection = newRay.m_origin + normal_direction * distance;
-	auto ptr = std::make_shared<Sphere>(*this);
-	Hit hit(x, distance, intersection, ptr);
-
-	//get normale
-	glm::mat4 transposed = glm::transpose(m_world_transformation_inv);
-	//glm::vec3 transformedNormale(transposed * glm::vec4{this -> get_normale(hit), 0.0f}); 
-	glm::vec3 transformedNormale(glm::mat3(transposed) * this -> get_normale(hit));
-	hit.m_normale = glm::normalize(transformedNormale);
-	//std::cout << "\nI changed normal to : \n" << hit.m_normale.x << hit.m_normale.y 
-	//<< hit.m_normale.z;
-
-	return hit;
-	*/
 }
 
 glm::vec3 Sphere::get_normale(Hit const& hit) const

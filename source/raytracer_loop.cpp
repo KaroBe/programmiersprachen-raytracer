@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 {
   //std::string karo_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/source/";
   std::string karo_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen/raytracer/programmiersprachen-raytracer/build/source/";
-  std::string lissy_path = "/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/source/";
+  std::string lissy_path = "/home/lissy/Dokumente/raytracer/programmiersprachen-raytracer/build/source";
 
   std::string user;
   std::cout << "\n~~~~~~~~~~~~ LE RAYTRACER ~~~~~~~~\nare you lissy [l] or karo [k] ? \n";
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     return 0;
   }
 
-  for (int i = 0; i<10; i++)
+  for (int i = 0; i<3; i++)
   {
     //path += "lissysscene";
     std::string current_path = path + "sdf_" + std::to_string(i);
