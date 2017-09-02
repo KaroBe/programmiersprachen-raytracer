@@ -33,7 +33,8 @@ void Renderer::render()
       Color pcolor{0.0, 0.0, 0.0};
 
       //cast ray trough that pixel -> Ray raycast(Pixel p)
-      Ray r = raycast(p);
+      //Ray r = raycast(p);
+      Ray r = m_scene.m_camera.calc_cam_rays(p,m_scene);
       
       pcolor = raytrace(r, 2);
       pcolor.r = pcolor.r / (pcolor.r + 1); //tonemapping
@@ -76,7 +77,7 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   float p_y = float(pixel.y);
   float w = float(width_);
   float h = float(height_);
-  float fov_x = m_scene.m_camera.m_fov_x;
+  float fov_x = m_scene.m_camera.get_fov_x();
 
   float img_ratio = w/h;
   float dis_film = (0.5 / tan(fov_x/2));
@@ -90,8 +91,6 @@ Ray Renderer::raycast(Pixel const& pixel) //const
   direction=glm::normalize(direction);
   
   Ray ray{{0,0,0}, direction};
-
-  cam_transform
 
   return ray;
 }

@@ -95,7 +95,7 @@ Hit Sphere::intersect(Ray const& ray_in) const
 	hit.m_normale = glm::normalize(this -> get_normale(hit));
 
 	glm::mat4 transposed = glm::transpose(m_world_transformation_inv);
-	glm::vec3 transformedNormale(transposed * glm::vec4{this -> get_normale(hit), 0.0f});
+	glm::vec3 transformedNormale(transposed * glm::vec4{hit.m_normale, 0.0f});
 	hit.m_normale = glm::normalize(transformedNormale);
 	
 	return hit;

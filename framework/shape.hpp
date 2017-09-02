@@ -18,8 +18,6 @@
 
 struct Hit;
 
-struct Hit;
-
 class Shape
 {
 public:

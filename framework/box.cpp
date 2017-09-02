@@ -176,6 +176,10 @@ Hit Box::intersect(Ray const& ray_in) const
             hit.m_normale = glm::vec3{0.0f, 0.0f, 1.0f};
         }
 
+        glm::mat4 transposed = glm::transpose(m_world_transformation_inv);
+        glm::vec3 transformedNormale(transposed * glm::vec4{hit.m_normale, 0.0f});
+        hit.m_normale = glm::normalize(transformedNormale);
+
         return hit;
 
     }
